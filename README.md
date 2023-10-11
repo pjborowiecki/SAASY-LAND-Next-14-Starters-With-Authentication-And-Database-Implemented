@@ -10,4 +10,4 @@ This branch contains a Next.js 13 starter with authentication and a PostgreSQL d
 
 - `npx prisma init`
 - `npx prisma generate`
-- `npx prisma migrate dev --name init`
+- `npx prisma migrate dev` or `npx prisma db push`
