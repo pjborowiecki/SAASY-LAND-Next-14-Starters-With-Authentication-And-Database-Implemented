@@ -86,7 +86,7 @@ export function SignInForm() {
             </FormItem>
           )}
         />
-        <Button>
+        <Button className="primary-gradient">
           {isPending && (
             <>
               <Icons.spinner

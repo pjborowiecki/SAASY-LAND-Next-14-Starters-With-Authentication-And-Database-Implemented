@@ -1,4 +1,10 @@
-# Next 13 starters with authentication and database set up
+# [Next 13 starters with authentication and database set up](https://saasyland.com)
+
+![public/images/screenshots/screenshot_1](./public/images/screenshots/screenshot_1.png)
+
+![public/images/screenshots/screenshot_2](./public/images/screenshots/screenshot_2.png)
+
+![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
 Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.
 

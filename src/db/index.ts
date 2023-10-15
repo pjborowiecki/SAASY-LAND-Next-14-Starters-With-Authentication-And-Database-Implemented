@@ -10,3 +10,8 @@ if (!process.env.DATABASE_URL) {
 
 const sql = neon(String(process.env.DATABASE_URL))
 export const db = drizzle(sql, { schema })
+
+export async function helloNow() {
+  const [dbResponse] = await sql`SELECT NOW();`
+  return dbResponse
+}

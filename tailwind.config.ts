@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         customOrange: {
           500: "#FF7000",
+          400: "#e2995f",
           100: "#FFF1E6",
         },
         customBlue: "#1DA1F2",
