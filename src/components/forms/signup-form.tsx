@@ -104,7 +104,7 @@ export function SignUpForm() {
           )}
         />
 
-        <Button>
+        <Button className="primary-gradient">
           {isPending && (
             <>
               <Icons.spinner
