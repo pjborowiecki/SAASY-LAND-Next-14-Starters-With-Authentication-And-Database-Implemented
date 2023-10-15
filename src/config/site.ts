@@ -1,6 +1,6 @@
 const links = {
   github:
-    "https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/main",
+    "https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented",
   twitter: "https://twitter.com/pjborowiecki",
   linkedin: "https://www.linkedin.com/in/pjborowiecki",
   discord: "",
