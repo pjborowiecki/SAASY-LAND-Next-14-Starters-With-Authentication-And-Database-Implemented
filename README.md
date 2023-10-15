@@ -1,21 +1,63 @@
 # [Next 13 starters with authentication and database set up](https://saasyland.com)
 
+Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.
+
 ![public/images/screenshots/screenshot_1](./public/images/screenshots/screenshot_1.png)
 
 ![public/images/screenshots/screenshot_2](./public/images/screenshots/screenshot_2.png)
 
 ![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
-Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.
+## Available branches:
 
-### PostgreSQL at [Neon](https://neon.tech) with [Drizzle ORM](https://orm.drizzle.team/)
+- ### [baseline](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/baseline)
 
-This branch contains a Next.js 13 starter with [Next-Auth](https://next-auth.js.org/) authentication and a PostgreSQL database at [Neon](https://neon.tech). It uses the official Drizzle adapter from Next-Auth, overwritten to automatically create a username during sign up.
+This branch contains a starting point for implementing authentication and database with Next.js 13. It is a bare-bones Next.js 13 project with Tailwind CSS and ShadCn set up, including a basic layout and a few components. It also contains a few basic pages, including a signin and a signup page, but also a configuration for Prettier, TypeScript, and ESLint.
 
-#### Commands:
+- ### [next-auth-drizzle-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-drizzle-neon-postgres)
 
-- `npm run db:check` (equivalent to `drizzle-kit check:pg`)
-- `npm run db:generate` (equivalent to `drizzle-kit generate:pg`)
-- `npm run db:push` (equivalent to `drizzle-kit push:pg`)
-- `npm run db:introspect` (equivalent to `drizzle-kit introspect:pg`)
-- `npm run db:studio` (equivalent to `drizzle-kit studio --port 4000 --verbose`)
+Under construction
+
+- ### [next-auth-drizzle-planetscale-mysql]()
+
+Under construction
+
+- ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-prisma5-serverless-neon-postgres)
+
+Under construction
+
+- ### [next-auth-prisma5-serverless-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-prisma5-serverless-planetscale-mysql)
+
+Under construction
+
+- ### [next-auth-docker-local-postgres-drizzle](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-docker-local-postgres-drizzle)
+
+Under construction
+
+- ### [next-auth-docker-local-postgres-prisma](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-docker-local-postgres-prisma)
+
+Under construction
+
+- ### [nestjs-nextjs-next-auth-prisma-sqlite](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/nestjs-nextjs-next-auth-prisma-sqlite)
+
+Under construction
+
+- ### [nestjs-nextjs-next-auth-drizzle-sqlite](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/nestjs-nextjs-next-auth-drizzle-sqlite)
+
+Under construction
+
+- ### [mern-nextjs-redux](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/mern-nextjs-redux)
+
+Under construction
+
+- ### [next-auth-supabase-postgres](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/next-auth-supabase-postgres)
+
+Under construction
+
+- ### [supabase-postgres](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/supabase-postgres)
+
+Under construction
+
+- ### [django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux](https://github.com/pjborowiecki/SAASY-LAND-next-13-starters-with-authentication-and-database-implemented/tree/django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux)
+
+Under construction
