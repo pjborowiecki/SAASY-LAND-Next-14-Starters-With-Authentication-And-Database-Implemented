@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import { prisma } from "@/config/prisma"
-
-export default function Home() {
-  const myUser = prisma.user.findFirst()
-
-  return <main>hello world</main>
-=======
 import { siteConfig } from "@/config/site"
 import { AboutSection } from "@/components/sections/about-section"
 import { FAQSection } from "@/components/sections/faq"
@@ -27,7 +19,6 @@ export default function LandingPage() {
       <NewsletterSection />
     </div>
   )
->>>>>>> fb7f8be752c8c9e879c926c55b442b13c2d8507a
 }
 
 export const runtime = "edge"

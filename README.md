@@ -10,14 +10,6 @@ Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, S
 
 ![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
+## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
-<<<<<<< HEAD
-### Postgresql at [Neon](https://neon.tech)
-
-This branch contains a Next.js 13 starter with authentication and a PostgreSQL database set up at [Neon](https://neon.tech).
-
-#### Commands:
-
-- `npx prisma init`
-- `npx prisma generate`
-- `npx prisma migrate dev` or `npx prisma db push`
+This branch contains a Next.js 13 starter with Next-Auth authentication and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected to the Next.js app via [Prisma](https://prisma.io) v.5 (serverless-compatible).
