@@ -16,4 +16,14 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 
 #### TODO:
 
-- Implement payments with [Stripe](https://stripe.com)
+- [x] Implement sign up with email and password
+- [ ] Implement sign in with email and password
+- [ ] Set up OAuth sign in with GitHub and Google
+- [ ] Set up email verification
+- [ ] Set up password reset
+- [ ] Set up a user profile page with a form to update user information
+- [ ] Set up file upload for user profile pictures
+- [ ] Complete the landing page sections and footer
+- [ ] Set up a newsletter sign up
+- [ ] Implement payments with [Stripe](https://stripe.com)
+- [ ] Set up blogging with Markdwon and MDX (or Payload 2 with Lexical)
