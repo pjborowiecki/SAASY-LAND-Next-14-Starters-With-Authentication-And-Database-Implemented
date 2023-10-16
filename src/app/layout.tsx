@@ -3,9 +3,11 @@ import "@/styles/globals.css"
 import * as React from "react"
 import type { Metadata } from "next"
 import { env } from "@/env.mjs"
+import { Toaster } from "sonner"
 
 import { fontInter, fontJetBrainsMono, fontSpaceGrotesk } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
+import { AuthProvider } from "@/providers/auth-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -70,8 +72,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>{children}</AuthProvider>
           <TailwindIndicator />
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>

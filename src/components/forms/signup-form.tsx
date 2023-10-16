@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
+import { signUpUserAction } from "@/actions/auth"
 import { signUpSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -24,7 +25,7 @@ import { PasswordInput } from "@/components/password-input"
 type SignUpFormInputs = z.infer<typeof signUpSchema>
 
 export function SignUpForm() {
-  // const router = useRouter()
+  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<SignUpFormInputs>({
@@ -39,18 +40,24 @@ export function SignUpForm() {
   function onSubmit(formData: SignUpFormInputs) {
     startTransition(async () => {
       try {
-        // TODO: await db call (ensure the function is async!)
+        const message = await signUpUserAction(
+          formData.email,
+          formData.password
+        )
 
-        form.reset()
-        // TODO: ensure the correct route is pushed
-        // router.push("/")
-        // TODO: display a toast message
-        // TODO: implement email confirmation?
-        toast.message("Account created!", {
-          description: "You can now sign in to your account.",
-        })
-        console.log(formData)
+        if (message === null) {
+          toast.error("Error creating account. Please try again")
+        } else if (message === "User already exists") {
+          toast.error("User with that email address already exists")
+        } else {
+          toast.message("Success!", {
+            description: "You can now sign in to your account",
+          })
+        }
+
+        router.push("/signin")
       } catch (error) {
+        toast.error("Error creating account. Please try again")
         console.log(error)
       }
     })
@@ -105,16 +112,17 @@ export function SignUpForm() {
         />
 
         <Button className="primary-gradient">
-          {isPending && (
+          {isPending ? (
             <>
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              Signing up
+              <span>Signing up</span>
             </>
+          ) : (
+            <span>Sign up</span>
           )}
-          Sign up
           <span className="sr-only">Sign up with email and password</span>
         </Button>
       </form>

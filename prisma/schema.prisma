@@ -45,6 +45,7 @@ model User {
   name                  String?
   email                 String?     @unique
   emailVerified         DateTime?   @map("email_verified")
+  passwordHash          String?     @map("password_hash")
   image                 String?
   accounts              Account[]
   sessions              Session[]

@@ -1,13 +1,11 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
-import { getStargazersCount } from "@/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Icons } from "@/components/icons"
 
 export function HeroSection() {
-  const stargazersCount = getStargazersCount()
 
   return (
     <section
