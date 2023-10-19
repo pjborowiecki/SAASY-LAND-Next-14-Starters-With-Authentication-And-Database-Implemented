@@ -26,7 +26,24 @@ Under construction
 
 - ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-neon-postgres)
 
-Under construction
+This branch features a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database hosted on [Neon](https://neon.tech). The database connection is facilitated through [Prisma](https://prisma.io) version 5, which is compatible with serverless architecture. Additionally, OAuth authentication is configured for both GitHub and Google. The setup includes email verification and password reset functionality, implemented with the help of [Resend](https://resend.com) and [React Email](https://react.email/). This project is written in TypeScript and styled using [Tailwind CSS](https://tailwindcss.com) and [ShadCn](https://shadcn.com).
+
+- ##### TODO:
+
+  - [x] Implement sign up with email and password
+  - [x] Implement sign in with email and password
+  - [x] Implement sign out functionality
+  - [ ] Set up OAuth sign in with GitHub and Google
+  - [ ] Set up email verification
+  - [ ] Set up password reset
+  - [ ] Fix TypeScript warnings
+  - [ ] Set up a user profile page with a form to update user information
+  - [ ] Set up file upload for user profile pictures
+  - [ ] Complete the landing page sections and footer
+  - [ ] Add terms of service and privacy policy pages
+  - [ ] Set up a newsletter sign up
+  - [ ] Implement payments with [Stripe](https://stripe.com)
+  - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
 
 - ### [next-auth-prisma5-serverless-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-planetscale-mysql)
 
