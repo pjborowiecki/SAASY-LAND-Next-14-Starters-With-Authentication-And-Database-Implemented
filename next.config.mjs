@@ -5,7 +5,17 @@ const nextConfig = {
   reactStrictMode: true,
   typescript: { ignoreBuildErrors: true },
   experimental: { serverActions: true },
-  images: { domains: [] },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
+      },
+    ],
+    domains: ["uploadthing.com"],
+  },
 }
 
 export default nextConfig

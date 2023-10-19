@@ -1,5 +1,6 @@
 import { prisma } from "@/db/prisma"
 import { env } from "@/env.mjs"
+import { PrismaAdapter } from "@auth/prisma-adapter"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import type { Account, AuthOptions, Profile, Session, User } from "next-auth"
@@ -11,6 +12,7 @@ import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   debug: env.NODE_ENV === "development",
   secret: env.AUTH_SECRET,
   session: {

@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
+import { getServerSession } from "next-auth/next"
 
 import {
   Card,
@@ -13,6 +15,7 @@ import {
 import { OAuthButtons } from "@/components/auth/oauth-buttons"
 import { SignInWithEmailForm } from "@/components/forms/signin-with-email-form"
 import { SignInWithPasswordForm } from "@/components/forms/signin-with-password-form"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -20,7 +23,13 @@ export const metadata: Metadata = {
   description: "Sign in to your account",
 }
 
-export default function SignInPage() {
+export default async function SignInPage() {
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    redirect("/")
+  }
+
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-lg">

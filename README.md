@@ -19,7 +19,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [x] Implement sign up with email and password
 - [x] Implement sign in with email and password
 - [x] Implement sign out functionality
-- [ ] Set up OAuth sign in with GitHub and Google
+- [x] Set up OAuth sign in with GitHub and Google
 - [ ] Set up email verification
 - [ ] Set up password reset
 - [ ] Fix TypeScript warnings
