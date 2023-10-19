@@ -19,14 +19,18 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["SaaS", "Next.js", "Template"],
   authors: [
     {
-      name: "pjborowiecki",
-      url: "https://github.com/pjborowiecki",
+      name: siteConfig.author,
+      url: siteConfig.links.authorsWebsite,
     },
   ],
-  creator: "pjborowiecki",
+  creator: siteConfig.author,
+  keywords: siteConfig.keywords,
+  robots: {
+    index: true,
+    follow: true,
+  },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     // images: [`${siteConfig.url}/og.jpg`],
-    creator: "@pjborowiecki",
+    creator: siteConfig.author,
   },
   icons: {
     icon: "/favicon.ico",
@@ -73,6 +77,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <AuthProvider>{children}</AuthProvider>
+
           <TailwindIndicator />
           <Toaster position="top-center" />
         </ThemeProvider>

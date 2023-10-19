@@ -17,13 +17,16 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 #### TODO:
 
 - [x] Implement sign up with email and password
-- [ ] Implement sign in with email and password
+- [x] Implement sign in with email and password
+- [x] Implement sign out functionality
 - [ ] Set up OAuth sign in with GitHub and Google
 - [ ] Set up email verification
 - [ ] Set up password reset
+- [ ] Fix TypeScript warnings
 - [ ] Set up a user profile page with a form to update user information
 - [ ] Set up file upload for user profile pictures
 - [ ] Complete the landing page sections and footer
+- [ ] Add terms of service and privacy policy pages
 - [ ] Set up a newsletter sign up
 - [ ] Implement payments with [Stripe](https://stripe.com)
-- [ ] Set up blogging with Markdwon and MDX (or Payload 2 with Lexical)
+- [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))

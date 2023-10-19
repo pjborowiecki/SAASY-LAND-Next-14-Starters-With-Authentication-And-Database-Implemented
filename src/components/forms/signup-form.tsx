@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signUpUserAction } from "@/actions/auth"
+import { signUpWithPasswordAction } from "@/actions/auth"
 import { signUpSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -40,22 +40,21 @@ export function SignUpForm() {
   function onSubmit(formData: SignUpFormInputs) {
     startTransition(async () => {
       try {
-        const message = await signUpUserAction(
+        const message = await signUpWithPasswordAction(
           formData.email,
           formData.password
         )
 
         if (message === null) {
           toast.error("Error creating account. Please try again")
-        } else if (message === "User already exists") {
-          toast.error("User with that email address already exists")
+        } else if (message === "exists") {
+          toast.error("User with this email address already exists")
         } else {
           toast.message("Success!", {
             description: "You can now sign in to your account",
           })
+          router.push("/signin")
         }
-
-        router.push("/signin")
       } catch (error) {
         toast.error("Error creating account. Please try again")
         console.log(error)
@@ -118,7 +117,7 @@ export function SignUpForm() {
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              <span>Signing up</span>
+              <span>Signing up...</span>
             </>
           ) : (
             <span>Sign up</span>

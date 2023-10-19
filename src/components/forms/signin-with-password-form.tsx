@@ -2,9 +2,11 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signInSchema } from "@/validations/auth"
+import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import type { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -20,30 +22,38 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignInFormInputs = z.infer<typeof signInSchema>
+type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
 
-export function SignInForm() {
-  // const router = useRouter()
+export function SignInWithPasswordForm() {
+  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInFormInputs>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<SignInWithPasswordFormInputs>({
+    resolver: zodResolver(signInWithPasswordSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   })
 
-  function onSubmit(formData: SignInFormInputs) {
+  function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        // TODO: await db call (ensure the function is async!)
+        const signInResponse = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        })
 
-        form.reset()
-        // TODO: ensure the correct route is pushed
-        // router.push("/")
-        // TODO: display a toast message
+        if (!signInResponse || !signInResponse.ok) {
+          toast.error("Invalid email or password")
+        } else {
+          toast.success("Success! You are now signed in")
+          router.push("/")
+          router.refresh()
+        }
       } catch (error) {
+        toast.error("Something went wrong. Try again")
         console.log(error)
       }
     })
@@ -87,16 +97,17 @@ export function SignInForm() {
           )}
         />
         <Button className="primary-gradient">
-          {isPending && (
+          {isPending ? (
             <>
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              Signing in
+              <span>Signing in...</span>
             </>
+          ) : (
+            <span>Sign in</span>
           )}
-          Sign in
           <span className="sr-only">Sign in with email and password</span>
         </Button>
       </form>

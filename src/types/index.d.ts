@@ -7,14 +7,6 @@ export interface NavItem {
   disabled?: boolean
 }
 
-export interface User {
-  email: string
-  username?: string
-  image?: string
-  firstName?: string
-  lastName?: string
-}
-
 export interface SessionCallbackParams {
   session: Session
   token: JWT

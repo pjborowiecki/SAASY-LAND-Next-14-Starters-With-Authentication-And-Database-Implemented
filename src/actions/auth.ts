@@ -1,9 +1,12 @@
 "use server"
 
 import { prisma } from "@/db/prisma"
-import bcrypt from "bcryptjs"
+import bcrypt from "bcrypt"
 
-export async function signUpUserAction(email: string, password: string) {
+export async function signUpWithPasswordAction(
+  email: string,
+  password: string
+) {
   const user = await prisma.user.findUnique({
     where: {
       email,
@@ -11,21 +14,27 @@ export async function signUpUserAction(email: string, password: string) {
   })
 
   if (user) {
-    return "User already exists"
+    return "exists"
   }
 
-  const passwordHash = bcrypt.hashSync(password, 10)
+  const passwordHash = await bcrypt.hash(password, 10)
 
-  const newUser = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email,
       passwordHash,
     },
   })
 
-  if (newUser) {
-    return "User created successfully"
-  }
+  return "success"
+}
 
-  return null
+export async function signUpWithEmailAction(email: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+
+  return user
 }

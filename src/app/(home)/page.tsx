@@ -1,4 +1,3 @@
-import { siteConfig } from "@/config/site"
 import { AboutSection } from "@/components/sections/about-section"
 import { FAQSection } from "@/components/sections/faq"
 import { FeaturesSection } from "@/components/sections/features-section"
@@ -20,6 +19,3 @@ export default function LandingPage() {
     </div>
   )
 }
-
-export const runtime = "edge"
-export const preferredRegion = siteConfig.hostingRegion

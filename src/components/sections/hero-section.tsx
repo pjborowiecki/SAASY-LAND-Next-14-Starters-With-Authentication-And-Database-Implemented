@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { Icons } from "@/components/icons"
 
 export function HeroSection() {
-
   return (
     <section
       id="hero"

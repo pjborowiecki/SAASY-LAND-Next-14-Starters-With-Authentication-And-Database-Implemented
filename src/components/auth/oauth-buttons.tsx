@@ -5,8 +5,6 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
-async function oauthSignIn() {}
-
 export function OAuthButtons() {
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">

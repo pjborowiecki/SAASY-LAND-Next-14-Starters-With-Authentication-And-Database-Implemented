@@ -44,7 +44,11 @@ export const signUpSchema = z
     path: ["confirmPassword"],
   })
 
-export const signInSchema = z.object({
+export const signInWithPasswordSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
+})
+
+export const signInWithEmailSchema = z.object({
+  email: emailSchema,
 })

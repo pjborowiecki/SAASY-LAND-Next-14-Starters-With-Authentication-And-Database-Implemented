@@ -1,16 +1,23 @@
 import { prisma } from "@/db/prisma"
 import { env } from "@/env.mjs"
-import type { JWTCallbackParams, SessionCallbackParams } from "@/types"
-import bcrypt from "bcryptjs"
+import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import type { AuthOptions } from "next-auth"
-import NextAuth from "next-auth"
-import type { JWTDecodeParams, JWTEncodeParams } from "next-auth/jwt"
+import type { Account, AuthOptions, Profile, Session, User } from "next-auth"
+import type { JWT } from "next-auth/jwt"
+import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
-import GithubProvider from "next-auth/providers/github"
+import EmailProvider from "next-auth/providers/email"
+import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 export const authOptions: AuthOptions = {
+  debug: env.NODE_ENV === "development",
+  secret: env.AUTH_SECRET,
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+  },
   pages: {
     signIn: "/signin",
     signOut: "/signout",
@@ -20,33 +27,24 @@ export const authOptions: AuthOptions = {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
-    GithubProvider({
+    GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
     CredentialsProvider({
-      name: "SaaSy Land",
+      name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "text",
-          placeholder: "johnsmith@gmail.com",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
+        email: {},
+        password: {},
       },
       authorize: async (credentials) => {
         if (!credentials) {
           return null
         }
 
-        const { email, password } = credentials
-
         const user = await prisma.user.findUnique({
           where: {
-            email,
+            email: credentials.email,
           },
         })
 
@@ -54,10 +52,9 @@ export const authOptions: AuthOptions = {
           return null
         }
 
-        const userPassword = user.passwordHash
-        const passwordIsValid = bcrypt.compareSync(
-          password,
-          userPassword as string
+        const passwordIsValid = await bcrypt.compare(
+          credentials.password,
+          String(user.passwordHash)
         )
 
         if (!passwordIsValid) {
@@ -68,20 +65,14 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  secret: env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
-  },
   jwt: {
-    async encode({ secret, token }: JWTEncodeParams) {
+    async encode({ secret, token }) {
       if (!token) {
         throw new Error("No token to encode")
       }
       return jwt.sign(token, secret)
     },
-    async decode({ secret, token }: JWTDecodeParams) {
+    async decode({ secret, token }) {
       if (!token) {
         throw new Error("No token to decode")
       }
@@ -94,13 +85,20 @@ export const authOptions: AuthOptions = {
     },
   },
   callbacks: {
-    async session(params: SessionCallbackParams) {
+    async session(params: { session: Session; token: JWT; user: User }) {
       if (params.session.user) {
         params.session.user.email = params.token.email
       }
+
       return params.session
     },
-    async jwt(params: JWTCallbackParams) {
+    async jwt(params: {
+      token: JWT
+      user?: User | undefined
+      account?: Account | null | undefined
+      profile?: Profile | undefined
+      isNewUser?: boolean | undefined
+    }) {
       if (params.user) {
         params.token.email = params.user.email
       }

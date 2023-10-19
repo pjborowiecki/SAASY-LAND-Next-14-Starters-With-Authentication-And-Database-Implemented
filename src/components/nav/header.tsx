@@ -1,8 +1,9 @@
 import Link from "next/link"
-import type { User } from "@/types"
+import { getServerSession } from "next-auth/next"
+import { signOut } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
-import { cn, getUsersInitials } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -15,17 +16,15 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { SignOutButton } from "@/components/auth/signout-button"
 import { Icons } from "@/components/icons"
 import { Navigation } from "@/components/nav/navigation"
 import { NavigationMobile } from "@/components/nav/navigation-mobile"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
-interface HeaderProps {
-  user?: User
-}
-
-export function Header({ user }: HeaderProps) {
-  const initials = getUsersInitials(user?.firstName, user?.lastName)
+export async function Header() {
+  const session = await getServerSession(authOptions)
 
   return (
     <header className="sticky top-0 z-40 flex h-20 w-full border-b bg-background">
@@ -43,7 +42,7 @@ export function Header({ user }: HeaderProps) {
           <NavigationMobile navItems={siteConfig.navItems} />
 
           <nav className="ml-2">
-            {user ? (
+            {session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   asChild
@@ -51,12 +50,14 @@ export function Header({ user }: HeaderProps) {
                 >
                   <Button variant="user" size="icon">
                     <Avatar className="h-full w-full">
-                      <AvatarImage
-                        src={user.image}
-                        alt={user.username ?? "user's profile image"}
-                      />
-                      <AvatarFallback className="text-xs">
-                        {initials}
+                      {session.user?.image && (
+                        <AvatarImage
+                          src={session.user?.image}
+                          alt={session.user?.name ?? "user's profile picture"}
+                        />
+                      )}
+                      <AvatarFallback className="text-xs capitalize">
+                        {session.user?.email && session.user.email.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -65,10 +66,10 @@ export function Header({ user }: HeaderProps) {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {user.firstName} {user.lastName}
+                        {session.user?.name}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {user.email}
+                        {session.user?.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -81,7 +82,6 @@ export function Header({ user }: HeaderProps) {
                           aria-hidden="true"
                         />
                         Account
-                        <DropdownMenuShortcut>⇧⌘A</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild disabled>
@@ -91,20 +91,12 @@ export function Header({ user }: HeaderProps) {
                           aria-hidden="true"
                         />
                         Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/signout">
-                      <Icons.logout
-                        className="mr-2 h-4 w-4"
-                        aria-hidden="true"
-                      />
-                      Log out
-                      <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                    </Link>
+                    <SignOutButton />
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

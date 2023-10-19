@@ -1,5 +1,3 @@
-import { siteConfig } from "@/config/site"
-
 export default function FeaturesPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
@@ -7,6 +5,3 @@ export default function FeaturesPage() {
     </div>
   )
 }
-
-export const runtime = "edge"
-export const preferredRegion = siteConfig.hostingRegion
