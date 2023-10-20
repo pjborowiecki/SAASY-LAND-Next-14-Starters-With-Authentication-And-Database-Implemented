@@ -23,7 +23,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [x] Implement sign out functionality
 - [x] Set up OAuth sign in with GitHub and Google
 - [ ] Set up email verification
-- [ ] Set up password reset
+- [x] Set up password reset
 - [ ] Fix TypeScript warnings
 - [ ] Set up a user profile page with a form to update user information
 - [ ] Set up file upload for user profile pictures
