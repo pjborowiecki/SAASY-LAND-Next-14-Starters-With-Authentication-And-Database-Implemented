@@ -31,15 +31,15 @@ export default async function SignInPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center">
-      <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+    <div className="flex h-auto min-h-screen w-full items-center justify-center">
+      <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex  max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Sign in</CardTitle>
           <CardDescription className="text-customDark-400 dark:text-customLight-400/70">
             Choose your preferred sign in method
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="max-sm:w-full max-sm:max-w-[340px] max-sm:px-10">
           <OAuthButtons />
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -65,28 +65,31 @@ export default async function SignInPage() {
           <SignInWithPasswordForm />
         </CardContent>
 
-        <CardFooter className="flex flex-wrap items-center justify-between gap-2">
-          <div className="text-sm text-muted-foreground">
-            <span className="mr-1 hidden sm:inline-block">
-              Don&apos;t have an account?
-            </span>
+        <CardFooter className="grid w-full text-sm text-muted-foreground max-sm:max-w-[340px] max-sm:px-10">
+          <div>
+            <span>Don&apos;t have an account? </span>
             <Link
               aria-label="Sign up"
               href="/signup"
-              className="text-primary underline-offset-4 transition-colors hover:underline"
+              className="font-bold tracking-wide text-primary underline-offset-4 transition-colors hover:underline"
             >
               Sign up
               <span className="sr-only">Sign up</span>
             </Link>
+            .
           </div>
-          <Link
-            aria-label="Reset password"
-            href="/signin/password-reset"
-            className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
-          >
-            Reset password
-            <span className="sr-only">Reset Password</span>
-          </Link>
+          <div>
+            <span>Forgot your password? </span>
+            <Link
+              aria-label="Reset password"
+              href="/signin/password-reset"
+              className="text-sm font-normal text-primary underline-offset-4 transition-colors hover:underline"
+            >
+              Reset now
+              <span className="sr-only">Reset Password</span>
+            </Link>
+            .
+          </div>
         </CardFooter>
       </Card>
     </div>

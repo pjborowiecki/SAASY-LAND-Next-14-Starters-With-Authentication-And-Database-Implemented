@@ -54,7 +54,9 @@ export function PasswordUpdateForm({
             description: "You can now sign in with your new password",
           })
         } else if (message === "expired") {
-          toast.error("JSON Web Token is missing or expired. Please try again")
+          toast.error(
+            "Reset Password Token is missing or expired. Please try again"
+          )
         } else {
           toast.error("Error updating password. Please try again")
         }

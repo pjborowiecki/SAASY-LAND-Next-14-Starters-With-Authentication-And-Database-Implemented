@@ -72,3 +72,7 @@ export const passwordUpdateSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   })
+
+export const emailVerificationSchema = z.object({
+  email: emailSchema,
+})

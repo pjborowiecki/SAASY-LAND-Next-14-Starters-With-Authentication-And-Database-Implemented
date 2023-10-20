@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { getUserByTokenAction } from "@/actions/user"
+import { getUserByResetPasswordTokenAction } from "@/actions/user"
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
@@ -29,14 +29,16 @@ export default async function PasswordUpdatePage({
   searchParams,
 }: PasswordUpdatePageProps) {
   if (searchParams.token) {
-    const user = await getUserByTokenAction(String(searchParams.token))
+    const user = await getUserByResetPasswordTokenAction(
+      String(searchParams.token)
+    )
 
     if (!user) {
       return (
         <div className="flex min-h-screen w-full items-center justify-center">
           <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
             <CardHeader>
-              <CardTitle>Invalid JSON Web Token</CardTitle>
+              <CardTitle>Invalid Reset Password Token</CardTitle>
               <CardDescription>
                 Please return to the sign in page and try again
               </CardDescription>
@@ -67,14 +69,14 @@ export default async function PasswordUpdatePage({
             <CardTitle>Password Update</CardTitle>
             <CardDescription>Set your new password</CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-4">
+          <CardContent className="grid gap-2">
             <PasswordUpdateForm
               resetPasswordToken={String(searchParams.token)}
             />
             <Link
               aria-label="Cancel password update"
               href="/signin"
-              className={buttonVariants({ variant: "secondary" })}
+              className={buttonVariants({ variant: "outline" })}
             >
               <span className="sr-only">Cancel password update</span>
               Cancel
@@ -88,7 +90,7 @@ export default async function PasswordUpdatePage({
       <div className="flex min-h-screen w-full items-center justify-center">
         <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
-            <CardTitle>Missing JSON Web Token</CardTitle>
+            <CardTitle>Missing Reset Password Token</CardTitle>
             <CardDescription>
               Please return to the sign in page and try again
             </CardDescription>

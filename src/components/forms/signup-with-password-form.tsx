@@ -46,8 +46,8 @@ export function SignUpWithPasswordForm() {
         )
 
         if (message === "success") {
-          toast.message("Success!", {
-            description: "You can now sign in to your account",
+          toast.message("Verification link has been sent", {
+            description: "Check your inbox to verify your email address",
           })
           router.push("/signin")
         } else if (message === "exists") {
@@ -58,7 +58,7 @@ export function SignUpWithPasswordForm() {
           router.push("/signin")
         }
       } catch (error) {
-        toast.error("Error creating account. Please try again")
+        toast.error("Something went wrong. Please try again")
         console.error(error)
       }
     })

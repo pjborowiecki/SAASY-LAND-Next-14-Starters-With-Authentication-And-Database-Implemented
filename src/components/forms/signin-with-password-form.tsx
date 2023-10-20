@@ -2,9 +2,13 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
+import {
+  checkIfEmailVerifiedAction,
+  signInWithPasswordAction,
+} from "@/actions/auth"
+import { getUserByEmailAction } from "@/actions/user"
 import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
@@ -39,18 +43,20 @@ export function SignInWithPasswordForm() {
   function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const signInResponse = await signIn("credentials", {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        })
+        const message = await signInWithPasswordAction(
+          formData.email,
+          formData.password
+        )
 
-        if (!signInResponse || !signInResponse.ok) {
-          toast.error("Invalid email or password")
-        } else {
+        if (message === "success") {
           toast.success("Success! You are now signed in")
           router.push("/")
-          router.refresh()
+        } else if (message === "email-not-verified") {
+          toast.error("Please verify your email address before signing in")
+        } else if (message === "invalid-credentials") {
+          toast.error("Invalid email or password")
+        } else {
+          toast.error("Error signing in. Try again")
         }
       } catch (error) {
         toast.error("Something went wrong. Try again")
@@ -62,7 +68,7 @@ export function SignInWithPasswordForm() {
   return (
     <Form {...form}>
       <form
-        className="grid gap-4"
+        className="grid w-full gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FormField

@@ -31,15 +31,15 @@ export default async function SignUpPage() {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center">
-      <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+    <div className="flex h-auto min-h-screen w-full items-center justify-center md:flex">
+      <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription className="text-customDark-400 dark:text-customLight-400">
             Choose your preferred sign up method
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="max-sm:w-full max-sm:max-w-[340px] max-sm:px-10">
           <OAuthButtons />
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -64,32 +64,49 @@ export default async function SignUpPage() {
           </div>
           <SignUpWithPasswordForm />
         </CardContent>
-        <CardFooter className="grid gap-2">
-          <div className="text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link
-              aria-label="Sign in"
-              href="/signin"
-              className="text-primary underline-offset-4 transition-all hover:underline"
-            >
-              Sign in
-              <span className="sr-only">Sign in</span>
-            </Link>
+        <CardFooter className="grid w-full gap-4 text-sm text-muted-foreground max-sm:max-w-[340px] max-sm:px-10">
+          <div>
+            <div>
+              <span> Already have an account? </span>
+              <Link
+                aria-label="Sign in"
+                href="/signin"
+                className="font-bold tracking-wide text-primary underline-offset-4 transition-all hover:underline"
+              >
+                Sign in
+                <span className="sr-only">Sign in</span>
+              </Link>
+              .
+            </div>
+            <div>
+              <span>Lost email verification link? </span>
+              <Link
+                aria-label="Resend email verification link"
+                href="/signup/reverify-email"
+                className="text-sm font-normal text-primary underline-offset-4 transition-colors hover:underline"
+              >
+                Resend
+                <span className="sr-only">Resend email verification link</span>
+              </Link>
+              .
+            </div>
           </div>
-          <div className="text-xs text-muted-foreground">
-            By continuing you agree to our{" "}
+
+          <div className="text-sm text-muted-foreground md:text-xs">
+            By continuing, you agree to our{" "}
             <Link
               aria-label="Terms of Service"
               href="/tos"
-              className="text-customDark-400 underline-offset-4 transition-all hover:underline dark:text-customLight-400"
+              className="font-semibold text-customDark-400 underline-offset-4 transition-all hover:underline dark:text-customLight-400"
             >
               ToS
             </Link>{" "}
+            <br className="xs:hidden sm:block md:hidden" />
             and
             <Link
               aria-label="Privacy Policy"
               href="/privacy"
-              className="text-customDark-400 underline-offset-4 transition-all hover:underline dark:text-customLight-400"
+              className="font-semibold text-customDark-400 underline-offset-4 transition-all hover:underline dark:text-customLight-400"
             >
               {" "}
               Privacy Policy

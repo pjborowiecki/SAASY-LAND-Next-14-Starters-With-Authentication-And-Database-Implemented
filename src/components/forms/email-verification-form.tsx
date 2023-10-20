@@ -1,16 +1,15 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { resetPasswordAction } from "@/actions/auth"
-import { passwordResetSchema } from "@/validations/auth"
+import { resendEmailVerificationLinkAction } from "@/actions/email"
+import { emailVerificationSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -22,38 +21,38 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
-type PasswordResetFormInputs = z.infer<typeof passwordResetSchema>
+type EmailVerificationFormInputs = z.infer<typeof emailVerificationSchema>
 
-export function PasswordResetForm() {
+export function EmailVerificationForm() {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<PasswordResetFormInputs>({
-    resolver: zodResolver(passwordResetSchema),
+  const form = useForm<EmailVerificationFormInputs>({
+    resolver: zodResolver(emailVerificationSchema),
     defaultValues: {
       email: "",
     },
   })
 
-  function onSubmit(formData: PasswordResetFormInputs) {
+  function onSubmit(formData: EmailVerificationFormInputs) {
     startTransition(async () => {
       try {
-        const message = await resetPasswordAction(formData.email)
+        const message = await resendEmailVerificationLinkAction(formData.email)
 
         if (message === "success") {
           toast.message("Success!", {
-            description: "Check your email for a password reset link",
+            description: "Check your inbox and verify your email address",
           })
           router.push("/signin")
         } else if (message === "not-found") {
           toast.error("User with this email address does not exist")
           form.reset()
         } else {
-          toast.error("Error resetting password. Please try again")
-          router.push("/signin")
+          toast.error("Error sending verification link. Please try again")
+          router.push("/signup")
         }
       } catch (error) {
-        toast.error("Something went wrong. Try again")
+        toast.error("Something went wrong. Please try again")
         console.error(error)
       }
     })
@@ -62,7 +61,7 @@ export function PasswordResetForm() {
   return (
     <Form {...form}>
       <form
-        className="grid gap-4"
+        className="grid gap-4 "
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FormField
@@ -89,9 +88,9 @@ export function PasswordResetForm() {
               <span>Pending...</span>
             </>
           ) : (
-            <span>Continue</span>
+            <span>Get verification link</span>
           )}
-          <span className="sr-only">Continue resetting password</span>
+          <span className="sr-only">Resend email verification link</span>
         </Button>
       </form>
     </Form>

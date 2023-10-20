@@ -46,11 +46,13 @@ model User {
   surname                       String?
   username                      String?     @unique
   email                         String?     @unique
-  emailVerified                 DateTime?   @map("email_verified")
+  emailVerified                 Boolean     @default(false) @map("email_verified")
+  emailVerificationToken        String?     @unique @map("email_verification_token")
   passwordHash                  String?     @map("password_hash")
   resetPasswordToken            String?     @unique @map("reset_password_token")
   resetPasswordTokenExpiry      DateTime?   @map("reset_password_token_expiery")
   image                         String?
+  createdAt                     DateTime    @default(now()) @map("created_at")
   accounts                      Account[]
   sessions                      Session[]
 
@@ -65,4 +67,3 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
-

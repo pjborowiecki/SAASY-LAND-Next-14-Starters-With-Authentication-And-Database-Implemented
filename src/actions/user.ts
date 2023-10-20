@@ -11,10 +11,23 @@ export async function getUserByEmailAction(email: string) {
   return user
 }
 
-export async function getUserByTokenAction(token: string) {
+export async function getUserByResetPasswordTokenAction(
+  resetPasswordToken: string
+) {
   const user = await prisma.user.findUnique({
     where: {
-      resetPasswordToken: token,
+      resetPasswordToken,
+    },
+  })
+  return user
+}
+
+export async function getUserByEmailVerificationTokenAction(
+  emailVerificationToken: string
+) {
+  const user = await prisma.user.findUnique({
+    where: {
+      emailVerificationToken,
     },
   })
   return user
