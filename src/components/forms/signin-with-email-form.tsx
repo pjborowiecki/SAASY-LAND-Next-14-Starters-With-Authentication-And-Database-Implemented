@@ -40,7 +40,7 @@ export function SignInWithEmailForm() {
         // TODO: Add the sign in with email logic here
       } catch (error) {
         toast.error("Something went wrong. try again")
-        console.log(error)
+        console.error(error)
       }
     })
   }

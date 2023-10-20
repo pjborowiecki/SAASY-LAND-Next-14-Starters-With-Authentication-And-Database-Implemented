@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signInWithPasswordSchema } from "@/validations/auth"
+import { signUpWithPasswordAction } from "@/actions/auth"
+import { signUpWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
@@ -22,38 +22,43 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
+type SignUpWithPasswordFormInputs = z.infer<typeof signUpWithPasswordSchema>
 
-export function SignInWithPasswordForm() {
+export function SignUpWithPasswordForm() {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInWithPasswordFormInputs>({
-    resolver: zodResolver(signInWithPasswordSchema),
+  const form = useForm<SignUpWithPasswordFormInputs>({
+    resolver: zodResolver(signUpWithPasswordSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   })
 
-  function onSubmit(formData: SignInWithPasswordFormInputs) {
+  function onSubmit(formData: SignUpWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const signInResponse = await signIn("credentials", {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        })
+        const message = await signUpWithPasswordAction(
+          formData.email,
+          formData.password
+        )
 
-        if (!signInResponse || !signInResponse.ok) {
-          toast.error("Invalid email or password")
+        if (message === "success") {
+          toast.message("Success!", {
+            description: "You can now sign in to your account",
+          })
+          router.push("/signin")
+        } else if (message === "exists") {
+          toast.error("User with this email address already exists")
+          form.reset()
         } else {
-          toast.success("Success! You are now signed in")
-          router.push("/")
-          router.refresh()
+          toast.error("Error creating account. Please try again")
+          router.push("/signin")
         }
       } catch (error) {
-        toast.error("Something went wrong. Try again")
+        toast.error("Error creating account. Please try again")
         console.error(error)
       }
     })
@@ -72,11 +77,7 @@ export function SignInWithPasswordForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  placeholder="johnsmith@gmail.com"
-                  {...field}
-                />
+                <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -90,12 +91,27 @@ export function SignInWithPasswordForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="********" {...field} />
+                <PasswordInput placeholder="**********" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <PasswordInput placeholder="**********" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button className="primary-gradient" disabled={isPending}>
           {isPending ? (
             <>
@@ -103,12 +119,14 @@ export function SignInWithPasswordForm() {
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              <span>Signing in...</span>
+              <span>Signing up...</span>
             </>
           ) : (
-            <span>Sign in</span>
+            <span>Continue</span>
           )}
-          <span className="sr-only">Sign in with email and password</span>
+          <span className="sr-only">
+            Continue signing up with email and password
+          </span>
         </Button>
       </form>
     </Form>

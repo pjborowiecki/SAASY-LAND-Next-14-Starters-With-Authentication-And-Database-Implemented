@@ -1,15 +1,16 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { signInWithPasswordSchema } from "@/validations/auth"
+import { resetPasswordAction } from "@/actions/auth"
+import { passwordResetSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
 
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -20,37 +21,36 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
-import { PasswordInput } from "@/components/password-input"
 
-type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
+type PasswordResetFormInputs = z.infer<typeof passwordResetSchema>
 
-export function SignInWithPasswordForm() {
+export function PasswordResetForm() {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInWithPasswordFormInputs>({
-    resolver: zodResolver(signInWithPasswordSchema),
+  const form = useForm<PasswordResetFormInputs>({
+    resolver: zodResolver(passwordResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
-  function onSubmit(formData: SignInWithPasswordFormInputs) {
+  function onSubmit(formData: PasswordResetFormInputs) {
     startTransition(async () => {
       try {
-        const signInResponse = await signIn("credentials", {
-          email: formData.email,
-          password: formData.password,
-          redirect: false,
-        })
+        const message = await resetPasswordAction(formData.email)
 
-        if (!signInResponse || !signInResponse.ok) {
-          toast.error("Invalid email or password")
+        if (message === "success") {
+          toast.message("Success!", {
+            description: "Check your email for a password reset link",
+          })
+          router.push("/signin")
+        } else if (message === "not-found") {
+          toast.error("User with this email address does not exist")
+          form.reset()
         } else {
-          toast.success("Success! You are now signed in")
-          router.push("/")
-          router.refresh()
+          toast.error("Error resetting password. Please try again")
+          router.push("/signin")
         }
       } catch (error) {
         toast.error("Something went wrong. Try again")
@@ -72,30 +72,13 @@ export function SignInWithPasswordForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  type="text"
-                  placeholder="johnsmith@gmail.com"
-                  {...field}
-                />
+                <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <Button className="primary-gradient" disabled={isPending}>
           {isPending ? (
             <>
@@ -103,13 +86,21 @@ export function SignInWithPasswordForm() {
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              <span>Signing in...</span>
+              <span>Pending...</span>
             </>
           ) : (
-            <span>Sign in</span>
+            <span>Continue</span>
           )}
-          <span className="sr-only">Sign in with email and password</span>
+          <span className="sr-only">Continue resetting password</span>
         </Button>
+
+        <Link
+          aria-label="Back to the sign in page"
+          href="/signin"
+          className={buttonVariants({ variant: "secondary" })}
+        >
+          Cancel
+        </Link>
       </form>
     </Form>
   )

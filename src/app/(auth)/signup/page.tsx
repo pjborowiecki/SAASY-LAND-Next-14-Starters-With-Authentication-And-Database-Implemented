@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card"
 import { OAuthButtons } from "@/components/auth/oauth-buttons"
 import { SignInWithEmailForm } from "@/components/forms/signin-with-email-form"
-import { SignUpForm } from "@/components/forms/signup-form"
+import { SignUpWithPasswordForm } from "@/components/forms/signup-with-password-form"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export const metadata: Metadata = {
@@ -62,7 +62,7 @@ export default async function SignUpPage() {
               </span>
             </div>
           </div>
-          <SignUpForm />
+          <SignUpWithPasswordForm />
         </CardContent>
         <CardFooter className="grid gap-2">
           <div className="text-sm text-muted-foreground">

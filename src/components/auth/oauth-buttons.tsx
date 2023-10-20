@@ -14,7 +14,7 @@ async function handleOAuthSignIn(provider: string) {
     })
   } catch (error) {
     toast.error("Something went wrong. Try again")
-    console.log(error)
+    console.error(error)
   }
 }
 

@@ -1,4 +1,5 @@
 import {
+  ArrowLeftIcon,
   AvatarIcon,
   DashboardIcon,
   GearIcon,
@@ -8,6 +9,7 @@ import {
 type IconProps = React.HTMLAttributes<SVGElement>
 
 export const Icons = {
+  arrowLeft: ArrowLeftIcon,
   avatar: AvatarIcon,
   placeholder: ImageIcon,
   dashboard: DashboardIcon,

@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signUpWithPasswordAction } from "@/actions/auth"
-import { signUpSchema } from "@/validations/auth"
+import { updatePasswordAction } from "@/actions/auth"
+import { passwordUpdateSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -18,46 +18,51 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignUpFormInputs = z.infer<typeof signUpSchema>
+type PasswordUpdateFormInputs = z.infer<typeof passwordUpdateSchema>
 
-export function SignUpForm() {
+interface PasswordUpdateFormProps {
+  resetPasswordToken: string
+}
+
+export function PasswordUpdateForm({
+  resetPasswordToken,
+}: PasswordUpdateFormProps) {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignUpFormInputs>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<PasswordUpdateFormInputs>({
+    resolver: zodResolver(passwordUpdateSchema),
     defaultValues: {
-      email: "",
       password: "",
       confirmPassword: "",
     },
   })
 
-  function onSubmit(formData: SignUpFormInputs) {
+  function onSubmit(formData: PasswordUpdateFormInputs) {
     startTransition(async () => {
       try {
-        const message = await signUpWithPasswordAction(
-          formData.email,
+        const message = await updatePasswordAction(
+          resetPasswordToken,
           formData.password
         )
 
-        if (message === null) {
-          toast.error("Error creating account. Please try again")
-        } else if (message === "exists") {
-          toast.error("User with this email address already exists")
-        } else {
+        if (message === "success") {
           toast.message("Success!", {
-            description: "You can now sign in to your account",
+            description: "You can now sign in with your new password",
           })
-          router.push("/signin")
+        } else if (message === "expired") {
+          toast.error("JSON Web Token is missing or expired. Please try again")
+        } else {
+          toast.error("Error updating password. Please try again")
         }
+
+        router.push("/signin")
       } catch (error) {
-        toast.error("Error creating account. Please try again")
-        console.log(error)
+        toast.error("Something went wrong. Try again")
+        console.error(error)
       }
     })
   }
@@ -68,20 +73,6 @@ export function SignUpForm() {
         className="grid gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="johnsmith@gmail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="password"
@@ -117,12 +108,12 @@ export function SignUpForm() {
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              <span>Signing up...</span>
+              <span>Updating...</span>
             </>
           ) : (
-            <span>Sign up</span>
+            <span>Update password</span>
           )}
-          <span className="sr-only">Sign up with email and password</span>
+          <span className="sr-only">Update password</span>
         </Button>
       </form>
     </Form>

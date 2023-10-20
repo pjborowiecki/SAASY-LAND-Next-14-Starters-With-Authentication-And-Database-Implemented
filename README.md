@@ -10,6 +10,8 @@ Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, S
 
 ![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
+![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_4.png)
+
 ## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
 This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected via [Prisma](https://prisma.io) v.5, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/). The project is written in TypeScript, styled with [Tailwind CSS](https://tailwindcss.com) and [ShadCn](https://shadcn.com).
@@ -30,3 +32,10 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Set up a newsletter sign up
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
+
+#### NOTES:
+
+- Adding username:
+
+  - https://www.youtube.com/watch?v=bicCg4GxOP8
+  - https://www.youtube.com/watch?v=Ev8FceRvBmA
