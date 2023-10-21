@@ -10,7 +10,7 @@ Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, S
 
 ![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
-![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_4.png)
+![public/images/screenshots/screenshot_4](./public/images/screenshots/screenshot_4.png)
 
 ## Available configurations:
 
