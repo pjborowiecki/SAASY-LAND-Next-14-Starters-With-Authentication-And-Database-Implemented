@@ -1,5 +1,5 @@
 import { sendEmailAction } from "@/actions/email"
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db/drizzle"
 import { env } from "@/env.mjs"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import bcrypt from "bcrypt"

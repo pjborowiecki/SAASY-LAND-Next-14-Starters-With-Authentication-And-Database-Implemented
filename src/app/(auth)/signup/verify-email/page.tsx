@@ -2,7 +2,7 @@ import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getUserByEmailVerificationTokenAction } from "@/actions/user"
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db/drizzle"
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"

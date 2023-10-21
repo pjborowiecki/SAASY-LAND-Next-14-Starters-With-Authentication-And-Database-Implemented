@@ -14,13 +14,13 @@ Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Bui
 
 ## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
-This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a MySQL database set up at [PlanetScale](https://planetscale.com). The database is connected via [Prisma v.5](https://prisma.io), which is now serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
 #### TODO:
 
-- [ ] Set up database connection
-- [ ] Define database schema
-- [ ] Set up authentication with Next-Auth and connect to database
+- [x] Set up database connection
+- [x] Define database schema
+- [x] Set up authentication with Next-Auth and connect to database
 - [x] Implement sign up with email and password
 - [x] Implement sign in with email and password
 - [x] Implement sign out functionality
@@ -38,20 +38,3 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
-
-### NOTES:
-
-To use PlanetScale's MySQL database with Prisma, it is necessary to create a shadow database. See [https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database) for more information.
-
-**PlanetScale does not support the use of foreign keys**. The use of Prisma's `@relation` is discouraged by Prisma itself with the following message: "With `relationMode = "prisma"`, no foreign keys are used, so relation fields will not benefit from the index usually created by the relational database under the hood. This can lead to poor performance when querying these fields. We recommend adding an index manually. Learn more at [https://pris.ly/d/relation-mode-prisma-indexes](https://pris.ly/d/relation-mode-prisma-indexes)". The schema in this branch has been updated to reflect this.
-
-See the following resources for more information on this:
-
-- [Operating without foreign key constraints (PlanetScale guides)](https://planetscale.com/docs/learn/operating-without-foreign-key-constraints#:%7E:text=PlanetScale%20doesn%27t%20support%20FOREIGN%20KEY%20constraints)
-- [Prisma best practices (PlanetScale guides)](https://planetscale.com/docs/prisma/prisma-best-practices)
-- [Using Prisma with PlanetScale (Prisma docs)](https://www.prisma.io/docs/guides/database/planetscale#how-to-emulate-relations-in-prisma-client)
-- [Relation mode (Prisma docs)](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#indexes)
-
-In short, with Prisma you can still maintain foreign key relationships in your data and allow the use of [referential actions](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-actions) by using Prisma's ability to [emulate relations in Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#emulate-relations-in-prisma-with-the-prisma-relation-mode) with the prisma relation mode. For more information, see [How to emulate relations in Prisma Client](https://www.prisma.io/docs/guides/database/planetscale#how-to-emulate-relations-in-prisma-client).
-
-Prisma recommends not using `prisma migrate` when making schema changes with PlanetScale. Instead, we recommend that you use the `prisma db push` command. Scripts in the package.json file have been updated to reflect this.

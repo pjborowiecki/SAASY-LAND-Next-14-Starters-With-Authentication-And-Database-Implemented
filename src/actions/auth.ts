@@ -6,7 +6,7 @@ import {
   getUserByEmailAction,
   getUserByResetPasswordTokenAction,
 } from "@/actions/user"
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db/drizzle"
 import { env } from "@/env.mjs"
 import bcrypt from "bcrypt"
 

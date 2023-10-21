@@ -1,7 +1,7 @@
 "use server"
 
 import crypto from "crypto"
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db/drizzle"
 import { env } from "@/env.mjs"
 import {
   type CreateEmailOptions,
