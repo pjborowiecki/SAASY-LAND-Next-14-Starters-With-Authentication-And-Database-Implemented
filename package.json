@@ -23,7 +23,7 @@
     "db:generate": "pnpm prisma generate",
     "db:migrate": "pnpm prisma migrate dev",
     "db:push": "pnpm prisma db push",
-    "db:introspect": "npx prisma db pull",
+    "db:pull": "npx prisma db pull",
     "db:reset": "npx prisma migrate reset",
     "db:studio": "npx prisma studio",
     "db:format-schema": "npx prisma format",
