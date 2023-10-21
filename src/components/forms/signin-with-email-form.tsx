@@ -1,10 +1,12 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
-import { signInSchema } from "@/validations/auth"
+import { useSearchParams } from "next/navigation"
+import { signInWithEmailSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import type { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -18,33 +20,30 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
-import { PasswordInput } from "@/components/password-input"
 
-type SignInFormInputs = z.infer<typeof signInSchema>
+type SignInWithEmailFormInputs = z.infer<typeof signInWithEmailSchema>
 
-export function SignInForm() {
-  // const router = useRouter()
+export function SignInWithEmailForm() {
+  const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInFormInputs>({
-    resolver: zodResolver(signInSchema),
+  const form = useForm<SignInWithEmailFormInputs>({
+    resolver: zodResolver(signInWithEmailSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   })
 
-  function onSubmit(formData: SignInFormInputs) {
+  function onSubmit(formData: SignInWithEmailFormInputs) {
     startTransition(async () => {
       try {
-        // TODO: await db call (ensure the function is async!)
-
-        form.reset()
-        // TODO: ensure the correct route is pushed
-        // router.push("/")
-        // TODO: display a toast message
+        await signIn("email", {
+          email: formData.email,
+          callbackUrl: searchParams.get("callbackUrl") || "/",
+        })
       } catch (error) {
-        console.log(error)
+        toast.error("Something went wrong. try again")
+        console.error(error)
       }
     })
   }
@@ -73,31 +72,19 @@ export function SignInForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button>
-          {isPending && (
+        <Button className="primary-gradient">
+          {isPending ? (
             <>
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              Signing in
+              <span>Pending...</span>
             </>
+          ) : (
+            <span>Continue</span>
           )}
-          Sign in
-          <span className="sr-only">Sign in with email and password</span>
+          <span className="sr-only">Continue with magic link</span>
         </Button>
       </form>
     </Form>

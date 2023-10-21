@@ -1,23 +1,40 @@
-# Next 13 starters with authentication and database set up
+# [Next 13 starters with authentication and database set up](https://saasyland.com)
 
-Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.
+Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Built with [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [ShadCn/ui](https://ui.shadcn.com/), authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with [Neon](https://neon.tech), or MySQL with [PlanetScale](https://planetscale.com), [Drizzle ORM](https://orm.drizzle.team/), [Prisma ORM v.5](https://www.prisma.io/) (serverless-compatible), but also [MongoDB Atlas](https://www.mongodb.com/atlas/database), [Supabase](https://supabase.com/), and even [Nest.js](https://nestjs.com/), [Express (MERN stack)](https://expressjs.com/), or [Django](https://www.djangoproject.com/). All users are stored in a database, regardless of whether they signed up with email and password, magic link, or via an OAuth provider.
 
-### MySQL at [PlanetScale](https://planetscale.com)
+**The project is currently under active development and is not ready for production use. Please check back soon**
 
-This branch contains a Next.js 13 starter with authentication and a MySQL database at [PlanetScale](https://planetscale.com). It uses Prisma 5 as an ORM, which is serverless-compatible.
+![public/images/screenshots/screenshot_1](./public/images/screenshots/screenshot_1.png)
 
-#### CommandsL
+![public/images/screenshots/screenshot_2](./public/images/screenshots/screenshot_2.png)
 
-- `npx prisma init`
-- `npx prisma generate`
-- `npx prisma migrate dev --name init`
+![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_3.png)
 
-## NOTES:
+![public/images/screenshots/screenshot_4](./public/images/screenshots/screenshot_4.png)
 
-- This configuration does not work yet. It is a work in progress. There is an error: P3014:
-  "Prisma Migrate could not create the shadow database. Please make sure the database user has permission to create databases. Read more about the shadow database (and workarounds) at https://pris.ly/d/migrate-shadow
+## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
-Original error:
-VT12001: unsupported: create database by failDBDDL
-0: schema_core::state::DevDiagnostic
-at schema-engine/core/src/state.rs:270"
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a MySQL database set up at [PlanetScale](https://planetscale.com). The database is connected via [Prisma v.5](https://prisma.io), which is now serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
+
+#### TODO:
+
+- [ ] Set up database connection
+- [ ] Define database schema
+- [ ] Set up authentication with Next-Auth and connect to database
+- [x] Implement sign up with email and password
+- [x] Implement sign in with email and password
+- [x] Implement sign out functionality
+- [x] Set up OAuth sign in with GitHub and Google
+- [x] Set up email verification
+- [x] Set up password reset
+- [x] Set up sign in with magic link
+- [x] Improve email templates with [React Email](https://react.email/)
+- [x] Fix linting warnings
+- [ ] Set up a user profile page with a form to update user information
+- [ ] Set up file upload for user profile pictures
+- [ ] Complete the landing page sections and footer
+- [ ] Add terms of service and privacy policy pages
+- [ ] Set up a newsletter sign up
+- [ ] Add contact form
+- [ ] Implement payments with [Stripe](https://stripe.com)
+- [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
