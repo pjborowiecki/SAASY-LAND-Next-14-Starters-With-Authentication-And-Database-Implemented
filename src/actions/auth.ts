@@ -1,7 +1,7 @@
 "use server"
 
 import crypto from "crypto"
-import { checkIfEmailVerifiedAction, sendEmail } from "@/actions/email"
+import { sendEmailAction } from "@/actions/email"
 import {
   getUserByEmailAction,
   getUserByResetPasswordTokenAction,
@@ -9,7 +9,6 @@ import {
 import { prisma } from "@/db/prisma"
 import { env } from "@/env.mjs"
 import bcrypt from "bcrypt"
-import { signIn } from "next-auth/react"
 
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
 import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
@@ -41,7 +40,7 @@ export async function signUpWithPasswordAction(
       emailVerificationToken,
     },
   })
-  const emailSent = await sendEmail({
+  const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
     to: [email],
     subject: "Verify your email address",
@@ -51,12 +50,6 @@ export async function signUpWithPasswordAction(
     return null
   }
   return "success"
-}
-
-export async function signUpWithEmailAction(email: string) {
-  const user = await getUserByEmailAction(email)
-  // TODO: Complete this function
-  return user
 }
 
 export async function resetPasswordAction(email: string) {
@@ -77,7 +70,7 @@ export async function resetPasswordAction(email: string) {
         resetPasswordTokenExpiry,
       },
     })
-    const emailSent = await sendEmail({
+    const emailSent = await sendEmailAction({
       from: env.RESEND_EMAIL_FROM,
       to: [email],
       subject: "Reset your password",
@@ -120,24 +113,4 @@ export async function updatePasswordAction(
     return null
   }
   return "success"
-}
-
-export async function signInWithPasswordAction(
-  email: string,
-  password: string
-) {
-  const signInResponse = await signIn("credentials", {
-    email,
-    password,
-    redirect: false,
-  })
-  if (signInResponse && signInResponse.ok) {
-    const emailVerified = await checkIfEmailVerifiedAction(email)
-    if (!emailVerified) {
-      return "email-not-verified"
-    }
-    return "success"
-  } else {
-    return "invalid-credentials"
-  }
 }

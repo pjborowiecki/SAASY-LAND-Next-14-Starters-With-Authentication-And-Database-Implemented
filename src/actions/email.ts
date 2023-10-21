@@ -13,7 +13,7 @@ import { EmailVerificationEmail } from "@/components/emails/email-verification-e
 
 import { getUserByEmailAction } from "./user"
 
-export async function sendEmail(
+export async function sendEmailAction(
   payload: CreateEmailOptions,
   options?: CreateEmailRequestOptions | undefined
 ) {
@@ -36,7 +36,7 @@ export async function resendEmailVerificationLinkAction(email: string) {
       emailVerificationToken,
     },
   })
-  const emailSent = await sendEmail({
+  const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
     to: [email],
     subject: "Verify your email address",
@@ -50,7 +50,7 @@ export async function resendEmailVerificationLinkAction(email: string) {
 
 export async function checkIfEmailVerifiedAction(email: string) {
   const user = await getUserByEmailAction(email)
-  if (user?.emailVerified) {
+  if (user?.emailVerified instanceof Date) {
     return true
   } else {
     return false

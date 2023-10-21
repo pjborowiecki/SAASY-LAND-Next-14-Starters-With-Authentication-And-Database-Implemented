@@ -70,7 +70,7 @@ export default async function VerifyEmailPage({
         emailVerificationToken,
       },
       data: {
-        emailVerified: true,
+        emailVerified: new Date(),
         emailVerificationToken: null,
       },
     })
@@ -92,7 +92,7 @@ export default async function VerifyEmailPage({
             <Link
               aria-label="Go back to sign in page"
               href="/signin"
-              className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
+              className={cn(buttonVariants(), "primary-gradient w-full")}
             >
               <span className="sr-only">Go to Sign In page</span>
               Go to Sign In page

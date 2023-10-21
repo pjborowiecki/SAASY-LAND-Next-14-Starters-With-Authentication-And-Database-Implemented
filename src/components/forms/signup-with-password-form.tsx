@@ -46,7 +46,7 @@ export function SignUpWithPasswordForm() {
         )
 
         if (message === "success") {
-          toast.message("Verification link has been sent", {
+          toast.message("Success!", {
             description: "Check your inbox to verify your email address",
           })
           router.push("/signin")

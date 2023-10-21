@@ -1,15 +1,19 @@
+import { sendEmailAction } from "@/actions/email"
 import { prisma } from "@/db/prisma"
 import { env } from "@/env.mjs"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import type { Account, AuthOptions, Profile, Session, User } from "next-auth"
-import type { JWT } from "next-auth/jwt"
+import { type JWT } from "next-auth/jwt"
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
-import EmailProvider from "next-auth/providers/email"
+import Email from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+
+import { siteConfig } from "@/config/site"
+import { MagicLinkEmail } from "@/components/emails/magic-link-email"
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -17,12 +21,13 @@ export const authOptions: AuthOptions = {
   secret: env.AUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, // 30 daysd
     updateAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
     signIn: "/signin",
     signOut: "/signout",
+    verifyRequest: "/signin/magic-link-signin",
   },
   providers: [
     GoogleProvider({
@@ -32,6 +37,29 @@ export const authOptions: AuthOptions = {
     GitHubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+    Email({
+      type: "email",
+      async sendVerificationRequest({
+        identifier,
+        url,
+      }: {
+        identifier: string
+        url: string
+      }) {
+        try {
+          const emailSent = await sendEmailAction({
+            from: env.RESEND_EMAIL_FROM,
+            to: [identifier],
+            subject: `${siteConfig.name} magic link sign in`,
+            react: MagicLinkEmail({ identifier, url }),
+          })
+
+          return void { success: true, data: emailSent }
+        } catch (error) {
+          throw new Error("Failed to send the verification Email.")
+        }
+      },
     }),
     CredentialsProvider({
       name: "Credentials",

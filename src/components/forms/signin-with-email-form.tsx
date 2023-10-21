@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { signInWithEmailSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
@@ -23,7 +24,7 @@ import { Icons } from "@/components/icons"
 type SignInWithEmailFormInputs = z.infer<typeof signInWithEmailSchema>
 
 export function SignInWithEmailForm() {
-  const router = useRouter()
+  const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<SignInWithEmailFormInputs>({
@@ -34,10 +35,12 @@ export function SignInWithEmailForm() {
   })
 
   function onSubmit(formData: SignInWithEmailFormInputs) {
-    startTransition((async) => {
+    startTransition(async () => {
       try {
-        console.log(formData)
-        // TODO: Add the sign in with email logic here
+        await signIn("email", {
+          email: formData.email,
+          callbackUrl: searchParams.get("callbackUrl") || "/",
+        })
       } catch (error) {
         toast.error("Something went wrong. try again")
         console.error(error)

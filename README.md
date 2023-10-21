@@ -24,8 +24,8 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [x] Set up OAuth sign in with GitHub and Google
 - [x] Set up email verification
 - [x] Set up password reset
-- [ ] Set up sign in with magic link
-- [ ] Improve email templates with [React Email](https://react.email/)
+- [x] Set up sign in with magic link
+- [x] Improve email templates with [React Email](https://react.email/)
 - [ ] Add welcome email to the sign up flow
 - [ ] Fix TypeScript warnings
 - [ ] Set up a user profile page with a form to update user information
@@ -33,6 +33,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Complete the landing page sections and footer
 - [ ] Add terms of service and privacy policy pages
 - [ ] Set up a newsletter sign up
+- [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
 

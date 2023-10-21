@@ -2,13 +2,10 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import {
-  checkIfEmailVerifiedAction,
-  signInWithPasswordAction,
-} from "@/actions/auth"
-import { getUserByEmailAction } from "@/actions/user"
+import { checkIfEmailVerifiedAction } from "@/actions/email"
 import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
@@ -43,20 +40,23 @@ export function SignInWithPasswordForm() {
   function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const message = await signInWithPasswordAction(
-          formData.email,
-          formData.password
-        )
+        const signInResponse = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        })
 
-        if (message === "success") {
+        if (signInResponse?.ok) {
+          const emailVerified = await checkIfEmailVerifiedAction(formData.email)
+          if (!emailVerified) {
+            toast.error("Please verify your email address before signing in")
+          }
+
           toast.success("Success! You are now signed in")
           router.push("/")
-        } else if (message === "email-not-verified") {
-          toast.error("Please verify your email address before signing in")
-        } else if (message === "invalid-credentials") {
-          toast.error("Invalid email or password")
+          router.refresh()
         } else {
-          toast.error("Error signing in. Try again")
+          toast.error("Invalid email or password")
         }
       } catch (error) {
         toast.error("Something went wrong. Try again")
