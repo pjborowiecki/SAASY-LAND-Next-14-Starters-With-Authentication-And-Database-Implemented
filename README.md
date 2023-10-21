@@ -38,3 +38,20 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
+
+### NOTES:
+
+To use PlanetScale's MySQL database with Prisma, it is necessary to create a shadow database. See [https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database) for more information.
+
+**PlanetScale does not support the use of foreign keys**. The use of Prisma's `@relation` is discouraged by Prisma itself with the following message: "With `relationMode = "prisma"`, no foreign keys are used, so relation fields will not benefit from the index usually created by the relational database under the hood. This can lead to poor performance when querying these fields. We recommend adding an index manually. Learn more at [https://pris.ly/d/relation-mode-prisma-indexes](https://pris.ly/d/relation-mode-prisma-indexes)".
+
+See the following resources for more information on this:
+
+- [Operating without foreign key constraints (PlanetScale guides)](https://planetscale.com/docs/learn/operating-without-foreign-key-constraints#:%7E:text=PlanetScale%20doesn%27t%20support%20FOREIGN%20KEY%20constraints)
+- [Prisma best practices (PlanetScale guides)](https://planetscale.com/docs/prisma/prisma-best-practices)
+- [Using Prisma with PlanetScale (Prisma docs)](https://www.prisma.io/docs/guides/database/planetscale#how-to-emulate-relations-in-prisma-client)
+- [Relation mode (Prisma docs)](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#indexes)
+
+In short, with Prisma you can still maintain foreign key relationships in your data and allow the use of [referential actions](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-actions) by using Prisma's ability to [emulate relations in Prisma Client](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/relation-mode#emulate-relations-in-prisma-with-the-prisma-relation-mode) with the prisma relation mode. For more information, see [How to emulate relations in Prisma Client](https://www.prisma.io/docs/guides/database/planetscale#how-to-emulate-relations-in-prisma-client).
+
+- Prisma recommends not using `prisma migrate` when making schema changes with PlanetScale. Instead, we recommend that you use the `prisma db push` command. Scripts in the package.json file have been updated to reflect this.
