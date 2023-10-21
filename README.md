@@ -26,8 +26,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [x] Set up password reset
 - [x] Set up sign in with magic link
 - [x] Improve email templates with [React Email](https://react.email/)
-- [ ] Add welcome email to the sign up flow
-- [ ] Fix TypeScript warnings
+- [x] Fix linting warnings
 - [ ] Set up a user profile page with a form to update user information
 - [ ] Set up file upload for user profile pictures
 - [ ] Complete the landing page sections and footer
