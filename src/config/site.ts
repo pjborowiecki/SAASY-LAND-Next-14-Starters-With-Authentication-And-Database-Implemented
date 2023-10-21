@@ -4,6 +4,7 @@ const links = {
   twitter: "https://twitter.com/pjborowiecki",
   linkedin: "https://www.linkedin.com/in/pjborowiecki",
   discord: "",
+  authorsWebsite: "https://pawelborowiecki.com",
 }
 
 export const siteConfig = {
@@ -12,8 +13,9 @@ export const siteConfig = {
     "An open-source starter for Next.js 13 full-stack projects with advanced authentication and several database configurations. The aim of this project is to provide a solid foundation for faster building and launching SaaS products, marketing sites, blogs, and more.",
   links,
   url: "https://saasyland.com",
-  // ogImage: "https://saasyland.com/opengraph-image.png",
+  author: "pjborowiecki",
   hostingRegion: "fra1",
+  keywords: ["SaaS", "Next.js", "Template"],
   navItems: [
     {
       title: "About",

@@ -1,9 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/router"
-import { signUpSchema } from "@/validations/auth"
+import { useRouter } from "next/navigation"
+import { checkIfEmailVerifiedAction } from "@/actions/email"
+import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
@@ -21,37 +23,44 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignUpFormInputs = z.infer<typeof signUpSchema>
+type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
 
-export function SignUpForm() {
-  // const router = useRouter()
+export function SignInWithPasswordForm() {
+  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignUpFormInputs>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<SignInWithPasswordFormInputs>({
+    resolver: zodResolver(signInWithPasswordSchema),
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
   })
 
-  function onSubmit(formData: SignUpFormInputs) {
+  function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        // TODO: await db call (ensure the function is async!)
-
-        form.reset()
-        // TODO: ensure the correct route is pushed
-        // router.push("/")
-        // TODO: display a toast message
-        // TODO: implement email confirmation?
-        toast.message("Account created!", {
-          description: "You can now sign in to your account.",
+        const signInResponse = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
         })
-        console.log(formData)
+
+        if (signInResponse?.ok) {
+          const emailVerified = await checkIfEmailVerifiedAction(formData.email)
+          if (!emailVerified) {
+            toast.error("Please verify your email address before signing in")
+          }
+
+          toast.success("Success! You are now signed in")
+          router.push("/")
+          router.refresh()
+        } else {
+          toast.error("Invalid email or password")
+        }
       } catch (error) {
-        console.log(error)
+        toast.error("Something went wrong. Try again")
+        console.error(error)
       }
     })
   }
@@ -59,7 +68,7 @@ export function SignUpForm() {
   return (
     <Form {...form}>
       <form
-        className="grid gap-4"
+        className="grid w-full gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FormField
@@ -69,7 +78,11 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="johnsmith@gmail.com" {...field} />
+                <Input
+                  type="text"
+                  placeholder="johnsmith@gmail.com"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,39 +96,25 @@ export function SignUpForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="**********" {...field} />
+                <PasswordInput placeholder="********" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="**********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button className="primary-gradient">
-          {isPending && (
+        <Button className="primary-gradient" disabled={isPending}>
+          {isPending ? (
             <>
               <Icons.spinner
                 className="mr-2 h-4 w-4 animate-spin"
                 aria-hidden="true"
               />
-              Signing up
+              <span>Signing in...</span>
             </>
+          ) : (
+            <span>Sign in</span>
           )}
-          Sign up
-          <span className="sr-only">Sign up with email and password</span>
+          <span className="sr-only">Sign in with email and password</span>
         </Button>
       </form>
     </Form>

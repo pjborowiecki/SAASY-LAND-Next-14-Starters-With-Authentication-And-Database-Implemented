@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
@@ -7,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Icons } from "@/components/icons"
 
 export function FeaturesSection() {
   return (
