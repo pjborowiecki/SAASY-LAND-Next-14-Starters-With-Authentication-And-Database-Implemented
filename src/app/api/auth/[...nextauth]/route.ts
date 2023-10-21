@@ -54,7 +54,6 @@ export const authOptions: AuthOptions = {
             subject: `${siteConfig.name} magic link sign in`,
             react: MagicLinkEmail({ identifier, url }),
           })
-
           return void { success: true, data: emailSent }
         } catch (error) {
           throw new Error("Failed to send the verification Email.")
@@ -71,58 +70,46 @@ export const authOptions: AuthOptions = {
         if (!credentials) {
           return null
         }
-
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },
         })
 
-        if (!user) {
-          return null
-        }
+        if (!user) return null
 
         const passwordIsValid = await bcrypt.compare(
           credentials.password,
           String(user.passwordHash)
         )
 
-        if (!passwordIsValid) {
-          return null
-        }
+        if (!passwordIsValid) return null
 
         return user
       },
     }),
   ],
   jwt: {
-    async encode({ secret, token }) {
+    encode({ secret, token }) {
       if (!token) {
         throw new Error("No token to encode")
       }
       return jwt.sign(token, secret)
     },
-    async decode({ secret, token }) {
+    decode({ secret, token }) {
       if (!token) {
         throw new Error("No token to decode")
       }
       const decodedToken = jwt.verify(token, secret)
       if (typeof decodedToken === "string") {
-        return JSON.parse(decodedToken)
+        return JSON.parse(decodedToken) as JWT
       } else {
         return decodedToken
       }
     },
   },
   callbacks: {
-    async session(params: { session: Session; token: JWT; user: User }) {
-      if (params.session.user) {
-        params.session.user.email = params.token.email
-      }
-
-      return params.session
-    },
-    async jwt(params: {
+    jwt(params: {
       token: JWT
       user?: User | undefined
       account?: Account | null | undefined
@@ -134,6 +121,13 @@ export const authOptions: AuthOptions = {
       }
 
       return params.token
+    },
+    session(params: { session: Session; token: JWT; user: User }) {
+      if (params.session.user) {
+        params.session.user.email = params.token.email
+      }
+
+      return params.session
     },
   },
 }
