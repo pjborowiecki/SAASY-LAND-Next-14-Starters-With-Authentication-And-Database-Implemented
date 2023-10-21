@@ -23,6 +23,7 @@
     "db:generate": "pnpm prisma generate",
     "db:migrate": "pnpm prisma migrate dev",
     "db:push": "pnpm prisma db push",
+    "db:pull": "npx prisma db pull",
     "db:reset": "npx prisma migrate reset",
     "db:studio": "npx prisma studio",
     "shadcn:add": "pnpm dlx shadcn-ui@latest add",
