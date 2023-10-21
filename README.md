@@ -1,8 +1,8 @@
 # [Next 13 starters with authentication and database set up](https://saasyland.com)
 
-Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.
+Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase. The project is written in TypeScript, styled with [Tailwind CSS](https://tailwindcss.com) and [ShadCn](https://shadcn.com). All users are stored in a database, regardless of whether they signed up with email and password, magic link, or via an OAuth provider.
 
-**The project is currently under active development and is not ready for production use. Please check back soon**
+**The project is currently under active development. Please check back soon**
 
 ![public/images/screenshots/screenshot_1](./public/images/screenshots/screenshot_1.png)
 
@@ -12,11 +12,21 @@ Starter templates for Next.js 13 full-stack projects. Built with Tailwind CSS, S
 
 ![public/images/screenshots/screenshot_3](./public/images/screenshots/screenshot_4.png)
 
-## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
+## Available configurations:
 
-This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected via [Prisma](https://prisma.io) v.5, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/). The project is written in TypeScript, styled with [Tailwind CSS](https://tailwindcss.com) and [ShadCn](https://shadcn.com).
+- ### [next-auth-drizzle-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-drizzle-planetscale-mysql)
 
-#### TODO:
+Under construction
+
+- ### [next-auth-drizzle-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-drizzle-planetscale-mysql)
+
+Under construction
+
+- ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-neon-postgres)
+
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected via [Prisma](https://prisma.io) v.5, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
+
+- ##### TODO:
 
 - [x] Implement sign up with email and password
 - [x] Implement sign in with email and password
@@ -35,3 +45,43 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
+
+- ### [next-auth-prisma5-serverless-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-planetscale-mysql)
+
+Under construction
+
+- ### [next-auth-docker-local-postgres-drizzle](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-docker-local-postgres-drizzle)
+
+Under construction
+
+- ### [next-auth-docker-local-postgres-prisma](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-docker-local-postgres-prisma)
+
+Under construction
+
+- ### [next-auth-mongoose-mongodb](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-mongoose-mongodb)
+
+Under construction
+
+- ### [nestjs-nextjs-next-auth-prisma-sqlite](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/nestjs-nextjs-next-auth-prisma-sqlite)
+
+Under construction
+
+- ### [nestjs-nextjs-next-auth-drizzle-sqlite](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/nestjs-nextjs-next-auth-drizzle-sqlite)
+
+Under construction
+
+- ### [mern-nextjs-redux](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/mern-nextjs-redux)
+
+Under construction
+
+- ### [next-auth-supabase-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-supabase-postgres)
+
+Under construction
+
+- ### [supabase-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/supabase-postgres)
+
+Under construction
+
+- ### [django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux)
+
+# Under construction
