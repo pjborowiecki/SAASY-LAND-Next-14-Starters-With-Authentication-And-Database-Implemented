@@ -84,4 +84,4 @@ Under construction
 
 - ### [django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/django-rest-djoser-digital-ocean-spaces-aws-ses-next-redux)
 
-# Under construction
+Under construction
