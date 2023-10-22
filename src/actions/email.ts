@@ -1,8 +1,10 @@
 "use server"
 
 import crypto from "crypto"
-import { prisma } from "@/db"
+import { db } from "@/db"
+import { users } from "@/db/schemas/auth.schema"
 import { env } from "@/env.mjs"
+import { eq } from "drizzle-orm"
 import {
   type CreateEmailOptions,
   type CreateEmailRequestOptions,
@@ -24,27 +26,23 @@ export async function sendEmailAction(
 
 export async function resendEmailVerificationLinkAction(email: string) {
   const user = await getUserByEmailAction(email)
-  if (!user) {
-    return "not-found"
-  }
+  if (!user) return "not-found"
+
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
-  const updatedUser = await prisma.user.update({
-    where: {
-      email,
-    },
-    data: {
-      emailVerificationToken,
-    },
-  })
+
+  const userUpdated = await db
+    .update(users)
+    .set({ emailVerificationToken })
+    .where(eq(users.email, email))
+
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
     to: [email],
     subject: "Verify your email address",
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
-  if (!updatedUser || !emailSent) {
-    return null
-  }
+
+  if (userUpdated || !emailSent) return null
   return "success"
 }
 

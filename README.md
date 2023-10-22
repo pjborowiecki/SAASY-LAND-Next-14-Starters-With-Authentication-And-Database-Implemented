@@ -14,7 +14,7 @@ Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Bui
 
 ## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
-This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. **This branch takes advantage of [prepared statements](https://orm.drizzle.team/docs/perf-queries), which are designed to massively improve query performance.** The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
 #### TODO:
 
@@ -38,3 +38,9 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
+
+#### NOTES:
+
+- With **prepared statements** you do SQL concatenation once on the Drizzle ORM side and then database driver is able to reuse precompiled binary SQL instead of parsing query all the time. **It has extreme performance benefits on large SQL queries**. You can read more about it [here](https://orm.drizzle.team/docs/perf-queries), or [here](https://orm.drizzle.team/docs/rqb)
+
+- Using Drizzle with Postgres allows for the use of [transactions](https://orm.drizzle.team/docs/transactions), which are useful for ensuring data integrity and consistency. Transactions are groupings of one or more SQL statements that interact with a database. A transaction in its entirety can commit to a database as a single logical unit or rollback (become undone) as a single logical unit.

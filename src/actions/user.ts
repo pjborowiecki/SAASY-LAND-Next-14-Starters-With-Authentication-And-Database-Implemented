@@ -1,34 +1,25 @@
 "use server"
 
-import { prisma } from "@/db"
+import {
+  psGetUserByEmail,
+  psGetUserByEmailVerificationToken,
+  psGetUserByResetPasswordToken,
+} from "@/db/prepared/statements"
 
 export async function getUserByEmailAction(email: string) {
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  })
-  return user
+  return await psGetUserByEmail.execute({ email })
 }
 
 export async function getUserByResetPasswordTokenAction(
   resetPasswordToken: string
 ) {
-  const user = await prisma.user.findUnique({
-    where: {
-      resetPasswordToken,
-    },
-  })
-  return user
+  return await psGetUserByResetPasswordToken.execute({ resetPasswordToken })
 }
 
 export async function getUserByEmailVerificationTokenAction(
   emailVerificationToken: string
 ) {
-  const user = await prisma.user.findUnique({
-    where: {
-      emailVerificationToken,
-    },
+  return await psGetUserByEmailVerificationToken.execute({
+    emailVerificationToken,
   })
-  return user
 }

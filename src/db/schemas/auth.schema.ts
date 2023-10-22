@@ -1,6 +1,7 @@
 import type { AdapterAccount } from "@auth/core/adapters"
 import { relations } from "drizzle-orm"
 import {
+  index,
   integer,
   pgTable,
   primaryKey,
@@ -52,20 +53,34 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   }),
 }))
 
-export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
-  name: text("name"),
-  surname: text("surname"),
-  username: text("username").unique(),
-  email: text("email").unique().notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  emailVerificationToken: text("emailVerificationToken").unique(),
-  passwordHash: text("passwordHash"),
-  resetPasswordToken: text("resetPasswordToken").unique(),
-  resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry"),
-  image: text("image"),
-  createdAt: timestamp("createdAt").notNull(),
-})
+export const users = pgTable(
+  "user",
+  {
+    id: text("id").notNull().primaryKey(),
+    name: text("name"),
+    surname: text("surname"),
+    username: text("username").unique(),
+    email: text("email").unique().notNull(),
+    emailVerified: timestamp("emailVerified", { mode: "date" }),
+    emailVerificationToken: text("emailVerificationToken").unique(),
+    passwordHash: text("passwordHash"),
+    resetPasswordToken: text("resetPasswordToken").unique(),
+    resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry"),
+    image: text("image"),
+    createdAt: timestamp("createdAt").notNull(),
+  },
+  (table) => {
+    return {
+      emailIdx: index("emailIdx").on(table.email),
+      resetPasswordTokenIdx: index("resetPasswordTokenIdx").on(
+        table.resetPasswordToken
+      ),
+      emailVerificationTokenIdx: index("emailVerificationTokenIdx").on(
+        table.emailVerificationToken
+      ),
+    }
+  }
+)
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   account: one(accounts, {
