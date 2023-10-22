@@ -16,7 +16,7 @@ Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Bui
 
 - ### [next-auth-drizzle-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-drizzle-planetscale-mysql)
 
-Under construction
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at Neon. The database is connected with Drizzle ORM, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react).
 
 - ### [next-auth-drizzle-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-drizzle-planetscale-mysql)
 
@@ -25,26 +25,6 @@ Under construction
 - ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-neon-postgres)
 
 This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected via [Prisma](https://prisma.io) v.5, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
-
-- ##### TODO:
-
-- [x] Implement sign up with email and password
-- [x] Implement sign in with email and password
-- [x] Implement sign out functionality
-- [x] Set up OAuth sign in with GitHub and Google
-- [x] Set up email verification
-- [x] Set up password reset
-- [x] Set up sign in with magic link
-- [x] Improve email templates with [React Email](https://react.email/)
-- [x] Fix linting warnings
-- [ ] Set up a user profile page with a form to update user information
-- [ ] Set up file upload for user profile pictures
-- [ ] Complete the landing page sections and footer
-- [ ] Add terms of service and privacy policy pages
-- [ ] Set up a newsletter sign up
-- [ ] Add contact form
-- [ ] Implement payments with [Stripe](https://stripe.com)
-- [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
 
 - ### [next-auth-prisma5-serverless-planetscale-mysql](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-planetscale-mysql)
 
