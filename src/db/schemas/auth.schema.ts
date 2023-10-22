@@ -1,5 +1,5 @@
 import type { AdapterAccount } from "@auth/core/adapters"
-import { relations, sql } from "drizzle-orm"
+import { relations } from "drizzle-orm"
 import {
   integer,
   pgTable,
@@ -7,14 +7,6 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/pg-core"
-
-export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
-  name: text("name"),
-  email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
-})
 
 export const accounts = pgTable(
   "account",
@@ -38,6 +30,13 @@ export const accounts = pgTable(
   })
 )
 
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}))
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
   userId: text("userId")
@@ -45,6 +44,36 @@ export const sessions = pgTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}))
+
+export const users = pgTable("user", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name"),
+  surname: text("surname"),
+  username: text("username").unique(),
+  email: text("email").unique().notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  emailVerificationToken: text("emailVerificationToken").unique(),
+  passwordHash: text("passwordHash"),
+  resetPasswordToken: text("resetPasswordToken").unique(),
+  resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry"),
+  image: text("image"),
+  createdAt: timestamp("createdAt").notNull(),
+})
+
+export const usersRelations = relations(users, ({ one, many }) => ({
+  account: one(accounts, {
+    fields: [users.id],
+    references: [accounts.userId],
+  }),
+  session: many(sessions),
+}))
 
 export const verificationTokens = pgTable(
   "verificationToken",
@@ -57,8 +86,6 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 )
-
-// TODO: Check the schemas, compare with prisma's, update for passowrd reset etc., add relations if needed
 
 export type User = typeof users.$inferSelect
 export type NewUser = typeof users.$inferInsert

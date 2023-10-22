@@ -19,7 +19,7 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "postinstall": "drizzle-kit generate:pg --config=drizzle.config.ts",
+    "postinstall": "drizzle-kit generate:pg --config=drizzle.config.ts && drizzle-kit push:pg --config=drizzle.config.ts",
     "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
     "db:push": "drizzle-kit push:pg --config=drizzle.config.ts",
     "db:pull": "drizzle-kit introspect:pg --config=drizzle.config.ts",
