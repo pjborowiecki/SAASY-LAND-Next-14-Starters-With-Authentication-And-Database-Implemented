@@ -1,7 +1,7 @@
 import { sendEmailAction } from "@/actions/email"
-import { prisma } from "@/db/drizzle"
+import { db } from "@/db"
 import { env } from "@/env.mjs"
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import type { Account, AuthOptions, Profile, Session, User } from "next-auth"
@@ -16,7 +16,7 @@ import { siteConfig } from "@/config/site"
 import { MagicLinkEmail } from "@/components/emails/magic-link-email"
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: DrizzleAdapter(db),
   debug: env.NODE_ENV === "development",
   secret: env.AUTH_SECRET,
   session: {
@@ -70,6 +70,7 @@ export const authOptions: AuthOptions = {
         if (!credentials) {
           return null
         }
+        // TODO: change to db.user.findUnique... etc.
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
