@@ -38,7 +38,6 @@
     "@auth/prisma-adapter": "^1.0.4",
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
-    "@prisma/adapter-neon": "^5.4.3",
     "@prisma/adapter-planetscale": "^5.4.3",
     "@prisma/client": "^5.4.2",
     "@radix-ui/react-avatar": "^1.0.4",
