@@ -19,9 +19,7 @@ export async function sendEmailAction(
   payload: CreateEmailOptions,
   options?: CreateEmailRequestOptions | undefined
 ) {
-  const data = await resend.emails.send(payload, options)
-  console.log("Email sent successfully")
-  return data
+  return await resend.emails.send(payload, options)
 }
 
 export async function resendEmailVerificationLinkAction(email: string) {
@@ -34,6 +32,8 @@ export async function resendEmailVerificationLinkAction(email: string) {
     .update(users)
     .set({ emailVerificationToken })
     .where(eq(users.email, email))
+    .returning()
+    .then((res) => res[0])
 
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
@@ -42,7 +42,7 @@ export async function resendEmailVerificationLinkAction(email: string) {
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
 
-  if (userUpdated || !emailSent) return null
+  if (!userUpdated || !emailSent) return null
   return "success"
 }
 

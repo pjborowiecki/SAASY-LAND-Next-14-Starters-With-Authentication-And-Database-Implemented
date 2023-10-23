@@ -1,4 +1,5 @@
 import { sendEmailAction } from "@/actions/email"
+import { getUserByEmailAction } from "@/actions/user"
 import { db } from "@/db"
 import { env } from "@/env.mjs"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
@@ -67,16 +68,9 @@ export const authOptions: AuthOptions = {
         password: {},
       },
       authorize: async (credentials) => {
-        if (!credentials) {
-          return null
-        }
-        // TODO: change to db.user.findUnique... etc.
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
+        if (!credentials) return null
 
+        const user = await getUserByEmailAction(credentials.email)
         if (!user) return null
 
         const passwordIsValid = await bcrypt.compare(

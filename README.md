@@ -38,9 +38,3 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
-
-#### NOTES:
-
-- With **prepared statements** you do SQL concatenation once on the Drizzle ORM side and then database driver is able to reuse precompiled binary SQL instead of parsing query all the time. **It has extreme performance benefits on large SQL queries**. You can read more about it [here](https://orm.drizzle.team/docs/perf-queries), or [here](https://orm.drizzle.team/docs/rqb)
-
-- Using Drizzle with Postgres allows for the use of [transactions](https://orm.drizzle.team/docs/transactions), which are useful for ensuring data integrity and consistency. Transactions are groupings of one or more SQL statements that interact with a database. A transaction in its entirety can commit to a database as a single logical unit or rollback (become undone) as a single logical unit.

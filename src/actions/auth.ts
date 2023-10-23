@@ -6,9 +6,11 @@ import {
   getUserByEmailAction,
   getUserByResetPasswordTokenAction,
 } from "@/actions/user"
-import { prisma } from "@/db"
+import { db } from "@/db"
+import { users, type NewUser } from "@/db/schemas/auth.schema"
 import { env } from "@/env.mjs"
 import bcrypt from "bcrypt"
+import { eq } from "drizzle-orm"
 
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
 import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
@@ -18,37 +20,41 @@ export async function signUpWithPasswordAction(
   password: string
 ) {
   const user = await getUserByEmailAction(email)
-  if (user) {
-    return "exists"
-  }
+  console.log("user", user)
+  if (user) return "exists"
+
   const passwordHash = await bcrypt.hash(password, 10)
-  const newUser = await prisma.user.create({
-    data: {
+
+  const newUser = await db
+    .insert(users)
+    .values({
+      id: crypto.randomUUID(),
       email,
       passwordHash,
-    },
-  })
-  if (!newUser) {
-    return null
-  }
+    } as NewUser)
+    .returning()
+    .then((res) => res[0])
+
+  if (!newUser) return null
+
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: newUser.id,
-    },
-    data: {
-      emailVerificationToken,
-    },
-  })
+
+  const updatedUser = await db
+    .update(users)
+    .set({ emailVerificationToken })
+    .where(eq(users.email, email))
+    .returning()
+    .then((res) => res[0])
+
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
     to: [email],
     subject: "Verify your email address",
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
-  if (!updatedUser || !emailSent) {
-    return null
-  }
+
+  if (!updatedUser || !emailSent) return null
+
   return "success"
 }
 

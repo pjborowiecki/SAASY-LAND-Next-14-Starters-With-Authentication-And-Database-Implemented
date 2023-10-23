@@ -25,6 +25,7 @@
     "db:pull": "drizzle-kit introspect:pg --config=drizzle.config.ts",
     "db:drop": "drizzle-kit drop --config=drizzle.config.ts",
     "db:check": "drizzle-kit check:pg --config=drizzle.config.ts",
+    "db:update": "drizzle-kit up:pg --config=drizzle.config.ts",
     "db:studio": "drizzle-kit studio --port 4000 --verbose",
     "shadcn:add": "pnpm dlx shadcn-ui@latest add",
     "prettier:format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "7e003eb9-4484-425b-a9fd-5d7fd1e2b9a2",
+  "id": "e5c09f18-2295-43e2-984b-c17fe1d6f9a7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -218,10 +218,33 @@
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "emailIdx": {
+          "name": "emailIdx",
+          "columns": [
+            "email"
+          ],
+          "isUnique": false
+        },
+        "resetPasswordTokenIdx": {
+          "name": "resetPasswordTokenIdx",
+          "columns": [
+            "resetPasswordToken"
+          ],
+          "isUnique": false
+        },
+        "emailVerificationTokenIdx": {
+          "name": "emailVerificationTokenIdx",
+          "columns": [
+            "emailVerificationToken"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {

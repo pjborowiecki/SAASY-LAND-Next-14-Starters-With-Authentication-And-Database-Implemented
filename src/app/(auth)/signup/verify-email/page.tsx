@@ -2,8 +2,10 @@ import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getUserByEmailVerificationTokenAction } from "@/actions/user"
-import { prisma } from "@/db"
+import { db } from "@/db"
+import { users } from "@/db/schemas/auth.schema"
 import { env } from "@/env.mjs"
+import { eq } from "drizzle-orm"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -43,7 +45,7 @@ export default async function VerifyEmailPage({
             <CardHeader>
               <CardTitle>Invalid Email Verification Token</CardTitle>
               <CardDescription>
-                Please return to the sign up page and try again
+                Please return to the Sign Up page and try again
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -65,19 +67,14 @@ export default async function VerifyEmailPage({
       )
     }
 
-    const updatedUser = await prisma.user.update({
-      where: {
-        emailVerificationToken,
-      },
-      data: {
-        emailVerified: new Date(),
-        emailVerificationToken: null,
-      },
-    })
+    const updatedUser = await db
+      .update(users)
+      .set({ emailVerified: new Date(), emailVerificationToken: null })
+      .where(eq(users.emailVerificationToken, emailVerificationToken))
+      .returning()
+      .then((res) => res[0])
 
-    if (!updatedUser) {
-      redirect("/signup")
-    }
+    if (!updatedUser) redirect("/signup")
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">

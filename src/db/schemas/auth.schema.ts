@@ -65,9 +65,11 @@ export const users = pgTable(
     emailVerificationToken: text("emailVerificationToken").unique(),
     passwordHash: text("passwordHash"),
     resetPasswordToken: text("resetPasswordToken").unique(),
-    resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry"),
+    resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry", {
+      mode: "date",
+    }),
     image: text("image"),
-    createdAt: timestamp("createdAt").notNull(),
+    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   },
   (table) => {
     return {

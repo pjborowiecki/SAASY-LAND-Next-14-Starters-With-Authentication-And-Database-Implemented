@@ -47,7 +47,7 @@ export function SignUpWithPasswordForm() {
 
         if (message === "success") {
           toast.message("Success!", {
-            description: "Check your inbox to verify your email address",
+            description: "Check your inbox and verify your email address",
           })
           router.push("/signin")
         } else if (message === "exists") {
