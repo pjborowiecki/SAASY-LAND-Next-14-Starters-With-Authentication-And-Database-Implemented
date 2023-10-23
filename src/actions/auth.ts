@@ -53,14 +53,13 @@ export async function signUpWithPasswordAction(
 
 export async function resetPasswordAction(email: string) {
   const user = await getUserByEmailAction(email)
-  if (!user) {
-    return "not-found"
-  }
+  if (!user) return "not-found"
+
   const today = new Date()
   const resetPasswordToken = crypto.randomBytes(32).toString("base64url")
   const resetPasswordTokenExpiry = new Date(today.setDate(today.getDate() + 1)) // 24 hours from now
   try {
-    const updatedUser = await prisma.user.update({
+    const userUpdated = await prisma.user.update({
       where: {
         id: user.id,
       },
@@ -75,9 +74,7 @@ export async function resetPasswordAction(email: string) {
       subject: "Reset your password",
       react: ResetPasswordEmail({ email, resetPasswordToken }),
     })
-    if (!updatedUser || !emailSent) {
-      return null
-    }
+    if (!userUpdated || !emailSent) return null
 
     return "success"
   } catch (error) {
