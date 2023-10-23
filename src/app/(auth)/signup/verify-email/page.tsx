@@ -72,7 +72,6 @@ export default async function VerifyEmailPage({
       .set({ emailVerified: new Date(), emailVerificationToken: null })
       .where(eq(users.emailVerificationToken, emailVerificationToken))
       .returning()
-      .then((res) => res[0])
 
     if (!updatedUser) redirect("/signup")
 

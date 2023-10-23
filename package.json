@@ -58,7 +58,7 @@
     "next": "13.5.4",
     "next-auth": "^4.24.3",
     "next-themes": "^0.2.1",
-    "nodemailer": "^6.9.6",
+    "nodemailer": "^6.9.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-email": "^1.9.5",
@@ -67,7 +67,7 @@
     "sonner": "^1.0.3",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "undici": "^5.26.4",
+    "undici": "^5.26.5",
     "utf-8-validate": "^6.0.3",
     "zod": "^3.22.4"
   },

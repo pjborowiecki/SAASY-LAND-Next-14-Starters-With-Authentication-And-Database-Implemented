@@ -53,36 +53,22 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   }),
 }))
 
-export const users = pgTable(
-  "user",
-  {
-    id: text("id").notNull().primaryKey(),
-    name: text("name"),
-    surname: text("surname"),
-    username: text("username").unique(),
-    email: text("email").unique().notNull(),
-    emailVerified: timestamp("emailVerified", { mode: "date" }),
-    emailVerificationToken: text("emailVerificationToken").unique(),
-    passwordHash: text("passwordHash"),
-    resetPasswordToken: text("resetPasswordToken").unique(),
-    resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry", {
-      mode: "date",
-    }),
-    image: text("image"),
-    createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
-  },
-  (table) => {
-    return {
-      emailIdx: index("emailIdx").on(table.email),
-      resetPasswordTokenIdx: index("resetPasswordTokenIdx").on(
-        table.resetPasswordToken
-      ),
-      emailVerificationTokenIdx: index("emailVerificationTokenIdx").on(
-        table.emailVerificationToken
-      ),
-    }
-  }
-)
+export const users = pgTable("user", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name"),
+  surname: text("surname"),
+  username: text("username").unique(),
+  email: text("email").unique().notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  emailVerificationToken: text("emailVerificationToken").unique(),
+  passwordHash: text("passwordHash"),
+  resetPasswordToken: text("resetPasswordToken").unique(),
+  resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry", {
+    mode: "date",
+  }),
+  image: text("image"),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+})
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   account: one(accounts, {

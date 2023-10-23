@@ -19,8 +19,7 @@ export async function signUpWithPasswordAction(
   email: string,
   password: string
 ) {
-  const user = await getUserByEmailAction(email)
-  console.log("user", user)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (user) return "exists"
 
   const passwordHash = await bcrypt.hash(password, 10)
@@ -33,7 +32,6 @@ export async function signUpWithPasswordAction(
       passwordHash,
     } as NewUser)
     .returning()
-    .then((res) => res[0])
 
   if (!newUser) return null
 
@@ -44,7 +42,6 @@ export async function signUpWithPasswordAction(
     .set({ emailVerificationToken })
     .where(eq(users.email, email))
     .returning()
-    .then((res) => res[0])
 
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
