@@ -24,11 +24,10 @@ export async function sendEmailAction(
 
 export async function resendEmailVerificationLinkAction(email: string) {
   const user = await getUserByEmailAction(email)
-  if (!user) {
-    return "not-found"
-  }
+  if (!user) return "not-found"
+
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
-  const updatedUser = await prisma.user.update({
+  const userUpdated = await prisma.user.update({
     where: {
       email,
     },
@@ -42,9 +41,7 @@ export async function resendEmailVerificationLinkAction(email: string) {
     subject: "Verify your email address",
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
-  if (!updatedUser || !emailSent) {
-    return null
-  }
+  if (!userUpdated || !emailSent) return null
   return "success"
 }
 

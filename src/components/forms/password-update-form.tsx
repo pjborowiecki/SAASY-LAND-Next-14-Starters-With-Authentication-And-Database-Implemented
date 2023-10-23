@@ -51,12 +51,10 @@ export function PasswordUpdateForm({
 
         if (message === "success") {
           toast.message("Success!", {
-            description: "You can now sign in with your new password",
+            description: "You can now sign in with new password",
           })
         } else if (message === "expired") {
-          toast.error(
-            "Reset Password Token is missing or expired. Please try again"
-          )
+          toast.error("Token is missing or expired. Please try again")
         } else {
           toast.error("Error updating password. Please try again")
         }

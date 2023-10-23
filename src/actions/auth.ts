@@ -18,21 +18,21 @@ export async function signUpWithPasswordAction(
   password: string
 ) {
   const user = await getUserByEmailAction(email)
-  if (user) {
-    return "exists"
-  }
+  if (user) return "exists"
+
   const passwordHash = await bcrypt.hash(password, 10)
+
   const newUser = await prisma.user.create({
     data: {
       email,
       passwordHash,
     },
   })
-  if (!newUser) {
-    return null
-  }
+  if (!newUser) return null
+
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
-  const updatedUser = await prisma.user.update({
+
+  const userUpdated = await prisma.user.update({
     where: {
       id: newUser.id,
     },
@@ -46,9 +46,8 @@ export async function signUpWithPasswordAction(
     subject: "Verify your email address",
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
-  if (!updatedUser || !emailSent) {
-    return null
-  }
+  if (!userUpdated || !emailSent) return null
+
   return "success"
 }
 
@@ -79,6 +78,7 @@ export async function resetPasswordAction(email: string) {
     if (!updatedUser || !emailSent) {
       return null
     }
+
     return "success"
   } catch (error) {
     console.error(error)
@@ -91,14 +91,13 @@ export async function updatePasswordAction(
   password: string
 ) {
   const user = await getUserByResetPasswordTokenAction(resetPasswordToken)
-  if (!user) {
-    return "not-found"
-  }
+  if (!user) return "not-found"
+
   const resetPasswordExpiry = user.resetPasswordTokenExpiry
-  if (!resetPasswordExpiry || resetPasswordExpiry < new Date()) {
-    return "expired"
-  }
+  if (!resetPasswordExpiry || resetPasswordExpiry < new Date()) return "expired"
+
   const passwordHash = await bcrypt.hash(password, 10)
+
   const updatedUser = await prisma.user.update({
     where: {
       id: user.id,
@@ -109,8 +108,7 @@ export async function updatePasswordAction(
       resetPasswordTokenExpiry: null,
     },
   })
-  if (!updatedUser) {
-    return null
-  }
+  if (!updatedUser) return null
+
   return "success"
 }
