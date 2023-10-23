@@ -38,3 +38,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
+
+### NOTES:
+
+- For some weird reason, `getUserByEmail` sometimes returns undefined, and I am yet to figure out why this is happening.

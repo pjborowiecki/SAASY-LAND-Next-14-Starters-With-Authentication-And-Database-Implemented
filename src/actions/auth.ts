@@ -32,6 +32,7 @@ export async function signUpWithPasswordAction(
       passwordHash,
     } as NewUser)
     .returning()
+    .then((res) => res[0])
 
   if (!newUser) return null
 
@@ -42,6 +43,7 @@ export async function signUpWithPasswordAction(
     .set({ emailVerificationToken })
     .where(eq(users.email, email))
     .returning()
+    .then((res) => res[0])
 
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
@@ -57,31 +59,31 @@ export async function signUpWithPasswordAction(
 
 export async function resetPasswordAction(email: string) {
   const user = await getUserByEmailAction(email)
-  if (!user) {
-    return "not-found"
-  }
+  if (!user) return "not-found"
+
   const today = new Date()
   const resetPasswordToken = crypto.randomBytes(32).toString("base64url")
   const resetPasswordTokenExpiry = new Date(today.setDate(today.getDate() + 1)) // 24 hours from now
   try {
-    const updatedUser = await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
+    const userUpdated = await db
+      .update(users)
+      .set({
         resetPasswordToken,
         resetPasswordTokenExpiry,
-      },
-    })
+      })
+      .where(eq(users.email, email))
+      .returning()
+      .then((res) => res[0])
+
     const emailSent = await sendEmailAction({
       from: env.RESEND_EMAIL_FROM,
       to: [email],
       subject: "Reset your password",
       react: ResetPasswordEmail({ email, resetPasswordToken }),
     })
-    if (!updatedUser || !emailSent) {
-      return null
-    }
+
+    if (!userUpdated || !emailSent) return null
+
     return "success"
   } catch (error) {
     console.error(error)
@@ -93,27 +95,29 @@ export async function updatePasswordAction(
   resetPasswordToken: string,
   password: string
 ) {
-  const user = await getUserByResetPasswordTokenAction(resetPasswordToken)
-  if (!user) {
-    return "not-found"
-  }
+  const user = await getUserByResetPasswordTokenAction(resetPasswordToken).then(
+    (res) => res[0]
+  )
+  if (!user) return "not-found"
+
   const resetPasswordExpiry = user.resetPasswordTokenExpiry
-  if (!resetPasswordExpiry || resetPasswordExpiry < new Date()) {
-    return "expired"
-  }
+
+  if (!resetPasswordExpiry || resetPasswordExpiry < new Date()) return "expired"
+
   const passwordHash = await bcrypt.hash(password, 10)
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
+
+  const userUpdated = await db
+    .update(users)
+    .set({
       passwordHash,
       resetPasswordToken: null,
       resetPasswordTokenExpiry: null,
-    },
-  })
-  if (!updatedUser) {
-    return null
-  }
+    })
+    .where(eq(users.id, user.id))
+    .returning()
+    .then((res) => res[0])
+
+  if (!userUpdated) return null
+
   return "success"
 }

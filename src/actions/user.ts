@@ -1,31 +1,27 @@
 "use server"
 
-import { db } from "@/db"
-import { users } from "@/db/schemas/auth.schema"
-import { eq } from "drizzle-orm"
+import {
+  psGetUserByEmail,
+  psGetUserByEmailVerificationToken,
+  psGetUserByResetPasswordToken,
+} from "@/db/prepared/statements"
 
 export async function getUserByEmailAction(email: string) {
-  const user = await db.query.users.findMany({
-    where: (users, { eq }) => eq(users.email, email),
-  })
-  console.log("user from getUserByEmailAction", user)
-  return user
+  return await psGetUserByEmail.execute({ email: email })
 }
 
 export async function getUserByResetPasswordTokenAction(
   resetPasswordToken: string
 ) {
-  return await db
-    .select()
-    .from(users)
-    .where(eq(users.resetPasswordToken, resetPasswordToken))
+  return await psGetUserByResetPasswordToken.execute({
+    resetPasswordToken: resetPasswordToken,
+  })
 }
 
 export async function getUserByEmailVerificationTokenAction(
-  emailVerificationToken: string
+  EmailVerificationToken: string
 ) {
-  return await db
-    .select()
-    .from(users)
-    .where(eq(users.emailVerificationToken, emailVerificationToken))
+  return await psGetUserByEmailVerificationToken.execute({
+    EmailVerificationToken: EmailVerificationToken,
+  })
 }

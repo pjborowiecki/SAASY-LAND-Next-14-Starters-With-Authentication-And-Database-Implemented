@@ -43,11 +43,12 @@ export async function resendEmailVerificationLinkAction(email: string) {
   })
 
   if (!userUpdated || !emailSent) return null
+
   return "success"
 }
 
 export async function checkIfEmailVerifiedAction(email: string) {
-  const user = await getUserByEmailAction(email)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (user?.emailVerified instanceof Date) {
     return true
   } else {
