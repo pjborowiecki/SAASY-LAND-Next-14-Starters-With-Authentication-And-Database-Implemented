@@ -19,7 +19,7 @@ export async function signUpWithPasswordAction(
   email: string,
   password: string
 ) {
-  const user = await getUserByEmailAction(email).then((res) => res[0])
+  const user = await getUserByEmailAction(email)
   if (user) return "exists"
 
   const passwordHash = await bcrypt.hash(password, 10)
@@ -95,9 +95,7 @@ export async function updatePasswordAction(
   resetPasswordToken: string,
   password: string
 ) {
-  const user = await getUserByResetPasswordTokenAction(resetPasswordToken).then(
-    (res) => res[0]
-  )
+  const user = await getUserByResetPasswordTokenAction(resetPasswordToken)
   if (!user) return "not-found"
 
   const resetPasswordExpiry = user.resetPasswordTokenExpiry

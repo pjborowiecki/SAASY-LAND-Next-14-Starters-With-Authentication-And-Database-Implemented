@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "e5c09f18-2295-43e2-984b-c17fe1d6f9a7",
+  "id": "b57eac4d-268e-42fe-bbc9-aa1552a147f2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -222,29 +222,7 @@
           "default": "now()"
         }
       },
-      "indexes": {
-        "emailIdx": {
-          "name": "emailIdx",
-          "columns": [
-            "email"
-          ],
-          "isUnique": false
-        },
-        "resetPasswordTokenIdx": {
-          "name": "resetPasswordTokenIdx",
-          "columns": [
-            "resetPasswordToken"
-          ],
-          "isUnique": false
-        },
-        "emailVerificationTokenIdx": {
-          "name": "emailVerificationTokenIdx",
-          "columns": [
-            "emailVerificationToken"
-          ],
-          "isUnique": false
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
