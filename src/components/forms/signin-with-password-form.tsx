@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { checkIfEmailVerifiedAction } from "@/actions/email"
+import { getUserByEmailAction } from "@/actions/user"
 import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
@@ -40,6 +41,18 @@ export function SignInWithPasswordForm() {
   function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
+        const user = await getUserByEmailAction(formData.email)
+        if (!user) {
+          toast.error("Please sign up first")
+          return
+        }
+
+        const emailVerified = await checkIfEmailVerifiedAction(formData.email)
+        if (!emailVerified) {
+          toast.error("Please verify your email address before sign in")
+          return
+        }
+
         const signInResponse = await signIn("credentials", {
           email: formData.email,
           password: formData.password,
@@ -47,11 +60,6 @@ export function SignInWithPasswordForm() {
         })
 
         if (signInResponse?.ok) {
-          const emailVerified = await checkIfEmailVerifiedAction(formData.email)
-          if (!emailVerified) {
-            toast.error("Please verify your email address before signing in")
-          }
-
           toast.success("Success! You are now signed in")
           router.push("/")
           router.refresh()
