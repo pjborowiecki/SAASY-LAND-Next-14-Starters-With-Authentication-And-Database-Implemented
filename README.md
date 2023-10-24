@@ -12,7 +12,7 @@ Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Bui
 
 ![public/images/screenshots/screenshot_4](./public/images/screenshots/screenshot_4.png)
 
-## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
+## Postgresql at [Neon](https://neon.tech) with [Drizzle](https://orm.drizzle.team) v.5 (serverless-compatible)
 
 This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. **This branch takes advantage of [prepared statements](https://orm.drizzle.team/docs/perf-queries), which are designed to massively improve query performance.** The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
