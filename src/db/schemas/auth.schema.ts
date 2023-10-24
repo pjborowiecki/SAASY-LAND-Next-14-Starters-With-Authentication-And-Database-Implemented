@@ -1,102 +1,61 @@
 import type { AdapterAccount } from "@auth/core/adapters"
-import { relations } from "drizzle-orm"
 import {
-  integer,
-  pgTable,
+  int,
+  mysqlTable,
   primaryKey,
-  text,
   timestamp,
-} from "drizzle-orm/pg-core"
+  varchar,
+} from "drizzle-orm/mysql-core"
 
-export const accounts = pgTable(
+export const users = mysqlTable("user", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).notNull(),
+  emailVerified: timestamp("emailVerified", {
+    mode: "date",
+    fsp: 3,
+  }).defaultNow(),
+  image: varchar("image", { length: 255 }),
+})
+
+export const accounts = mysqlTable(
   "account",
   {
-    userId: text("userId")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    type: text("type").$type<AdapterAccount["type"]>().notNull(),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    refresh_token: text("refresh_token"),
-    access_token: text("access_token"),
-    expires_at: integer("expires_at"),
-    token_type: text("token_type"),
-    scope: text("scope"),
-    id_token: text("id_token"),
-    session_state: text("session_state"),
+    userId: varchar("userId", { length: 255 }).notNull(),
+    // .references(() => users.id, { onDelete: "cascade" }),
+    type: varchar("type", { length: 255 })
+      .$type<AdapterAccount["type"]>()
+      .notNull(),
+    provider: varchar("provider", { length: 255 }).notNull(),
+    providerAccountId: varchar("providerAccountId", { length: 255 }).notNull(),
+    refresh_token: varchar("refresh_token", { length: 255 }),
+    access_token: varchar("access_token", { length: 255 }),
+    expires_at: int("expires_at"),
+    token_type: varchar("token_type", { length: 255 }),
+    scope: varchar("scope", { length: 255 }),
+    id_token: varchar("id_token", { length: 255 }),
+    session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
   })
 )
 
-export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
-  }),
-}))
-
-export const sessions = pgTable("session", {
-  sessionToken: text("sessionToken").notNull().primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+export const sessions = mysqlTable("session", {
+  sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
+  userId: varchar("userId", { length: 255 }).notNull(),
+  // .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
 
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
-  }),
-}))
-
-export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
-  name: text("name"),
-  surname: text("surname"),
-  username: text("username").unique(),
-  email: text("email").unique().notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  emailVerificationToken: text("emailVerificationToken").unique(),
-  passwordHash: text("passwordHash"),
-  resetPasswordToken: text("resetPasswordToken").unique(),
-  resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpiry", {
-    mode: "date",
-  }),
-  image: text("image"),
-  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
-})
-
-export const usersRelations = relations(users, ({ one, many }) => ({
-  account: one(accounts, {
-    fields: [users.id],
-    references: [accounts.userId],
-  }),
-  session: many(sessions),
-}))
-
-export const verificationTokens = pgTable(
+export const verificationTokens = mysqlTable(
   "verificationToken",
   {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
+    identifier: varchar("identifier", { length: 255 }).notNull(),
+    token: varchar("token", { length: 255 }).notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 )
-
-export type User = typeof users.$inferSelect
-export type NewUser = typeof users.$inferInsert
-
-export type Account = typeof accounts.$inferSelect
-export type NewAccount = typeof accounts.$inferInsert
-
-export type Session = typeof sessions.$inferSelect
-export type NewSession = typeof sessions.$inferInsert
-
-export type VerificationToken = typeof verificationTokens.$inferSelect
-export type NewVerificationToken = typeof verificationTokens.$inferInsert

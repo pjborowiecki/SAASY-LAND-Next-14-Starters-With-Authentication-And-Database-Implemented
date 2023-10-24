@@ -14,7 +14,7 @@ Starter templates for [Next.js 13](https://nextjs.org/) full-stack projects. Bui
 
 ## Postgresql at [Neon](https://neon.tech) with [Prisma](https://prisma.io) v.5 (serverless-compatible)
 
-This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. **This branch takes advantage of [prepared statements](https://orm.drizzle.team/docs/perf-queries), which are designed to massively improve query performance.** The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
+This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a MySQL database set up at [PlanetScale](https://planetscale.com). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
 #### TODO:
 
@@ -38,7 +38,3 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 - [ ] Add contact form
 - [ ] Implement payments with [Stripe](https://stripe.com)
 - [ ] Set up blogging with Markdown and MDX (or [Payload 2](https://payloadcms.com/) and [Lexical](https://lexical.dev/))
-
-### NOTES:
-
-- For some weird reason, `getUserByEmail` sometimes returns undefined, and I am yet to figure out why this is happening.

@@ -1,12 +1,19 @@
 {
   "version": "5",
-  "dialect": "pg",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1698085848084,
-      "tag": "0000_steep_may_parker",
+      "when": 1698130851929,
+      "tag": "0000_lame_paladin",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698130877551,
+      "tag": "0001_colorful_pretty_boy",
       "breakpoints": true
     }
   ]
