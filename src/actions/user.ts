@@ -7,21 +7,19 @@ import {
 } from "@/db/prepared/statements"
 
 export async function getUserByEmailAction(email: string) {
-  return await psGetUserByEmail.execute({ email }).then((res) => res[0])
+  return await psGetUserByEmail.execute({ email })
 }
 
 export async function getUserByResetPasswordTokenAction(
   resetPasswordToken: string
 ) {
-  return await psGetUserByResetPasswordToken
-    .execute({ resetPasswordToken })
-    .then((res) => res[0])
+  return await psGetUserByResetPasswordToken.execute({ resetPasswordToken })
 }
 
 export async function getUserByEmailVerificationTokenAction(
   emailVerificationToken: string
 ) {
-  return await psGetUserByEmailVerificationToken
-    .execute({ emailVerificationToken })
-    .then((res) => res[0])
+  return await psGetUserByEmailVerificationToken.execute({
+    emailVerificationToken,
+  })
 }

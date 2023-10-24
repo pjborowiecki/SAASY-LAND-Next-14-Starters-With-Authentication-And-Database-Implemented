@@ -1,0 +1,1 @@
+ALTER TABLE `user` MODIFY COLUMN `emailVerified` timestamp(3);

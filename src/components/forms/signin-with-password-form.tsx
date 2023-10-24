@@ -41,8 +41,9 @@ export function SignInWithPasswordForm() {
   function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const user = await getUserByEmailAction(formData.email)
-        console.log("user", user)
+        const user = await getUserByEmailAction(formData.email).then(
+          (res) => res[0]
+        )
         if (!user) {
           toast.error("Please sign up first")
           return

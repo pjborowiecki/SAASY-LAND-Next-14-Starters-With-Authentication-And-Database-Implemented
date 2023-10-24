@@ -70,7 +70,9 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials) => {
         if (!credentials) return null
 
-        const user = await getUserByEmailAction(credentials.email)
+        const user = await getUserByEmailAction(credentials.email).then(
+          (res) => res[0]
+        )
         if (!user) return null
 
         const passwordIsValid = await bcrypt.compare(

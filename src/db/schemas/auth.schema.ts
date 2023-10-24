@@ -57,13 +57,16 @@ export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
+  emailVerificationToken: varchar("emailVerificationToken", {
+    length: 255,
+  }).unique(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     fsp: 3,
-  }).defaultNow(),
+  }),
   passwordHash: text("passwordHash"),
   resetPasswordToken: varchar("resetPasswordToken", { length: 255 }).unique(),
-  resetPasswordTokenExpires: timestamp("resetPasswordTokenExpires", {
+  resetPasswordTokenExpiry: timestamp("resetPasswordTokenExpires", {
     mode: "date",
     fsp: 3,
   }),

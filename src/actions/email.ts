@@ -23,17 +23,15 @@ export async function sendEmailAction(
 }
 
 export async function resendEmailVerificationLinkAction(email: string) {
-  const user = await getUserByEmailAction(email)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (!user) return "not-found"
 
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
 
-  const userUpdated = await db
+  const userUpdatedResponse = await db
     .update(users)
     .set({ emailVerificationToken })
     .where(eq(users.email, email))
-    .returning()
-    .then((res) => res[0])
 
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
@@ -42,13 +40,13 @@ export async function resendEmailVerificationLinkAction(email: string) {
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
 
-  if (!userUpdated || !emailSent) return null
+  if (!userUpdatedResponse || !emailSent) return null
 
   return "success"
 }
 
 export async function checkIfEmailVerifiedAction(email: string) {
-  const user = await getUserByEmailAction(email)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (user?.emailVerified instanceof Date) {
     return true
   } else {
