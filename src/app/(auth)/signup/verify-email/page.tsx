@@ -36,7 +36,7 @@ export default async function VerifyEmailPage({
   if (emailVerificationToken) {
     const user = await getUserByEmailVerificationTokenAction(
       emailVerificationToken
-    )
+    ).then((res) => res[0])
 
     if (!user) {
       return (
@@ -67,13 +67,12 @@ export default async function VerifyEmailPage({
       )
     }
 
-    const updatedUser = await db
+    const userUpdatedResponse = await db
       .update(users)
       .set({ emailVerified: new Date(), emailVerificationToken: null })
       .where(eq(users.emailVerificationToken, emailVerificationToken))
-      .returning()
 
-    if (!updatedUser) redirect("/signup")
+    if (!userUpdatedResponse) redirect("/signup")
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">

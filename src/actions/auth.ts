@@ -19,31 +19,25 @@ export async function signUpWithPasswordAction(
   email: string,
   password: string
 ) {
-  const user = await getUserByEmailAction(email)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (user) return "exists"
 
   const passwordHash = await bcrypt.hash(password, 10)
 
-  const newUser = await db
-    .insert(users)
-    .values({
-      id: crypto.randomUUID(),
-      email,
-      passwordHash,
-    } as NewUser)
-    .returning()
-    .then((res) => res[0])
+  const newUserResponse = await db.insert(users).values({
+    id: crypto.randomUUID(),
+    email,
+    passwordHash,
+  } as NewUser)
 
-  if (!newUser) return null
+  if (!newUserResponse) return null
 
   const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
 
-  const updatedUser = await db
+  const updatedUserResponse = await db
     .update(users)
     .set({ emailVerificationToken })
     .where(eq(users.email, email))
-    .returning()
-    .then((res) => res[0])
 
   const emailSent = await sendEmailAction({
     from: env.RESEND_EMAIL_FROM,
@@ -52,28 +46,26 @@ export async function signUpWithPasswordAction(
     react: EmailVerificationEmail({ email, emailVerificationToken }),
   })
 
-  if (!updatedUser || !emailSent) return null
+  if (!updatedUserResponse || !emailSent) return null
 
   return "success"
 }
 
 export async function resetPasswordAction(email: string) {
-  const user = await getUserByEmailAction(email)
+  const user = await getUserByEmailAction(email).then((res) => res[0])
   if (!user) return "not-found"
 
   const today = new Date()
   const resetPasswordToken = crypto.randomBytes(32).toString("base64url")
   const resetPasswordTokenExpiry = new Date(today.setDate(today.getDate() + 1)) // 24 hours from now
   try {
-    const userUpdated = await db
+    const userUpdatedResponse = await db
       .update(users)
       .set({
         resetPasswordToken,
         resetPasswordTokenExpiry,
       })
       .where(eq(users.email, email))
-      .returning()
-      .then((res) => res[0])
 
     const emailSent = await sendEmailAction({
       from: env.RESEND_EMAIL_FROM,
@@ -82,7 +74,7 @@ export async function resetPasswordAction(email: string) {
       react: ResetPasswordEmail({ email, resetPasswordToken }),
     })
 
-    if (!userUpdated || !emailSent) return null
+    if (!userUpdatedResponse || !emailSent) return null
 
     return "success"
   } catch (error) {
@@ -95,7 +87,10 @@ export async function updatePasswordAction(
   resetPasswordToken: string,
   password: string
 ) {
-  const user = await getUserByResetPasswordTokenAction(resetPasswordToken)
+  const user = await getUserByResetPasswordTokenAction(resetPasswordToken).then(
+    (res) => res[0]
+  )
+
   if (!user) return "not-found"
 
   const resetPasswordExpiry = user.resetPasswordTokenExpiry
@@ -104,7 +99,7 @@ export async function updatePasswordAction(
 
   const passwordHash = await bcrypt.hash(password, 10)
 
-  const userUpdated = await db
+  const userUpdatedResponse = await db
     .update(users)
     .set({
       passwordHash,
@@ -112,10 +107,8 @@ export async function updatePasswordAction(
       resetPasswordTokenExpiry: null,
     })
     .where(eq(users.id, user.id))
-    .returning()
-    .then((res) => res[0])
 
-  if (!userUpdated) return null
+  if (!userUpdatedResponse) return null
 
   return "success"
 }
