@@ -4,6 +4,7 @@ import {
   int,
   mysqlTable,
   primaryKey,
+  text,
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core"
@@ -60,7 +61,15 @@ export const users = mysqlTable("user", {
     mode: "date",
     fsp: 3,
   }).defaultNow(),
+  emailVerificationToken: text("emailVerificationToken").unique(),
+  passwordHash: text("passwordHash"),
+  resetPasswordToken: text("resetPasswordToken").unique(),
+  resetPasswordTokenExpires: timestamp("resetPasswordTokenExpires", {
+    mode: "date",
+    fsp: 3,
+  }),
   image: varchar("image", { length: 255 }),
+  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
 })
 
 export const userRelations = relations(users, ({ one, many }) => ({
