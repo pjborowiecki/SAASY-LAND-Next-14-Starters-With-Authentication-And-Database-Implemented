@@ -7,7 +7,7 @@ export const psGetUserByEmail = db
   .select()
   .from(users)
   .where(eq(users.email, sql.placeholder("email")))
-  .prepare("psGetUserByEmail")
+  .prepare()
 
 export const psGetUserByEmailVerificationToken = db
   .select()
@@ -15,10 +15,10 @@ export const psGetUserByEmailVerificationToken = db
   .where(
     eq(users.emailVerificationToken, sql.placeholder("emailVerificationToken"))
   )
-  .prepare("psGetUserByEmailVerificationToken")
+  .prepare()
 
 export const psGetUserByResetPasswordToken = db
   .select()
   .from(users)
   .where(eq(users.resetPasswordToken, sql.placeholder("resetPasswordToken")))
-  .prepare("psGetUserByResetPasswordToken")
+  .prepare()

@@ -1,0 +1,1 @@
+ALTER TABLE `user` ADD `createdAt` timestamp(3) DEFAULT (now());

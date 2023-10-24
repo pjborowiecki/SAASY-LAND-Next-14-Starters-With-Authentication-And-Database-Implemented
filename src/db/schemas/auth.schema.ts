@@ -61,15 +61,14 @@ export const users = mysqlTable("user", {
     mode: "date",
     fsp: 3,
   }).defaultNow(),
-  emailVerificationToken: text("emailVerificationToken").unique(),
   passwordHash: text("passwordHash"),
-  resetPasswordToken: text("resetPasswordToken").unique(),
+  resetPasswordToken: varchar("resetPasswordToken", { length: 255 }).unique(),
   resetPasswordTokenExpires: timestamp("resetPasswordTokenExpires", {
     mode: "date",
     fsp: 3,
   }),
   image: varchar("image", { length: 255 }),
-  createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { mode: "date", fsp: 3 }).defaultNow(),
 })
 
 export const userRelations = relations(users, ({ one, many }) => ({

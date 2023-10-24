@@ -1,0 +1,1 @@
+ALTER TABLE `user` ADD `emailVerified` timestamp(3) DEFAULT (now());

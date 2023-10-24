@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "6f38ff31-ace7-4829-b02e-2c835db85601",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "1b4db8c8-68d2-4a6a-aaa3-b7307df0b5c5",
+  "prevId": "94735a47-9c00-4989-b0ca-48897f1b1ab5",
   "tables": {
     "account": {
       "name": "account",
@@ -159,6 +159,14 @@
           "notNull": true,
           "autoincrement": false
         },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "timestamp(3)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
         "passwordHash": {
           "name": "passwordHash",
           "type": "text",
@@ -168,7 +176,14 @@
         },
         "resetPasswordToken": {
           "name": "resetPasswordToken",
-          "type": "text",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "resetPasswordTokenExpires": {
+          "name": "resetPasswordTokenExpires",
+          "type": "timestamp(3)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

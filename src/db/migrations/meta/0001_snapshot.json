@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "5a33eb02-e810-4fd4-8c0e-6f1925fd4a7b",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "74bd1d17-a12c-4249-9faa-90818e54d187",
+  "prevId": "6f38ff31-ace7-4829-b02e-2c835db85601",
   "tables": {
     "account": {
       "name": "account",
@@ -159,13 +159,19 @@
           "notNull": true,
           "autoincrement": false
         },
-        "emailVerified": {
-          "name": "emailVerified",
-          "type": "timestamp(3)",
+        "passwordHash": {
+          "name": "passwordHash",
+          "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "(now())"
+          "autoincrement": false
+        },
+        "resetPasswordToken": {
+          "name": "resetPasswordToken",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "image": {
           "name": "image",
@@ -185,7 +191,14 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "user_resetPasswordToken_unique": {
+          "name": "user_resetPasswordToken_unique",
+          "columns": [
+            "resetPasswordToken"
+          ]
+        }
+      }
     },
     "verificationToken": {
       "name": "verificationToken",

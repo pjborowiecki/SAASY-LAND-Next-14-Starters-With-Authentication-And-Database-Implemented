@@ -1,6 +1,3 @@
--- Current sql file was generated after introspecting the database
--- If you want to run this migration please uncomment this code before executing migrations
-/*
 CREATE TABLE `account` (
 	`userId` varchar(255) NOT NULL,
 	`type` varchar(255) NOT NULL,
@@ -20,23 +17,23 @@ CREATE TABLE `session` (
 	`sessionToken` varchar(255) NOT NULL,
 	`userId` varchar(255) NOT NULL,
 	`expires` timestamp NOT NULL,
-	CONSTRAINT `session_provider_providerAccountId` PRIMARY KEY(`provider`,`providerAccountId`)
+	CONSTRAINT `session_sessionToken` PRIMARY KEY(`sessionToken`)
 );
 --> statement-breakpoint
 CREATE TABLE `user` (
 	`id` varchar(255) NOT NULL,
 	`name` varchar(255),
 	`email` varchar(255) NOT NULL,
-	`emailVerified` timestamp(3) DEFAULT now(),
+	`passwordHash` text,
+	`resetPasswordToken` text,
 	`image` varchar(255),
-	CONSTRAINT `user_provider_providerAccountId` PRIMARY KEY(`provider`,`providerAccountId`)
+	CONSTRAINT `user_id` PRIMARY KEY(`id`),
+	CONSTRAINT `user_resetPasswordToken_unique` UNIQUE(`resetPasswordToken`)
 );
 --> statement-breakpoint
 CREATE TABLE `verificationToken` (
 	`identifier` varchar(255) NOT NULL,
 	`token` varchar(255) NOT NULL,
 	`expires` timestamp NOT NULL,
-	CONSTRAINT `verificationToken_provider_providerAccountId` PRIMARY KEY(`provider`,`providerAccountId`)
+	CONSTRAINT `verificationToken_identifier_token` PRIMARY KEY(`identifier`,`token`)
 );
-
-*/
