@@ -1,4 +1,5 @@
 import type { AdapterAccount } from "@auth/core/adapters"
+import { relations } from "drizzle-orm"
 import {
   int,
   mysqlTable,
@@ -6,17 +7,6 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core"
-
-export const users = mysqlTable("user", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("emailVerified", {
-    mode: "date",
-    fsp: 3,
-  }).defaultNow(),
-  image: varchar("image", { length: 255 }),
-})
 
 export const accounts = mysqlTable(
   "account",
@@ -41,12 +31,45 @@ export const accounts = mysqlTable(
   })
 )
 
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}))
+
 export const sessions = mysqlTable("session", {
   sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
   userId: varchar("userId", { length: 255 }).notNull(),
   // .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
+}))
+
+export const users = mysqlTable("user", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 255 }).notNull(),
+  emailVerified: timestamp("emailVerified", {
+    mode: "date",
+    fsp: 3,
+  }).defaultNow(),
+  image: varchar("image", { length: 255 }),
+})
+
+export const userRelations = relations(users, ({ one, many }) => ({
+  account: one(accounts, {
+    fields: [users.id],
+    references: [accounts.userId],
+  }),
+  session: many(sessions),
+}))
 
 export const verificationTokens = mysqlTable(
   "verificationToken",
@@ -59,3 +82,15 @@ export const verificationTokens = mysqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 )
+
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
+
+export type Account = typeof accounts.$inferSelect
+export type NewAccount = typeof accounts.$inferInsert
+
+export type Session = typeof sessions.$inferSelect
+export type NewSession = typeof sessions.$inferInsert
+
+export type VerificationToken = typeof verificationTokens.$inferSelect
+export type NewVerificationToken = typeof verificationTokens.$inferInsert
