@@ -30,7 +30,7 @@ export async function Header() {
           href="/"
           className="flex items-center justify-center gap-2 text-lg font-bold tracking-wide transition-all duration-300 ease-in-out"
         >
-          <Icons.rocket className="h-6 w-6" />
+          <Icons.rocket className="h-6 w-6 md:hidden lg:flex" />
           <span className="hidden md:flex">{siteConfig.name}</span>
         </Link>
         <Navigation navItems={siteConfig.navItems} />

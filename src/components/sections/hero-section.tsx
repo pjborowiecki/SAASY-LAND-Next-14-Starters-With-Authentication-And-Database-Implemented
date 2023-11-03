@@ -14,7 +14,7 @@ export async function HeroSection() {
     <section
       id="hero"
       aria-label="hero section"
-      className="w-full pb-12 pt-24 lg:p-32"
+      className="w-full py-24 md:py-32 lg:py-48"
     >
       <div className="container flex flex-col items-center gap-6 text-center">
         {gitHubStars ? (
