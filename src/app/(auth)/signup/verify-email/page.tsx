@@ -2,7 +2,7 @@ import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getUserByEmailVerificationTokenAction } from "@/actions/user"
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
@@ -39,7 +39,7 @@ export default async function VerifyEmailPage({
     if (!user) {
       return (
         <div className="flex min-h-screen w-full items-center justify-center">
-          <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+          <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
             <CardHeader>
               <CardTitle>Invalid Email Verification Token</CardTitle>
               <CardDescription>
@@ -81,7 +81,7 @@ export default async function VerifyEmailPage({
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Email successfully verified</CardTitle>
             <CardDescription>
@@ -92,7 +92,7 @@ export default async function VerifyEmailPage({
             <Link
               aria-label="Go back to sign in page"
               href="/signin"
-              className={cn(buttonVariants(), "primary-gradient w-full")}
+              className={buttonVariants()}
             >
               <span className="sr-only">Go to Sign In page</span>
               Go to Sign In page
@@ -104,7 +104,7 @@ export default async function VerifyEmailPage({
   } else {
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Missing Email Verification Token</CardTitle>
             <CardDescription>

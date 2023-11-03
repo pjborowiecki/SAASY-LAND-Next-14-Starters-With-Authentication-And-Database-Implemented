@@ -32,10 +32,10 @@ export default async function SignInPage() {
 
   return (
     <div className="flex h-auto min-h-screen w-full items-center justify-center">
-      <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex  max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+      <Card className="max-sm:flex  max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Sign in</CardTitle>
-          <CardDescription className="text-customDark-400 dark:text-customLight-400/70">
+          <CardDescription>
             Choose your preferred sign in method
           </CardDescription>
         </CardHeader>
@@ -46,7 +46,7 @@ export default async function SignInPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative mb-3 mt-6 flex justify-center text-xs uppercase">
-              <span className="bg-customLight-800 px-2 text-customDark-400 dark:bg-customDark-300 dark:text-customLight-400/70">
+              <span className="bg-background px-2">
                 Or continue with magic link
               </span>
             </div>
@@ -57,7 +57,7 @@ export default async function SignInPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative mb-3 mt-6 flex justify-center text-xs uppercase">
-              <span className="bg-customLight-800 px-2 text-customDark-400 dark:bg-customDark-300 dark:text-customLight-400/70">
+              <span className="bg-background px-2">
                 Or continue with password
               </span>
             </div>

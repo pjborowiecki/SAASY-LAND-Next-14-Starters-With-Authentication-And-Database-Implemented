@@ -36,7 +36,7 @@ export default async function PasswordUpdatePage({
     if (!user) {
       return (
         <div className="flex min-h-screen w-full items-center justify-center">
-          <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+          <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
             <CardHeader>
               <CardTitle>Invalid Reset Password Token</CardTitle>
               <CardDescription>
@@ -64,7 +64,7 @@ export default async function PasswordUpdatePage({
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Password Update</CardTitle>
             <CardDescription>Set your new password</CardDescription>
@@ -88,7 +88,7 @@ export default async function PasswordUpdatePage({
   } else {
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Missing Reset Password Token</CardTitle>
             <CardDescription>

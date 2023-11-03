@@ -1,19 +1,17 @@
-/* eslint-disable camelcase */
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google"
+import { Inter as FontSans, Urbanist } from "next/font/google"
+import localFont from "next/font/local"
 
-export const fontInter = Inter({
+export const fontSans = FontSans({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-inter",
+  variable: "--font-sans",
 })
 
-export const fontSpaceGrotesk = Space_Grotesk({
+export const fontUrban = Urbanist({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-spaceGrotesk",
+  variable: "--font-urban",
 })
 
-export const fontJetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetBrainsMono",
+export const fontHeading = localFont({
+  src: "../../public/fonts/CalSans-SemiBold.woff2",
+  variable: "--font-heading",
 })

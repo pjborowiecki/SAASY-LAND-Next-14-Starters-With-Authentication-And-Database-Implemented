@@ -2,9 +2,10 @@ export function NewsletterSection() {
   return (
     <section
       id="pricing"
-      className="container flex min-h-screen w-full items-center justify-center"
+      aria-label="newsletter section"
+      className="w-full pb-12 pt-24 lg:p-32"
     >
-      Newsletter Section
+      <div className="container">Newsletter Section</div>
     </section>
   )
 }

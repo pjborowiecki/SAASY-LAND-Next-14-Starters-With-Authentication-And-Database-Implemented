@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -22,17 +26,22 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
-    ".eslintrc.cjs",
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "**/*.js",
     "**/*.cjs",
     "**/*.mjs",
+    "**/*.ts",
+    "**/*.jsx",
+    "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

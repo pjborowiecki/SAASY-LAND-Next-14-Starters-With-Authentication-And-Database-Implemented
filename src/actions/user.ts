@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db"
 
 export async function getUserByEmailAction(email: string) {
   return await prisma.user.findUnique({

@@ -78,7 +78,7 @@ export function EmailVerificationForm() {
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner
