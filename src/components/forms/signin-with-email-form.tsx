@@ -72,7 +72,7 @@ export function SignInWithEmailForm() {
           )}
         />
 
-        <Button className="primary-gradient">
+        <Button>
           {isPending ? (
             <>
               <Icons.spinner

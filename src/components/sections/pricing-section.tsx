@@ -2,9 +2,10 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="container flex min-h-screen w-full items-center justify-center"
+      aria-label="pricing section"
+      className="w-full pb-12 pt-24 lg:p-32"
     >
-      Pricing Section
+      <div className="container">Pricing Section</div>
     </section>
   )
 }

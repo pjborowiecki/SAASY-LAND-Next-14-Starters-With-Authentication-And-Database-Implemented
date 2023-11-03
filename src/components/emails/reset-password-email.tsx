@@ -46,7 +46,6 @@ export function ResetPasswordEmail({
               </Text>
               <Button
                 href={`${env.NEXT_PUBLIC_APP_URL}/signin/password-update?token=${resetPasswordToken}`}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-gradient-to-r from-customOrange-500 to-customOrange-400 px-8 font-medium text-customLight-700 transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 Set new password
               </Button>

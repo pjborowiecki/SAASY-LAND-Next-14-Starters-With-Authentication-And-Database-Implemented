@@ -2,9 +2,10 @@ export function TestimonialsSection() {
   return (
     <section
       id="pricing"
-      className="container flex min-h-screen w-full items-center justify-center"
+      aria-label="testimonials section"
+      className="w-full pb-12 pt-24 lg:p-32"
     >
-      Testimonial Section
+      <div className="container">Testimonials Section</div>
     </section>
   )
 }

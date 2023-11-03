@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { resetPasswordAction } from "@/actions/auth"
+import { resetPassword } from "@/actions/auth"
 import { passwordResetSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -37,7 +37,7 @@ export function PasswordResetForm() {
   function onSubmit(formData: PasswordResetFormInputs) {
     startTransition(async () => {
       try {
-        const message = await resetPasswordAction(formData.email)
+        const message = await resetPassword(formData.email)
 
         if (message === "success") {
           toast.message("Success!", {
@@ -78,7 +78,7 @@ export function PasswordResetForm() {
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner
