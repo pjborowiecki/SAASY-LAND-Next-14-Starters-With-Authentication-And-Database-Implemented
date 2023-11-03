@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { updatePasswordAction } from "@/actions/auth"
+import { updatePassword } from "@/actions/auth"
 import { passwordUpdateSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -44,7 +44,7 @@ export function PasswordUpdateForm({
   function onSubmit(formData: PasswordUpdateFormInputs) {
     startTransition(async () => {
       try {
-        const message = await updatePasswordAction(
+        const message = await updatePassword(
           resetPasswordToken,
           formData.password
         )

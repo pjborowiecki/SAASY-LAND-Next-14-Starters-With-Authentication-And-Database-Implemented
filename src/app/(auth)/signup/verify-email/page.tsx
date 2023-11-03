@@ -1,7 +1,7 @@
 import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { getUserByEmailVerificationTokenAction } from "@/actions/user"
+import { getUserByEmailVerificationToken } from "@/actions/user"
 import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 
@@ -32,9 +32,7 @@ export default async function VerifyEmailPage({
   const emailVerificationToken = searchParams.token as string
 
   if (emailVerificationToken) {
-    const user = await getUserByEmailVerificationTokenAction(
-      emailVerificationToken
-    )
+    const user = await getUserByEmailVerificationToken(emailVerificationToken)
 
     if (!user) {
       return (

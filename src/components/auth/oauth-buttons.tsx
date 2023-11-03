@@ -25,7 +25,7 @@ export function OAuthButtons() {
         aria-label="Sign in with Google"
         variant="outline"
         onClick={() => void handleOAuthSignIn("google")}
-        className="w-full bg-customLight-900 hover:opacity-70 dark:bg-customDark-200 sm:w-auto"
+        className="w-full sm:w-auto"
       >
         <Icons.google className="mr-2 h-4 w-4" />
         Google
@@ -35,7 +35,7 @@ export function OAuthButtons() {
         aria-label="Sign in with gitHub"
         variant="outline"
         onClick={() => void handleOAuthSignIn("github")}
-        className="w-full bg-customLight-900 hover:opacity-70 dark:bg-customDark-200 sm:w-auto"
+        className="w-full sm:w-auto"
       >
         <Icons.gitHub className="mr-2 h-4 w-4" />
         GitHub

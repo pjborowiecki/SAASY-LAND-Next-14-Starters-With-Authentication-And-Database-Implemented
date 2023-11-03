@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { getUserByResetPasswordTokenAction } from "@/actions/user"
+import { getUserByResetPasswordToken } from "@/actions/user"
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
@@ -29,7 +29,7 @@ export default async function PasswordUpdatePage({
   searchParams,
 }: PasswordUpdatePageProps) {
   if (searchParams.token) {
-    const user = await getUserByResetPasswordTokenAction(
+    const user = await getUserByResetPasswordToken(
       String(searchParams.token)
     )
 

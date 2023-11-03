@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
-import { getServerSession } from "next-auth/next"
 
+import { getCurrentUser } from "@/lib/auth"
 import {
   Card,
   CardContent,
@@ -15,7 +15,6 @@ import {
 import { OAuthButtons } from "@/components/auth/oauth-buttons"
 import { SignInWithEmailForm } from "@/components/forms/signin-with-email-form"
 import { SignInWithPasswordForm } from "@/components/forms/signin-with-password-form"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -24,11 +23,8 @@ export const metadata: Metadata = {
 }
 
 export default async function SignInPage() {
-  const session = await getServerSession(authOptions)
-
-  if (session) {
-    redirect("/")
-  }
+  const user = await getCurrentUser()
+  if (user) redirect("/")
 
   return (
     <div className="flex h-auto min-h-screen w-full items-center justify-center">

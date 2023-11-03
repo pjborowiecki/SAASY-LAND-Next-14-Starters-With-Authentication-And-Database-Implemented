@@ -1,4 +1,4 @@
-import { sendEmailAction } from "@/actions/email"
+import { sendEmail } from "@/actions/email"
 import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 import { PrismaAdapter } from "@auth/prisma-adapter"
@@ -6,6 +6,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import type { Account, AuthOptions, Profile, Session, User } from "next-auth"
 import { type JWT } from "next-auth/jwt"
+import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
 import Email from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
@@ -47,7 +48,7 @@ export const authOptions: AuthOptions = {
         url: string
       }) {
         try {
-          const emailSent = await sendEmailAction({
+          const emailSent = await sendEmail({
             from: env.RESEND_EMAIL_FROM,
             to: [identifier],
             subject: `${siteConfig.name} magic link sign in`,
@@ -81,9 +82,8 @@ export const authOptions: AuthOptions = {
           String(user.passwordHash)
         )
 
-        if (!passwordIsValid) return null
-
-        return user
+        if (passwordIsValid) return user
+        return null
       },
     }),
   ],
@@ -116,6 +116,7 @@ export const authOptions: AuthOptions = {
     }) {
       if (params.user) {
         params.token.email = params.user.email
+        params.token.id = params.user?.id
       }
 
       return params.token
@@ -123,9 +124,14 @@ export const authOptions: AuthOptions = {
     session(params: { session: Session; token: JWT; user: User }) {
       if (params.session.user) {
         params.session.user.email = params.token.email
+        params.session.user.id = params.token.id as string
       }
 
       return params.session
     },
   },
 }
+
+const handler = NextAuth(authOptions) as unknown
+
+export { handler as GET, handler as POST }

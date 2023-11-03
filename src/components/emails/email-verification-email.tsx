@@ -47,7 +47,6 @@ export function EmailVerificationEmail({
               </Text>
               <Button
                 href={`${env.NEXT_PUBLIC_APP_URL}/signup/verify-email?token=${emailVerificationToken}`}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-gradient-to-r from-customOrange-500 to-customOrange-400 px-8 font-medium text-customLight-700 transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
               >
                 Verify email now
               </Button>
