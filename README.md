@@ -24,7 +24,7 @@ This branch contains a Next.js 13 starter with Next-Auth authentication using JS
 
 This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a MySQL database set up at [PlanetScale](https://planetscale.com). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
-- ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-neon-postgres)
+- ### [next-auth-prisma5-serverless-neon-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-prisma5-serverless-neon-postgresql)
 
 This branch contains a Next.js 13 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a PostgreSQL database set up at [Neon](https://neon.tech). The database is connected via [Prisma](https://prisma.io) v.5, which is serverless-compatible. OAuth authentication is also set up for GitHub and Google. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
