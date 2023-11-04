@@ -1,6 +1,6 @@
 const links = {
   github:
-    "https://github.com/pjborowiecki/SAASY-LAND-Next-13-Starters-With-Authentication-And-Database-Implemented",
+    "https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented",
   twitter: "https://twitter.com/pjborowiecki",
   linkedin: "https://www.linkedin.com/in/pjborowiecki",
   discord: "",
@@ -10,7 +10,7 @@ const links = {
 export const siteConfig = {
   name: "SaaSy Land",
   description:
-    "An open-source starter for Next.js 13 full-stack projects with advanced authentication and several database configurations. The aim of this project is to provide a solid foundation for faster building and launching SaaS products, marketing sites, blogs, and more.",
+    "An open-source starter for Next.js 14 full-stack projects with advanced authentication and several database configurations. The aim of this project is to provide a solid foundation for faster building and launching SaaS products, marketing sites, blogs, and more.",
   links,
   url: "https://saasyland.com",
   author: "pjborowiecki",
@@ -35,7 +35,7 @@ export const siteConfig = {
     },
     {
       title: "Docs",
-      href: "/docs"
+      href: "/docs",
     },
     {
       title: "Blog",

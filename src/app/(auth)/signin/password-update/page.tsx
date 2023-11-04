@@ -29,9 +29,7 @@ export default async function PasswordUpdatePage({
   searchParams,
 }: PasswordUpdatePageProps) {
   if (searchParams.token) {
-    const user = await getUserByResetPasswordToken(
-      String(searchParams.token)
-    )
+    const user = await getUserByResetPasswordToken(String(searchParams.token))
 
     if (!user) {
       return (

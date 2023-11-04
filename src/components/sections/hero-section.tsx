@@ -14,7 +14,7 @@ export async function HeroSection() {
     <section
       id="hero"
       aria-label="hero section"
-      className="w-full py-24 md:py-32 lg:py-48"
+      className="w-full pb-16 pt-24 md:pb-20 md:pt-32 lg:pb-28 lg:pt-48"
     >
       <div className="container flex flex-col items-center gap-6 text-center">
         {gitHubStars ? (
@@ -56,7 +56,7 @@ export async function HeroSection() {
           className="flex animate-fade-up justify-center space-x-2 opacity-0 md:space-x-4"
           style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
         >
-          <Link href="/" className={cn(buttonVariants(), "")}>
+          <Link href="/signup" className={cn(buttonVariants(), "")}>
             Get Started
           </Link>
 
