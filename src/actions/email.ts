@@ -1,6 +1,7 @@
 "use server"
 
 import crypto from "crypto"
+import { getUserByEmail } from "@/actions/user"
 import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 import {
@@ -10,8 +11,6 @@ import {
 
 import { resend } from "@/config/email"
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
-
-import { getUserByEmail } from "@/actions/user"
 
 export async function sendEmail(
   payload: CreateEmailOptions,

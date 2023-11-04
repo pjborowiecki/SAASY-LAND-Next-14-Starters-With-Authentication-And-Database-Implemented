@@ -1,5 +1,4 @@
 import * as React from "react"
-import { env } from "@/env.mjs"
 import {
   Body,
   Button,
@@ -13,6 +12,7 @@ import {
 } from "@react-email/components"
 
 import { siteConfig } from "@/config/site"
+import { absoluteUrl } from "@/lib/utils"
 
 interface ResetPasswordEmailProps {
   email: string
@@ -45,7 +45,9 @@ export function ResetPasswordEmail({
                 If this was you, you can set a new password here:
               </Text>
               <Button
-                href={`${env.NEXT_PUBLIC_APP_URL}/signin/password-update?token=${resetPasswordToken}`}
+                href={absoluteUrl(
+                  `/signin/password-update?token=${resetPasswordToken}`
+                )}
               >
                 Set new password
               </Button>
