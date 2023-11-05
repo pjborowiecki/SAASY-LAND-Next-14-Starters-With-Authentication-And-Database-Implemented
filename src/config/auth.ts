@@ -1,4 +1,5 @@
 import { sendEmail } from "@/actions/email"
+import { getUserByEmail } from "@/actions/user"
 import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 import { PrismaAdapter } from "@auth/prisma-adapter"
@@ -71,12 +72,7 @@ export const authOptions: AuthOptions = {
       authorize: async (credentials) => {
         if (!credentials) return null
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        })
-
+        const user = await getUserByEmail(credentials.email)
         if (!user) return null
 
         const passwordIsValid = await bcrypt.compare(
