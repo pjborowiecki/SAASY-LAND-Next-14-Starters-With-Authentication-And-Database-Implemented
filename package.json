@@ -15,9 +15,10 @@
   "bugs": {
     "url": "https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented/issues"
   },
+  "type": "module",
   "scripts": {
     "dev": "contentlayer build && next dev  --experimental-https",
-    "build": "next build",
+    "build": "contentlayer build && next build",
     "start": "next start",
     "postinstall": "pnpm prisma generate && pnpm prisma migrate dev",
     "db:generate": "pnpm prisma generate",
