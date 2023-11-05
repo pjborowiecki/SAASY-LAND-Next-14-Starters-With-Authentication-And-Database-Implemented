@@ -45,11 +45,12 @@ export async function Header() {
                   className="transition-all duration-300 ease-in-out hover:opacity-70"
                 >
                   <Button variant="user" size="icon">
-                    <Avatar className="h-full w-full">
+                    <Avatar className="m-0 h-full w-full p-0">
                       {user.image && (
                         <AvatarImage
                           src={user.image}
                           alt={user.name ?? "user's profile picture"}
+                          className="m-0 p-0"
                         />
                       )}
                       <AvatarFallback className="text-xs capitalize">
