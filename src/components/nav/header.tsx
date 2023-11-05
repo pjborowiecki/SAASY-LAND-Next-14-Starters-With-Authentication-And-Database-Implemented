@@ -50,7 +50,6 @@ export async function Header() {
                         <AvatarImage
                           src={user.image}
                           alt={user.name ?? "user's profile picture"}
-                          className=""
                         />
                       )}
                       <AvatarFallback className="text-xs capitalize">
