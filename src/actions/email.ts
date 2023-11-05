@@ -4,6 +4,7 @@ import crypto from "crypto"
 import { getUserByEmail } from "@/actions/user"
 import { prisma } from "@/db"
 import { env } from "@/env.mjs"
+import { type User } from "@prisma/client"
 import {
   type CreateEmailOptions,
   type CreateEmailRequestOptions,
@@ -70,5 +71,24 @@ export async function checkIfEmailVerified(email: string): Promise<boolean> {
   } catch (error) {
     console.error(error)
     throw new Error("Error checking if email verified")
+  }
+}
+
+export async function markEmailAsVerified(
+  emailVerificationToken: string
+): Promise<User> {
+  try {
+    return await prisma.user.update({
+      where: {
+        emailVerificationToken,
+      },
+      data: {
+        emailVerified: new Date(),
+        emailVerificationToken: null,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error marking email as verified")
   }
 }

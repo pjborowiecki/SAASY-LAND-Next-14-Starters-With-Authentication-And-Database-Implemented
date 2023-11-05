@@ -1,8 +1,13 @@
+import { withContentlayer } from "next-contentlayer"
+
 import("./src/env.mjs")
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    webpackBuildWorker: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -21,4 +26,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+export default withContentlayer(nextConfig)

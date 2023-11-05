@@ -28,15 +28,13 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.js",
+    "**/*.ts",
+    "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "**/*.ts",
-    "**/*.jsx",
-    "**/*.tsx",
     ".next/types/**/*.ts",
-    "./contentlayer.config.js",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
+    "next.config.cjs"
   ],
   "exclude": ["node_modules"]
 }
