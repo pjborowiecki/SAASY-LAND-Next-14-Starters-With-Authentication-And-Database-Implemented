@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import * as React from "react"
 import type { Metadata, Viewport } from "next"
 import { env } from "@/env.mjs"
+import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "sonner"
 
 import { fontHeading, fontSans, fontUrban } from "@/config/fonts"
@@ -86,7 +87,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <AuthProvider>{children}</AuthProvider>
-
+          <Analytics />
           <TailwindIndicator />
           <Toaster position="top-center" />
         </ThemeProvider>
