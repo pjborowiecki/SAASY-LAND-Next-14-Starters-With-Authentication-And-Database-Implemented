@@ -1,8 +1,8 @@
 import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { markEmailAsVerified } from "@/actions/email"
 import { getUserByEmailVerificationToken } from "@/actions/user"
-import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: "Verify your email address to continue",
 }
 
-interface VerifyEmailPageProps {
+export interface VerifyEmailPageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
@@ -63,19 +63,8 @@ export default async function VerifyEmailPage({
       )
     }
 
-    const updatedUser = await prisma.user.update({
-      where: {
-        emailVerificationToken,
-      },
-      data: {
-        emailVerified: new Date(),
-        emailVerificationToken: null,
-      },
-    })
-
-    if (!updatedUser) {
-      redirect("/signup")
-    }
+    const updatedUser = await markEmailAsVerified(emailVerificationToken)
+    if (!updatedUser) redirect("/signup")
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">

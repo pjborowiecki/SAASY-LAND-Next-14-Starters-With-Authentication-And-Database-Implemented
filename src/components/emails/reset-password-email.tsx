@@ -1,15 +1,4 @@
 import * as React from "react"
-// import {
-//   Body,
-//   Button,
-//   Container,
-//   Head,
-//   Html,
-//   Preview,
-//   Section,
-//   Tailwind,
-//   Text,
-// } from "@jsx-email/all"
 import { Body } from "@react-email/body"
 import { Button } from "@react-email/button"
 import { Container } from "@react-email/container"

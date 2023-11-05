@@ -4,7 +4,6 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 
 import { getCurrentUser } from "@/lib/auth"
-import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Card,

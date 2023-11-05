@@ -1,14 +1,3 @@
-// import {
-//   Body,
-//   Button,
-//   Container,
-//   Head,
-//   Html,
-//   Preview,
-//   Section,
-//   Tailwind,
-//   Text,
-// } from "@react-email/components"
 import { Body } from "@react-email/body"
 import { Button } from "@react-email/button"
 import { Container } from "@react-email/container"

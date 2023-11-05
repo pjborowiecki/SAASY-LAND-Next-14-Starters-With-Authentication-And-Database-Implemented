@@ -10,18 +10,6 @@ import { Section } from "@react-email/section"
 import { Tailwind } from "@react-email/tailwind"
 import { Text } from "@react-email/text"
 
-// import {
-//   Body,
-//   Button,
-//   Container,
-//   Head,
-//   Html,
-//   Preview,
-//   Section,
-//   Tailwind,
-//   Text,
-// } from "@react-email/components"
-
 import { siteConfig } from "@/config/site"
 
 interface EmailVerificationEmailProps {
