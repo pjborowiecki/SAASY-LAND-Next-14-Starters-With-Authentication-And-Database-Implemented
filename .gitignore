@@ -39,6 +39,3 @@ next-env.d.ts
 
 # certificates
 certificates
-
-# content
-.contentlayer
