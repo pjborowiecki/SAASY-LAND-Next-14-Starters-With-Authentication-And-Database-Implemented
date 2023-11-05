@@ -4,13 +4,14 @@ import * as React from "react"
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
 
+import { absoluteUrl } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
 async function handleOAuthSignIn(provider: string) {
   try {
     await signIn(provider, {
-      callbackUrl: `${window.location.origin}/`,
+      callbackUrl: absoluteUrl("/api/auth/callback/" + provider),
     })
   } catch (error) {
     toast.error("Something went wrong. Try again")
