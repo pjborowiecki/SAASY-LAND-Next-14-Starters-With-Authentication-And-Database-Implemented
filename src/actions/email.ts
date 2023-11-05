@@ -46,7 +46,10 @@ export async function resendEmailVerificationLink(
       from: env.RESEND_EMAIL_FROM,
       to: [email],
       subject: "Verify your email address",
-      react: EmailVerificationEmail({ email, emailVerificationToken }),
+      react: EmailVerificationEmail({
+        email,
+        emailVerificationToken,
+      }),
     })
     if (!userUpdated || !emailSent) return null
     return "success"

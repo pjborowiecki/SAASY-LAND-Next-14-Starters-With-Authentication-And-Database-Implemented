@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 
 import { getCurrentUser } from "@/lib/auth"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -15,6 +16,7 @@ import {
 import { OAuthButtons } from "@/components/auth/oauth-buttons"
 import { SignInWithEmailForm } from "@/components/forms/signin-with-email-form"
 import { SignInWithPasswordForm } from "@/components/forms/signin-with-password-form"
+import { Icons } from "@/components/icons"
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -30,7 +32,12 @@ export default async function SignInPage() {
     <div className="flex h-auto min-h-screen w-full items-center justify-center">
       <Card className="max-sm:flex  max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Sign in</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-2xl">Sign in</CardTitle>
+            <Link href="/" className={buttonVariants({ variant: "ghost" })}>
+              <Icons.close className="h-4 w-4" />
+            </Link>
+          </div>
           <CardDescription>
             Choose your preferred sign in method
           </CardDescription>

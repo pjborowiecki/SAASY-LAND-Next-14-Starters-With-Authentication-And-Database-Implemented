@@ -13,6 +13,7 @@ import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 import { siteConfig } from "@/config/site"
+
 import { MagicLinkEmail } from "@/components/emails/magic-link-email"
 
 export const authOptions: AuthOptions = {
