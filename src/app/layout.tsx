@@ -6,7 +6,7 @@ import { env } from "@/env.mjs"
 import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "sonner"
 
-import { fontHeading, fontSans, fontUrban } from "@/config/fonts"
+import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
 import { AuthProvider } from "@/providers/auth-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
@@ -75,8 +75,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontUrban.variable,
+          fontInter.variable,
+          fontUrbanist.variable,
           fontHeading.variable
         )}
       >

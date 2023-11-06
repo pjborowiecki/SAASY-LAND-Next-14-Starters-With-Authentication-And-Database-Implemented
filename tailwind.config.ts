@@ -14,6 +14,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        urbanist: ["var(--font-urbanist)"],
+        heading: ["var(--font-heading)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -54,11 +59,6 @@ module.exports = {
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
       },
-      fontFamily: {
-        sans: ["var(--font-sans)"],
-        urban: ["var(--font-urban)"],
-        heading: ["var(--font-heading)"],
-      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -68,7 +68,6 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
-        // Fade up and down
         "fade-up": {
           "0%": {
             opacity: 0,
@@ -95,7 +94,6 @@ module.exports = {
             transform: "translateY(0px)",
           },
         },
-        // Fade in and out
         "fade-in": {
           "0%": {
             opacity: 0,
@@ -122,12 +120,8 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-
-        // Fade up and down
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",
-
-        // Fade in and out
         "fade-in": "fade-in 0.4s",
         "fade-out": "fade-out 0.4s",
       },
