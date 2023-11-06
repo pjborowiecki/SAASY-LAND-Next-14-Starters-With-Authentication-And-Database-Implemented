@@ -4,7 +4,6 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 
 import { getCurrentUser } from "@/lib/auth"
-import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -34,7 +33,7 @@ export default async function SignInPage() {
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl">Sign in</CardTitle>
-            <Link href="/" className={buttonVariants({ variant: "ghost" })}>
+            <Link href="/">
               <Icons.close className="h-4 w-4" />
             </Link>
           </div>
