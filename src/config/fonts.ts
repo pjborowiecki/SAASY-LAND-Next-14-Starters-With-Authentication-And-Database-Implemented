@@ -1,17 +1,17 @@
-import { Inter as FontSans, Urbanist } from "next/font/google"
+import { Inter, Urbanist } from "next/font/google"
 import localFont from "next/font/local"
 
-export const fontSans = FontSans({
+export const fontInter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
 })
 
-export const fontUrban = Urbanist({
+export const fontUrbanist = Urbanist({
   subsets: ["latin"],
-  variable: "--font-urban",
+  variable: "--font-urbanist",
 })
 
 export const fontHeading = localFont({
-  src: "../../public/fonts/CalSans-SemiBold.woff2",
+  src: "../../public/fonts/cal-sans-semi-bold.woff2",
   variable: "--font-heading",
 })
