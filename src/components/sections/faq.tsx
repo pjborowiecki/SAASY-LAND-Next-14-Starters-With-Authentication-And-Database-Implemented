@@ -2,9 +2,10 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="container flex min-h-screen w-full items-center justify-center"
+      aria-label="faq section"
+      className="w-full pb-12 pt-24 lg:p-32"
     >
-      FAQ Section
+      <div className="container">FAQ Section</div>
     </section>
   )
 }

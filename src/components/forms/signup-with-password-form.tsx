@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signUpWithPasswordAction } from "@/actions/auth"
+import { signUpWithPassword } from "@/actions/auth"
 import { signUpWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -40,7 +40,7 @@ export function SignUpWithPasswordForm() {
   function onSubmit(formData: SignUpWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const message = await signUpWithPasswordAction(
+        const message = await signUpWithPassword(
           formData.email,
           formData.password
         )
@@ -112,7 +112,7 @@ export function SignUpWithPasswordForm() {
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

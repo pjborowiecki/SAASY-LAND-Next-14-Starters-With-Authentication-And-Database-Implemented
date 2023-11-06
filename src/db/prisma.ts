@@ -9,4 +9,16 @@ const connectionString = env.DATABASE_URL
 const connection = connect({ url: connectionString, fetch: undiciFetch })
 const adapter = new PrismaPlanetScale(connection)
 
-export const prisma = new PrismaClient({ adapter })
+const prismaClientSingleton = () => {
+  return new PrismaClient({ adapter })
+}
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
+}
+
+export const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+
+if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma

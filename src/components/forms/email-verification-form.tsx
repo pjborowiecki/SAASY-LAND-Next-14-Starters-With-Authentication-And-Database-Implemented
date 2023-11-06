@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { resendEmailVerificationLinkAction } from "@/actions/email"
+import { resendEmailVerificationLink } from "@/actions/email"
 import { emailVerificationSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -37,7 +37,7 @@ export function EmailVerificationForm() {
   function onSubmit(formData: EmailVerificationFormInputs) {
     startTransition(async () => {
       try {
-        const message = await resendEmailVerificationLinkAction(formData.email)
+        const message = await resendEmailVerificationLink(formData.email)
 
         if (message === "success") {
           toast.message("Success!", {
@@ -78,7 +78,7 @@ export function EmailVerificationForm() {
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

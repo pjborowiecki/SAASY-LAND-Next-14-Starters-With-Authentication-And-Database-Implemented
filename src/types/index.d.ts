@@ -20,3 +20,9 @@ export interface JWTCallbackParams {
   profile?: Profile | undefined
   isNewUser?: boolean | undefined
 }
+
+export interface BlogPostParamsProps {
+  params: {
+    slug: string[]
+  }
+}

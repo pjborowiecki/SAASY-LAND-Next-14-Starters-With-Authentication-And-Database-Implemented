@@ -1,3 +1,7 @@
 export function ContactSection() {
-  return <div>Contact Section</div>
+  return (
+    <section id="contact-section" aria-label="contact section">
+      Contact Section
+    </section>
+  )
 }

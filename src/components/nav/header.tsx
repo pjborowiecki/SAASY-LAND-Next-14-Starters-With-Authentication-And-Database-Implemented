@@ -1,8 +1,7 @@
 import Link from "next/link"
-import { getServerSession } from "next-auth/next"
 
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { getCurrentUser } from "@/lib/auth"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
@@ -19,19 +18,18 @@ import { Icons } from "@/components/icons"
 import { Navigation } from "@/components/nav/navigation"
 import { NavigationMobile } from "@/components/nav/navigation-mobile"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export async function Header() {
-  const session = await getServerSession(authOptions)
+  const user = await getCurrentUser()
 
   return (
-    <header className="sticky top-0 z-40 flex h-20 w-full border-b bg-background">
+    <header className="sticky top-0 z-40 flex h-20 w-full bg-background">
       <div className="container flex items-center justify-between p-4">
         <Link
           href="/"
-          className="flex items-center justify-center gap-2 text-lg font-bold tracking-wide transition-all duration-300 ease-in-out hover:text-customOrange-400"
+          className="flex items-center justify-center gap-2 text-lg font-bold tracking-wide transition-all duration-300 ease-in-out"
         >
-          <Icons.rocket className="h-6 w-6 text-customOrange-400" />
+          <Icons.rocket className="h-6 w-6 md:hidden lg:flex" />
           <span className="hidden md:flex">{siteConfig.name}</span>
         </Link>
         <Navigation navItems={siteConfig.navItems} />
@@ -40,7 +38,7 @@ export async function Header() {
           <NavigationMobile navItems={siteConfig.navItems} />
 
           <nav className="ml-2">
-            {session ? (
+            {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   asChild
@@ -48,14 +46,14 @@ export async function Header() {
                 >
                   <Button variant="user" size="icon">
                     <Avatar className="h-full w-full">
-                      {session.user?.image && (
+                      {user.image && (
                         <AvatarImage
-                          src={session.user?.image}
-                          alt={session.user?.name ?? "user's profile picture"}
+                          src={user.image}
+                          alt={user.name ?? "user's profile picture"}
                         />
                       )}
                       <AvatarFallback className="text-xs capitalize">
-                        {session.user?.email && session.user.email.charAt(0)}
+                        {user.email && user.email.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -64,10 +62,10 @@ export async function Header() {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {session.user?.name}
+                        {user.name}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {session.user?.email}
+                        {user.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -102,10 +100,7 @@ export async function Header() {
               <Link
                 aria-label="Get started"
                 href="/signup"
-                className={cn(
-                  buttonVariants(),
-                  "primary-gradient rounded-full font-semibold text-customDark-200"
-                )}
+                className={buttonVariants()}
               >
                 Get Started
                 <span className="sr-only">Get Started</span>
