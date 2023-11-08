@@ -1,8 +1,43 @@
 # [Next 14 starters with authentication and database set up](https://saasyland.com)
 
+- [live demo]("https://saasyland.com")
+
 Starter templates for [Next.js 14](https://nextjs.org/) full-stack projects. Built with [TypeScript](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [ShadCn/ui](https://ui.shadcn.com/), authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with [Neon](https://neon.tech), or MySQL with [PlanetScale](https://planetscale.com), [Drizzle ORM](https://orm.drizzle.team/), [Prisma ORM v.5](https://www.prisma.io/) (serverless-compatible), but also [MongoDB Atlas](https://www.mongodb.com/atlas/database), [Supabase](https://supabase.com/), and even [Nest.js](https://nestjs.com/), [Express (MERN stack)](https://expressjs.com/), or [Django](https://www.djangoproject.com/). All users are stored in a database, regardless of whether they signed up with email and password, magic link, or via an OAuth provider.
 
-**The project is currently under active development. Please check back soon.**
+> **Warning**
+> This project is still in active development.
+>
+> It uses new technologies (server actions, serverless database connection, etc. ), which are subject to change and may break your application.
+> It is not recommended to use this project in production yet.
+
+## Features:
+
+- [x] Authentication with NextAuth
+- [x] Database and ORM set up
+- [x] Magic link authentication
+- [x] OAuth authentication
+- [x] Email and password authentication
+- [x] Email verification
+- [x] Password reset
+- [x] Email templates with React Email
+- [x] Functional contact form
+- [x] Functional newsletter sign up
+- [x] Functional blog with Contentlayer and MDX
+- [x] Functional and styled landing page with pricing, features, testimonials, and FAQ sections
+- [x] Functional and styled sign in and sign up pages
+- [x] Input validation with Zod
+- [x] Rigorous linting and TypeScript type checking
+
+- [ ] Documentation pages
+- [ ] Stripe payments integration
+- [ ] Opt out from newsletter
+- [ ] User profile and settings pages
+- [ ] Custom loading pages with skeleton loaders
+- [ ] Custom error pages
+- [ ] Add pages for menu items
+- [ ] Improve MDX blog styling
+- [ ] Improve performance and make Edge compatible
+- [ ] Add tests
 
 ![public/images/screenshots/screenshot_1](./public/images/screenshots/screenshot_1.png)
 
