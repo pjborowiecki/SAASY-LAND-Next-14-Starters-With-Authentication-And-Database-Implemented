@@ -23,7 +23,7 @@ import { Icons } from "@/components/icons"
 
 type SignInWithEmailFormInputs = z.infer<typeof signInWithEmailSchema>
 
-export function SignInWithEmailForm() {
+export function SignInWithEmailForm(): JSX.Element {
   const searchParams = useSearchParams()
   const [isPending, startTransition] = React.useTransition()
 
@@ -34,7 +34,7 @@ export function SignInWithEmailForm() {
     },
   })
 
-  function onSubmit(formData: SignInWithEmailFormInputs) {
+  function onSubmit(formData: SignInWithEmailFormInputs): void {
     startTransition(async () => {
       try {
         await signIn("email", {

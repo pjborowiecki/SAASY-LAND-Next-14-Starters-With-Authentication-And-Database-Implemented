@@ -15,7 +15,10 @@ interface MagicLinkEmailProps {
   url: string
 }
 
-export function MagicLinkEmail({ identifier, url }: MagicLinkEmailProps) {
+export function MagicLinkEmail({
+  identifier,
+  url,
+}: MagicLinkEmailProps): JSX.Element {
   const previewText = `${siteConfig.name} magic link sign in.`
   return (
     <Html lang="en">

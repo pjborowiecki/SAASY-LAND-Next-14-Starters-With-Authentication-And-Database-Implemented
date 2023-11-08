@@ -17,6 +17,7 @@ export const env = createEnv({
     GITHUB_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
     RESEND_EMAIL_FROM: z.string().email(),
+    RESEND_EMAIL_TO: z.string().email(),
   },
 
   /**
@@ -44,6 +45,7 @@ export const env = createEnv({
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     RESEND_EMAIL_FROM: process.env.RESEND_EMAIL_FROM,
+    RESEND_EMAIL_TO: process.env.RESEND_EMAIL_TO,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.

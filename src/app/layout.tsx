@@ -1,4 +1,5 @@
 import "@/styles/globals.css"
+import "@/styles/mdx.css"
 
 import * as React from "react"
 import type { Metadata, Viewport } from "next"
@@ -9,6 +10,7 @@ import { Toaster } from "sonner"
 import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
 import { AuthProvider } from "@/providers/auth-provider"
+import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
@@ -69,12 +71,12 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "w-full bg-background bg-gradient-to-r from-background to-pink-400/10 font-sans antialiased",
           fontInter.variable,
           fontUrbanist.variable,
           fontHeading.variable
@@ -82,14 +84,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>{children}</AuthProvider>
-          <Analytics />
-          <TailwindIndicator />
-          <Toaster position="top-center" />
+          <SmoothScrollProvider>
+            <AuthProvider>{children}</AuthProvider>
+            <Analytics />
+            <TailwindIndicator />
+            <Toaster position="top-center" />
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

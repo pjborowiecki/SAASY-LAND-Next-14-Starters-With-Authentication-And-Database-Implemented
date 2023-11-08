@@ -1,5 +1,5 @@
 "use client"
 
-export function UpdateUserForm() {
-  return <div>Update User Form</div>
+export function UpdateUserForm(): JSX.Element {
+  return <div>TODO: Update User Form</div>
 }

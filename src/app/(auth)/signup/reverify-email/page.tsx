@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Provide your email address to receive the verification link",
 }
 
-export default function ReverifyEmailPage() {
+export default function ReverifyEmailPage(): JSX.Element {
   return (
     <div className="flex min-h-screen w-full items-center justify-center">
       <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">

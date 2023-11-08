@@ -23,7 +23,7 @@ import { Icons } from "@/components/icons"
 
 type PasswordResetFormInputs = z.infer<typeof passwordResetSchema>
 
-export function PasswordResetForm() {
+export function PasswordResetForm(): JSX.Element {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
@@ -34,22 +34,25 @@ export function PasswordResetForm() {
     },
   })
 
-  function onSubmit(formData: PasswordResetFormInputs) {
+  function onSubmit(formData: PasswordResetFormInputs): void {
     startTransition(async () => {
       try {
         const message = await resetPassword(formData.email)
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "Check your email for a password reset link",
-          })
-          router.push("/signin")
-        } else if (message === "not-found") {
-          toast.error("User with this email address does not exist")
-          form.reset()
-        } else {
-          toast.error("Error resetting password. Please try again")
-          router.push("/signin")
+        switch (message) {
+          case "not-found":
+            toast.error("User with this email address does not exist")
+            form.reset()
+            break
+          case "success":
+            toast.message("Success!", {
+              description: "Check your email for a password reset link",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast.error("Error resetting password. Please try again")
+            router.push("/signin")
         }
       } catch (error) {
         toast.error("Something went wrong. Try again")
