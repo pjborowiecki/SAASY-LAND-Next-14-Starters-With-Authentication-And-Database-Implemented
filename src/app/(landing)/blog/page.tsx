@@ -14,7 +14,7 @@ export const metadata = {
   description: "Read out latest blog posts",
 }
 
-export default function BlogPage() {
+export default function BlogPage(): JSX.Element {
   const posts = allPosts
     .filter((post) => post.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))

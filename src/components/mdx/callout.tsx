@@ -7,7 +7,12 @@ interface CalloutProps extends React.PropsWithChildren {
   title?: string
 }
 
-export function Callout({ title, children, icon, ...props }: CalloutProps) {
+export function Callout({
+  title,
+  children,
+  icon,
+  ...props
+}: CalloutProps): JSX.Element {
   return (
     <Alert {...props}>
       {icon && <span className="mr-4 text-2xl">{icon}</span>}

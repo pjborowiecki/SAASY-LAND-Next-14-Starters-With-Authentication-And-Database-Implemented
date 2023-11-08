@@ -26,7 +26,7 @@ import { PasswordInput } from "@/components/password-input"
 
 type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
 
-export function SignInWithPasswordForm() {
+export function SignInWithPasswordForm(): JSX.Element {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
@@ -38,7 +38,7 @@ export function SignInWithPasswordForm() {
     },
   })
 
-  function onSubmit(formData: SignInWithPasswordFormInputs) {
+  function onSubmit(formData: SignInWithPasswordFormInputs): void {
     startTransition(async () => {
       try {
         const user = await getUserByEmail(formData.email)

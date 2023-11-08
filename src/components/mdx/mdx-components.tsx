@@ -153,7 +153,7 @@ interface MdxProps {
   code: string
 }
 
-export function Mdx({ code }: MdxProps) {
+export function Mdx({ code }: MdxProps): JSX.Element {
   const Component = useMDXComponent(code)
 
   return (

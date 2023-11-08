@@ -1,23 +1,21 @@
-import { notFound } from "next/navigation"
-import { allAuthors, allPosts } from "contentlayer/generated"
-
-import { Mdx } from "@/components/mdx/mdx-components"
-
-import "@/styles/mdx.css"
-
 import Image from "next/image"
 import Link from "next/link"
+import { notFound } from "next/navigation"
 import { type BlogPostParamsProps } from "@/types"
 import { ChevronLeftIcon } from "@radix-ui/react-icons"
+import { allAuthors, allPosts } from "contentlayer/generated"
 
 import { getPostFromParams } from "@/lib/mdx"
 import { cn, formatDate } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Mdx } from "@/components/mdx/mdx-components"
 import { MdxPager } from "@/components/mdx/mdx-pager"
 
-export default function BlogPostPage({ params }: BlogPostParamsProps) {
+export default function BlogPostPage({
+  params,
+}: BlogPostParamsProps): JSX.Element {
   const post = getPostFromParams(params)
   if (!post) notFound()
 

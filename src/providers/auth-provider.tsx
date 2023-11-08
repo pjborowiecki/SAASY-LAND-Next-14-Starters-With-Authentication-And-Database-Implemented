@@ -7,6 +7,6 @@ interface AuthProviderProps {
   children: React.ReactNode
 }
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   return <SessionProvider>{children}</SessionProvider>
 }

@@ -4,7 +4,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function BlogPostLoadingPage() {
+export default function BlogPostLoadingPage(): JSX.Element {
   return (
     <article className="container grid max-w-7xl items-center gap-8 py-24 md:py-16 lg:py-32">
       <Skeleton className="absolute left-[-200px] top-14 hidden h-9 w-28 xl:inline-block" />

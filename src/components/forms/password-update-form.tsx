@@ -29,7 +29,7 @@ interface PasswordUpdateFormProps {
 
 export function PasswordUpdateForm({
   resetPasswordToken,
-}: PasswordUpdateFormProps) {
+}: PasswordUpdateFormProps): JSX.Element {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
@@ -41,7 +41,7 @@ export function PasswordUpdateForm({
     },
   })
 
-  function onSubmit(formData: PasswordUpdateFormInputs) {
+  function onSubmit(formData: PasswordUpdateFormInputs): void {
     startTransition(async () => {
       try {
         const message = await updatePassword(
@@ -49,17 +49,18 @@ export function PasswordUpdateForm({
           formData.password
         )
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "You can now sign in with new password",
-          })
-        } else if (message === "expired") {
-          toast.error("Token is missing or expired. Please try again")
-        } else {
-          toast.error("Error updating password. Please try again")
+        switch (message) {
+          case "expired":
+            toast.error("Token is missing or expired. Please try again")
+            router.push("/signin")
+            break
+          case "success":
+            toast.success("Success! You can now sign in with new password")
+            router.push("/signin")
+            break
+          default:
+            toast.error("Error updating password. Please try again")
         }
-
-        router.push("/signin")
       } catch (error) {
         toast.error("Something went wrong. Try again")
         console.error(error)

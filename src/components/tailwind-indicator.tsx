@@ -1,6 +1,6 @@
 import { env } from "@/env.mjs"
 
-export function TailwindIndicator() {
+export function TailwindIndicator(): JSX.Element | null {
   if (env.NODE_ENV === "production") return null
 
   return (

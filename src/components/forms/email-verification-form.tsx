@@ -23,7 +23,7 @@ import { Icons } from "@/components/icons"
 
 type EmailVerificationFormInputs = z.infer<typeof emailVerificationSchema>
 
-export function EmailVerificationForm() {
+export function EmailVerificationForm(): JSX.Element {
   const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
@@ -34,22 +34,25 @@ export function EmailVerificationForm() {
     },
   })
 
-  function onSubmit(formData: EmailVerificationFormInputs) {
+  function onSubmit(formData: EmailVerificationFormInputs): void {
     startTransition(async () => {
       try {
         const message = await resendEmailVerificationLink(formData.email)
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "Check your inbox and verify your email address",
-          })
-          router.push("/signin")
-        } else if (message === "not-found") {
-          toast.error("User with this email address does not exist")
-          form.reset()
-        } else {
-          toast.error("Error sending verification link. Please try again")
-          router.push("/signup")
+        switch (message) {
+          case "not-found":
+            toast.error("User with this email address does not exist")
+            form.reset()
+            break
+          case "success":
+            toast.message("Success!", {
+              description: "Check your inbox and verify your email address",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast.error("Error sending verification link. Please try again")
+            router.push("/signup")
         }
       } catch (error) {
         toast.error("Something went wrong. Please try again")

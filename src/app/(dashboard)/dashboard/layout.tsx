@@ -9,9 +9,8 @@ interface DashboardLayoutProps {
 
 export default async function DashboardLayout({
   children,
-}: DashboardLayoutProps) {
+}: DashboardLayoutProps): Promise<JSX.Element> {
   const user = await getCurrentUser()
-
   if (!user) redirect("/signin")
 
   return <div>{children}</div>

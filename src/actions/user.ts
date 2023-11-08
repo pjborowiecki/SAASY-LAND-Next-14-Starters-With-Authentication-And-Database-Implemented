@@ -1,6 +1,6 @@
 "use server"
 
-import { prisma } from "@/db/prisma"
+import { prisma } from "@/db"
 import { type User } from "@prisma/client"
 
 export async function getUserByEmail(email: string): Promise<User | null> {

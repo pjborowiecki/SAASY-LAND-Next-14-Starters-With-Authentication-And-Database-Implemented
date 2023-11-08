@@ -27,7 +27,7 @@ interface PasswordUpdatePageProps {
 
 export default async function PasswordUpdatePage({
   searchParams,
-}: PasswordUpdatePageProps) {
+}: PasswordUpdatePageProps): Promise<JSX.Element> {
   if (searchParams.token) {
     const user = await getUserByResetPasswordToken(String(searchParams.token))
 

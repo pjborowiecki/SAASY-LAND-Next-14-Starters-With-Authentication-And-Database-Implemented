@@ -1,3 +1,3 @@
-export default function SettingsPage() {
+export default function SettingsPage(): JSX.Element {
   return <div>Settings Page</div>
 }

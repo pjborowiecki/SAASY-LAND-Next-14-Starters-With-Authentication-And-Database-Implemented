@@ -19,7 +19,7 @@ export function MdxPager({
   allItems,
   className,
   ...props
-}: MdxPagerProps) {
+}: MdxPagerProps): JSX.Element | null {
   const pager = getPager(currentItem, allItems)
 
   if (!pager) {

@@ -13,7 +13,7 @@ export function MdxCard({
   children,
   disabled,
   ...props
-}: CardProps) {
+}: CardProps): JSX.Element {
   return (
     <div
       className={cn(

@@ -1,4 +1,3 @@
-import * as React from "react"
 import { env } from "@/env.mjs"
 import { Body } from "@react-email/body"
 import { Button } from "@react-email/button"
@@ -20,7 +19,7 @@ interface EmailVerificationEmailProps {
 export function EmailVerificationEmail({
   email,
   emailVerificationToken,
-}: Readonly<EmailVerificationEmailProps>) {
+}: Readonly<EmailVerificationEmailProps>): JSX.Element {
   const previewText = `${siteConfig.name} email verification.`
   return (
     <Html lang="en">

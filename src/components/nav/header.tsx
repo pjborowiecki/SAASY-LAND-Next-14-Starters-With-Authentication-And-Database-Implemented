@@ -19,11 +19,11 @@ import { Navigation } from "@/components/nav/navigation"
 import { NavigationMobile } from "@/components/nav/navigation-mobile"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-export async function Header() {
+export async function Header(): Promise<JSX.Element> {
   const user = await getCurrentUser()
 
   return (
-    <header className="sticky top-0 z-40 flex h-20 w-full bg-background">
+    <header className="sticky top-0 z-40 flex h-20 w-full bg-transparent">
       <div className="container flex items-center justify-between p-4">
         <Link
           href="/"
@@ -100,7 +100,7 @@ export async function Header() {
               <Link
                 aria-label="Get started"
                 href="/signup"
-                className={buttonVariants()}
+                className={buttonVariants({ size: "sm" })}
               >
                 Get Started
                 <span className="sr-only">Get Started</span>
