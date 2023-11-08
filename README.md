@@ -32,6 +32,8 @@ Starter templates for [Next.js 14](https://nextjs.org/) full-stack projects. Bui
 - [x] Input validation with Zod
 - [x] Rigorous linting and TypeScript type checking
 
+<br />
+
 - [ ] Documentation pages
 - [ ] Stripe payments integration
 - [ ] Opt out from newsletter
