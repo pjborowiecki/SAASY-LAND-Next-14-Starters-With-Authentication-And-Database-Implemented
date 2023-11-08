@@ -129,7 +129,3 @@ export const authOptions: AuthOptions = {
     },
   },
 }
-
-const handler = NextAuth(authOptions) as unknown
-
-export { handler as GET, handler as POST }
