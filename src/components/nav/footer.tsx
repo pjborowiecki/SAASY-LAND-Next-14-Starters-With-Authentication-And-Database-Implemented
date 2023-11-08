@@ -4,10 +4,9 @@ import Balancer from "react-wrap-balancer"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { NewsletterSignUpForm } from "@/components/forms/newsletter-signup-form"
 import { Icons } from "@/components/icons"
 import { ThemeToggle } from "@/components/theme-toggle"
-
-import { NewsletterSignUpForm } from "../forms/newsletter-signup-form"
 
 export function Footer(): JSX.Element {
   return (
