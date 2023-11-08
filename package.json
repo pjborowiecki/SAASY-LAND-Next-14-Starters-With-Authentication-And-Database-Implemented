@@ -93,7 +93,7 @@
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.4",
     "jsonwebtoken": "^9.0.2",
-    "locomotive-scroll": "4.1.4",
+    "locomotive-scroll": "5.0.0-beta.8",
     "next": "14.0.1",
     "next-auth": "^4.24.4",
     "next-contentlayer": "^0.3.4",
