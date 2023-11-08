@@ -12,6 +12,7 @@ import {
 
 import { resend } from "@/config/email"
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
+import { NewEnquiryEmail } from "@/components/emails/new-enquiry-email"
 
 export async function sendEmail(
   payload: CreateEmailOptions,
@@ -90,5 +91,31 @@ export async function markEmailAsVerified(
   } catch (error) {
     console.error(error)
     throw new Error("Error marking email as verified")
+  }
+}
+
+export async function submitContactForm(formData: {
+  email: string
+  name: string
+  message: string
+}): Promise<"success" | null> {
+  try {
+    const emailSend = await sendEmail({
+      from: env.RESEND_EMAIL_FROM,
+      to: env.RESEND_EMAIL_TO,
+      subject: "Exciting news! New enquiry awaits",
+      react: NewEnquiryEmail({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }),
+    })
+
+    if (!emailSend) return null
+
+    return "success"
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error submitting contact form")
   }
 }

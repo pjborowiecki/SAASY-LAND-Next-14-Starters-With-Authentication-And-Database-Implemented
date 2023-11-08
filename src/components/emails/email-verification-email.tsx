@@ -20,7 +20,7 @@ interface EmailVerificationEmailProps {
 export function EmailVerificationEmail({
   email,
   emailVerificationToken,
-}: Readonly<EmailVerificationEmailProps>) {
+}: Readonly<EmailVerificationEmailProps>): JSX.Element {
   const previewText = `${siteConfig.name} email verification.`
   return (
     <Html lang="en">

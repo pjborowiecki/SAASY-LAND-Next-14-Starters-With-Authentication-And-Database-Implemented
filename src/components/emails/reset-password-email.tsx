@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Body } from "@react-email/body"
 import { Button } from "@react-email/button"
 import { Container } from "@react-email/container"
@@ -20,7 +19,7 @@ interface ResetPasswordEmailProps {
 export function ResetPasswordEmail({
   email,
   resetPasswordToken,
-}: Readonly<ResetPasswordEmailProps>) {
+}: Readonly<ResetPasswordEmailProps>): JSX.Element {
   const previewText = `${siteConfig.name} password reset.`
 
   return (

@@ -1,4 +1,5 @@
-import { AboutSection } from "@/components/sections/about-section"
+import { BenefitsSection } from "@/components/sections/benefits-section"
+import { ContactSection } from "@/components/sections/contact-section"
 import { FAQSection } from "@/components/sections/faq-section"
 import { FeaturesSection } from "@/components/sections/features-section"
 import { HeroSection } from "@/components/sections/hero-section"
@@ -7,17 +8,18 @@ import { PricingSection } from "@/components/sections/pricing-section"
 import { TechSection } from "@/components/sections/tech-section"
 import { TestimonialsSection } from "@/components/sections/testimonials-section"
 
-export default function LandingPage() {
+export default function LandingPage(): JSX.Element {
   return (
-    <div className="flex w-full flex-col items-center justify-center">
+    <div className="grid w-full grid-cols-1 items-center justify-center gap-16 md:gap-32">
       <HeroSection />
       <TechSection />
-      <AboutSection />
+      <BenefitsSection />
       <FeaturesSection />
+      <NewsletterSection />
       <TestimonialsSection />
       <PricingSection />
       <FAQSection />
-      <NewsletterSection />
+      <ContactSection />
     </div>
   )
 }

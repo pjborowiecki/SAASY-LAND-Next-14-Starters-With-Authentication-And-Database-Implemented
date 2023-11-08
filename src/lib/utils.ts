@@ -2,8 +2,6 @@ import { env } from "@/env.mjs"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-import { siteConfig } from "@/config/site"
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -26,18 +24,19 @@ export function truncate(str: string, length: number) {
 
 export async function getGitHubStars(): Promise<number | null> {
   try {
-    const response = await fetch(siteConfig.links.github, {
-      headers: {
-        Accept: "application/vnd.github+json",
-      },
-      next: {
-        revalidate: 60,
-      },
-    })
+    const response = await fetch(
+      "https://api.github.com/repos/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented",
+      {
+        headers: {
+          Accept: "application/vnd.github+json",
+        },
+        next: {
+          revalidate: 60,
+        },
+      }
+    )
 
-    if (!response.ok) {
-      return null
-    }
+    if (!response.ok) return null
 
     const data = (await response.json()) as { stargazers_count: number }
 

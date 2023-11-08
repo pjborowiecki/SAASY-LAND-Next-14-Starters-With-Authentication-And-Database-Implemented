@@ -9,7 +9,11 @@ type CodeBlockProps = React.DetailedHTMLProps<
   raw?: string
 }
 
-export function CodeBlock({ children, raw, ...props }: CodeBlockProps) {
+export function CodeBlock({
+  children,
+  raw,
+  ...props
+}: CodeBlockProps): JSX.Element {
   return (
     <>
       <CopyButton value={raw} />

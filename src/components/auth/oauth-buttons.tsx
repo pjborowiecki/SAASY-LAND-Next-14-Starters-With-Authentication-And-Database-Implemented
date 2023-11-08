@@ -18,9 +18,9 @@ async function handleOAuthSignIn(provider: string) {
   }
 }
 
-export function OAuthButtons() {
+export function OAuthButtons(): JSX.Element {
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+    <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
       <Button
         aria-label="Sign in with Google"
         variant="outline"

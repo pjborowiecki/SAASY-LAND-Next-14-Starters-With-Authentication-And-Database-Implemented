@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   description: "Sign in to your account",
 }
 
-export default async function SignInPage() {
+export default async function SignInPage(): Promise<JSX.Element> {
   const user = await getCurrentUser()
   if (user) redirect("/")
 
