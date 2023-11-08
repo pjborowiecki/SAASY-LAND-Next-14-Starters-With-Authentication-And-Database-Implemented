@@ -15,7 +15,7 @@ export async function HeroSection() {
     <section
       id="hero-section"
       aria-label="hero section"
-      className="mt-24 w-full md:mt-48"
+      className="mt-16 w-full md:mt-48"
     >
       <Image
         fill

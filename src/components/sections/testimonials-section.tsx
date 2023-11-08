@@ -63,7 +63,7 @@ export function TestimonialsSection(): JSX.Element {
                           {testimonial.name.charAt(0)}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-[2px]">
                         <p className="text-base font-semibold tracking-wide">
                           <Balancer>{testimonial.name}</Balancer>
                         </p>
