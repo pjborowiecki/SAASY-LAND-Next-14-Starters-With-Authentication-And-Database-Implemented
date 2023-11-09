@@ -79,28 +79,21 @@ export const authOptions: AuthOptions = {
           String(user.passwordHash)
         )
 
-        if (passwordIsValid) return user
-        return null
+        return passwordIsValid ? user : null
       },
     }),
   ],
   jwt: {
     encode({ secret, token }) {
-      if (!token) {
-        throw new Error("No token to encode")
-      }
+      if (!token) throw new Error("No token to encode")
       return jwt.sign(token, secret)
     },
     decode({ secret, token }) {
-      if (!token) {
-        throw new Error("No token to decode")
-      }
+      if (!token) throw new Error("No token to decode")
       const decodedToken = jwt.verify(token, secret)
-      if (typeof decodedToken === "string") {
-        return JSON.parse(decodedToken) as JWT
-      } else {
-        return decodedToken
-      }
+      return typeof decodedToken === "string"
+        ? (JSON.parse(decodedToken) as JWT)
+        : decodedToken
     },
   },
   callbacks: {

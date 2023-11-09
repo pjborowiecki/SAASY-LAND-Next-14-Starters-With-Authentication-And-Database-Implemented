@@ -5,9 +5,9 @@ import { submitContactForm } from "@/actions/email"
 import { contactFormSchema } from "@/validations/email"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,6 +24,7 @@ import { Icons } from "@/components/icons"
 type ContactFormInputs = z.infer<typeof contactFormSchema>
 
 export function ContactForm(): JSX.Element {
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<ContactFormInputs>({
@@ -42,14 +43,24 @@ export function ContactForm(): JSX.Element {
 
         switch (message) {
           case "success":
-            toast.success("Thank you! Your message has been sent")
+            toast({
+              title: "Thank you!",
+              description: "Your message has been sent",
+            })
             form.reset()
             break
           default:
-            toast.error("Something went wrong. Please try again")
+            toast({
+              title: "Something went wrong",
+              description: "Please try again",
+              variant: "destructive",
+            })
         }
       } catch (error) {
-        toast.error("Something went wrong. Please try again")
+        toast({
+          description: "Something went wrong. Please try again",
+          variant: "destructive",
+        })
       }
     })
   }
@@ -69,14 +80,9 @@ export function ContactForm(): JSX.Element {
                 <FormLabel>Name</FormLabel>
 
                 <FormControl className="h-12">
-                  <Input
-                    type="text"
-                    autoComplete="off"
-                    placeholder="John"
-                    {...field}
-                  />
+                  <Input type="text" placeholder="John" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="pt-2 sm:text-sm" />
               </FormItem>
             )}
           />
@@ -88,14 +94,9 @@ export function ContactForm(): JSX.Element {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl className="h-12">
-                  <Input
-                    type="email"
-                    autoComplete="off"
-                    placeholder="john@smith.com"
-                    {...field}
-                  />
+                  <Input type="email" placeholder="john@smith.com" {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="pt-2 sm:text-sm" />
               </FormItem>
             )}
           />
@@ -107,10 +108,14 @@ export function ContactForm(): JSX.Element {
           render={({ field }) => (
             <FormItem className="">
               <FormLabel>Message</FormLabel>
-              <FormControl className="min-h-[240px]">
-                <Textarea {...field} placeholder="Hi, I am looking to..." />
+              <FormControl className="min-h-[180px] md:min-h-[240px]">
+                <Textarea
+                  {...field}
+                  placeholder="Hi, I am looking to..."
+                  className="text-base"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />

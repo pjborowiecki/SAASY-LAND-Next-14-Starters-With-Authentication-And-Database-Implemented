@@ -2,23 +2,39 @@
 
 import * as React from "react"
 import { signIn } from "next-auth/react"
-import { toast } from "sonner"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
-async function handleOAuthSignIn(provider: string) {
-  try {
-    await signIn(provider, {
-      callbackUrl: `${window.location.origin}/`,
-    })
-  } catch (error) {
-    toast.error("Something went wrong. Try again")
-    console.error(error)
-  }
-}
-
 export function OAuthButtons(): JSX.Element {
+  const { toast } = useToast()
+
+  async function handleOAuthSignIn(provider: string): Promise<void> {
+    try {
+      const signInResponse = await signIn(provider, {
+        callbackUrl: `${window.location.origin}/`,
+      })
+
+      if (signInResponse?.ok) {
+        toast({ title: "Success!", description: "You are now signed in" })
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again",
+        variant: "destructive",
+      })
+      console.error(error)
+    }
+  }
+
   return (
     <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
       <Button

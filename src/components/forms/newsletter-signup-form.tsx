@@ -5,9 +5,9 @@ import { subscribeToNewsletter } from "@/actions/newsletter"
 import { newsletterSignUpSchema } from "@/validations/email"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,6 +23,7 @@ import { Icons } from "@/components/icons"
 type NewsletterSignUpFormInputs = z.infer<typeof newsletterSignUpSchema>
 
 export function NewsletterSignUpForm(): JSX.Element {
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<NewsletterSignUpFormInputs>({
@@ -39,18 +40,32 @@ export function NewsletterSignUpForm(): JSX.Element {
 
         switch (message) {
           case "exists":
-            toast.message("You are already subscribed")
+            toast({
+              title: "You are subscribed already",
+              variant: "destructive",
+            })
             form.reset()
             break
           case "success":
-            toast.success("Thank you for subscribing!")
+            toast({
+              title: "Thank you!",
+              description: "You have successfully subscribed to our newsletter",
+            })
             form.reset()
             break
           default:
-            toast.error("Something went wrong. Please try again")
+            toast({
+              title: "Something went wrong",
+              description: "Please try again",
+              variant: "destructive",
+            })
         }
       } catch (error) {
-        toast.error("Something went wrong. Please try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
       }
     })
   }
@@ -69,15 +84,17 @@ export function NewsletterSignUpForm(): JSX.Element {
               <FormLabel className="sr-only">Email</FormLabel>
               <FormControl className="rounded-r-none">
                 <Input
+                  type="email"
                   placeholder="johnsmith@gmail.com"
                   className="h-10 placeholder:text-xs md:h-12 md:placeholder:text-sm"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
+
         <Button
           className="h-10 w-10 rounded-l-none md:h-12 md:w-12"
           disabled={isPending}
