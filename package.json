@@ -105,7 +105,6 @@
     "react-hook-form": "^7.48.2",
     "react-wrap-balancer": "^1.1.0",
     "resend": "^2.0.0",
-    "sonner": "^1.2.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "ws": "^8.14.2",

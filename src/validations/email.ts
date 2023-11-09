@@ -17,15 +17,6 @@ export const emailSchema = z
 
 export const newsletterSignUpSchema = z.object({
   email: emailSchema,
-  token: z.string({
-    required_error: "Token is required",
-    invalid_type_error: "Token must be a string",
-  }),
-  subject: z
-    .string({
-      invalid_type_error: "Subject must be a string",
-    })
-    .optional(),
 })
 
 export const contactFormSchema = z.object({
