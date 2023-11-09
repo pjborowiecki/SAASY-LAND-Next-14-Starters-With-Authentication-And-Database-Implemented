@@ -28,7 +28,7 @@ export function NewsletterSection(): JSX.Element {
           </h3>
         </div>
 
-        <div className="w-full max-w-xl">
+        <div className="w-full max-w-lg md:max-w-xl">
           <NewsletterSignUpForm />
         </div>
       </div>

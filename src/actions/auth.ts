@@ -45,9 +45,8 @@ export async function signUpWithPassword(
       subject: "Verify your email address",
       react: EmailVerificationEmail({ email, emailVerificationToken }),
     })
-    if (!userUpdated || !emailSent) return null
 
-    return "success"
+    return userUpdated && emailSent ? "success" : null
   } catch (error) {
     console.error(error)
     throw new Error("Error signing up with password")
@@ -80,9 +79,8 @@ export async function resetPassword(
       subject: "Reset your password",
       react: ResetPasswordEmail({ email, resetPasswordToken }),
     })
-    if (!userUpdated || !emailSent) return null
 
-    return "success"
+    return userUpdated && emailSent ? "success" : null
   } catch (error) {
     console.error(error)
     return null
@@ -103,7 +101,7 @@ export async function updatePassword(
 
     const passwordHash = await bcrypt.hash(password, 10)
 
-    const updatedUser = await prisma.user.update({
+    const userUpdated = await prisma.user.update({
       where: {
         id: user.id,
       },
@@ -113,9 +111,8 @@ export async function updatePassword(
         resetPasswordTokenExpiry: null,
       },
     })
-    if (!updatedUser) return null
 
-    return "success"
+    return userUpdated ? "success" : null
   } catch (error) {
     console.error(error)
     throw new Error("Error updating password")

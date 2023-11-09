@@ -59,7 +59,7 @@ export async function HeroSection() {
           </Balancer>
         </h3>
 
-        <div className="z-10 flex animate-fade-up justify-center gap-4">
+        <div className="z-10 flex animate-fade-up flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/signup"
             className={cn(

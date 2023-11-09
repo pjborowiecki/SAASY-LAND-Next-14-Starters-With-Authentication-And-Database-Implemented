@@ -5,7 +5,6 @@ import * as React from "react"
 import type { Metadata, Viewport } from "next"
 import { env } from "@/env.mjs"
 import { Analytics } from "@vercel/analytics/react"
-import { Toaster } from "sonner"
 
 import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
@@ -13,6 +12,7 @@ import { AuthProvider } from "@/providers/auth-provider"
 import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 export const viewport: Viewport = {
@@ -90,9 +90,9 @@ export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
         >
           <SmoothScrollProvider>
             <AuthProvider>{children}</AuthProvider>
+            <Toaster />
             <Analytics />
             <TailwindIndicator />
-            <Toaster position="top-center" />
           </SmoothScrollProvider>
         </ThemeProvider>
       </body>

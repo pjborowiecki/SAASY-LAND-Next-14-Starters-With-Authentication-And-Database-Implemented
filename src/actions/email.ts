@@ -53,8 +53,8 @@ export async function resendEmailVerificationLink(
         emailVerificationToken,
       }),
     })
-    if (!userUpdated || !emailSent) return null
-    return "success"
+
+    return userUpdated && emailSent ? "success" : null
   } catch (error) {
     console.error(error)
     throw new Error("Error resending email verification link")
@@ -64,11 +64,7 @@ export async function resendEmailVerificationLink(
 export async function checkIfEmailVerified(email: string): Promise<boolean> {
   try {
     const user = await getUserByEmail(email)
-    if (user?.emailVerified instanceof Date) {
-      return true
-    } else {
-      return false
-    }
+    return user?.emailVerified instanceof Date ? true : false
   } catch (error) {
     console.error(error)
     throw new Error("Error checking if email verified")
@@ -100,7 +96,7 @@ export async function submitContactForm(formData: {
   message: string
 }): Promise<"success" | null> {
   try {
-    const emailSend = await sendEmail({
+    const emailSent = await sendEmail({
       from: env.RESEND_EMAIL_FROM,
       to: env.RESEND_EMAIL_TO,
       subject: "Exciting news! New enquiry awaits",
@@ -111,9 +107,7 @@ export async function submitContactForm(formData: {
       }),
     })
 
-    if (!emailSend) return null
-
-    return "success"
+    return emailSent ? "success" : null
   } catch (error) {
     console.error(error)
     throw new Error("Error submitting contact form")
