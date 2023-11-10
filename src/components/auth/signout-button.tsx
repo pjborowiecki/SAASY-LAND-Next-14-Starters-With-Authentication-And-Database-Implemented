@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
-export function SignOutButton() {
+export function SignOutButton(): JSX.Element {
   return (
     <Button
       aria-label="Sign Out"

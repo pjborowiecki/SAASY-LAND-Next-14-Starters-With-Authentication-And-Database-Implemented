@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { signUpWithPasswordAction } from "@/actions/auth"
+import { signUpWithPassword } from "@/actions/auth"
 import { signUpWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,8 +24,9 @@ import { PasswordInput } from "@/components/password-input"
 
 type SignUpWithPasswordFormInputs = z.infer<typeof signUpWithPasswordSchema>
 
-export function SignUpWithPasswordForm() {
+export function SignUpWithPasswordForm(): JSX.Element {
   const router = useRouter()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<SignUpWithPasswordFormInputs>({
@@ -37,28 +38,44 @@ export function SignUpWithPasswordForm() {
     },
   })
 
-  function onSubmit(formData: SignUpWithPasswordFormInputs) {
+  function onSubmit(formData: SignUpWithPasswordFormInputs): void {
     startTransition(async () => {
       try {
-        const message = await signUpWithPasswordAction(
+        const message = await signUpWithPassword(
           formData.email,
           formData.password
         )
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "Check your inbox and verify your email address",
-          })
-          router.push("/signin")
-        } else if (message === "exists") {
-          toast.error("User with this email address already exists")
-          form.reset()
-        } else {
-          toast.error("Error creating account. Please try again")
-          router.push("/signin")
+        switch (message) {
+          case "exists":
+            toast({
+              title: "User with this email address already exists",
+              description: "If this is you, please sign in instead",
+              variant: "destructive",
+            })
+            form.reset()
+            break
+          case "success":
+            toast({
+              title: "Success!",
+              description: "Check your inbox to verify your email address",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast({
+              title: "Something went wrong",
+              description: "Please try again",
+              variant: "destructive",
+            })
+            console.error(message)
         }
       } catch (error) {
-        toast.error("Something went wrong. Please try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -79,7 +96,7 @@ export function SignUpWithPasswordForm() {
               <FormControl>
                 <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
@@ -93,7 +110,7 @@ export function SignUpWithPasswordForm() {
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
@@ -107,12 +124,12 @@ export function SignUpWithPasswordForm() {
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

@@ -1,1 +1,0 @@
-ALTER TABLE `user` ADD `resetPasswordTokenExpires` timestamp(3);

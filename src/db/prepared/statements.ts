@@ -1,7 +1,7 @@
 import { db } from "@/db"
+import { users } from "@/db/schemas/auth.schema"
+import { newsletterSubscribers } from "@/db/schemas/newsletter.schema"
 import { eq, sql } from "drizzle-orm"
-
-import { users } from "../schemas/auth.schema"
 
 export const psGetUserByEmail = db
   .select()
@@ -21,4 +21,10 @@ export const psGetUserByResetPasswordToken = db
   .select()
   .from(users)
   .where(eq(users.resetPasswordToken, sql.placeholder("resetPasswordToken")))
+  .prepare()
+
+export const psGetNewsletterSubscriberByEmail = db
+  .select()
+  .from(newsletterSubscribers)
+  .where(eq(newsletterSubscribers.email, sql.placeholder("email")))
   .prepare()

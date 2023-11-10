@@ -1,1 +1,0 @@
-ALTER TABLE `user` MODIFY COLUMN `resetPasswordToken` varchar(255);

@@ -5,21 +5,42 @@ import {
   psGetUserByEmailVerificationToken,
   psGetUserByResetPasswordToken,
 } from "@/db/prepared/statements"
+import { type User } from "@/db/schemas/auth.schema"
 
-export async function getUserByEmailAction(email: string) {
-  return await psGetUserByEmail.execute({ email })
+export async function getUserByEmail(email: string): Promise<User | null> {
+  try {
+    const [user] = await psGetUserByEmail.execute({ email })
+    return user || null
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error getting user by email")
+  }
 }
 
-export async function getUserByResetPasswordTokenAction(
+export async function getUserByResetPasswordToken(
   resetPasswordToken: string
-) {
-  return await psGetUserByResetPasswordToken.execute({ resetPasswordToken })
+): Promise<User | null> {
+  try {
+    const [user] = await psGetUserByResetPasswordToken.execute({
+      resetPasswordToken,
+    })
+    return user || null
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error getting user by reset password token")
+  }
 }
 
-export async function getUserByEmailVerificationTokenAction(
+export async function getUserByEmailVerificationToken(
   emailVerificationToken: string
-) {
-  return await psGetUserByEmailVerificationToken.execute({
-    emailVerificationToken,
-  })
+): Promise<User | null> {
+  try {
+    const [user] = await psGetUserByEmailVerificationToken.execute({
+      emailVerificationToken,
+    })
+    return user || null
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error getting user by email verification token")
+  }
 }
