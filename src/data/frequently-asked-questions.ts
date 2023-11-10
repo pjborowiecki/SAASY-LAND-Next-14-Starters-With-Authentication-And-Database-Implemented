@@ -29,13 +29,13 @@ export const frequentlyAskedQuestions: FrequentlyAskedQuestion[] = [
               on what really matters - building your own, unique product. And it's completely free!`,
   },
   {
-    question: `I am confused about the pricing`,
+    question: `I am confused with pricing`,
     answer: `Our product is completely free and open source. The pricing section is there to 
               serve as an example of how you could set it up for your own SaaS product.
               We have no plans and no intentions to make this a paid product.`,
   },
   {
-    question: `Is is easy to use? How do I get started?`,
+    question: `Is it easy to use? How do I get started?`,
     answer: `${siteConfig.name} is extremely easy to use. You can get started by cloning a GitHub repo and following the documentation.`,
   },
   {
