@@ -1,16 +1,30 @@
 import "@/styles/globals.css"
+import "@/styles/mdx.css"
 
 import * as React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { env } from "@/env.mjs"
-import { Toaster } from "sonner"
+import { Analytics } from "@vercel/analytics/react"
 
-import { fontInter, fontJetBrainsMono, fontSpaceGrotesk } from "@/config/fonts"
+import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
 import { AuthProvider } from "@/providers/auth-provider"
+import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -31,10 +45,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -47,39 +58,42 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    // images: [`${siteConfig.url}/og.jpg`],
+    images: [siteConfig.links.openGraphImage],
     creator: siteConfig.author,
   },
   icons: {
     icon: "/favicon.ico",
   },
+  // manifest: siteConfig.links.manifestFile,
 }
 
 interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background antialiased",
+          "w-full bg-background bg-gradient-to-r from-background to-pink-400/10 font-sans antialiased",
           fontInter.variable,
-          fontSpaceGrotesk.variable,
-          fontJetBrainsMono.variable
+          fontUrbanist.variable,
+          fontHeading.variable
         )}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>{children}</AuthProvider>
-
-          <TailwindIndicator />
-          <Toaster position="top-center" />
+          <SmoothScrollProvider>
+            <AuthProvider>{children}</AuthProvider>
+            <Toaster />
+            <Analytics />
+            <TailwindIndicator />
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

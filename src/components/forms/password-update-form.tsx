@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { updatePasswordAction } from "@/actions/auth"
+import { updatePassword } from "@/actions/auth"
 import { passwordUpdateSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -29,8 +29,9 @@ interface PasswordUpdateFormProps {
 
 export function PasswordUpdateForm({
   resetPasswordToken,
-}: PasswordUpdateFormProps) {
+}: PasswordUpdateFormProps): JSX.Element {
   const router = useRouter()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<PasswordUpdateFormInputs>({
@@ -41,29 +42,43 @@ export function PasswordUpdateForm({
     },
   })
 
-  function onSubmit(formData: PasswordUpdateFormInputs) {
+  function onSubmit(formData: PasswordUpdateFormInputs): void {
     startTransition(async () => {
       try {
-        const message = await updatePasswordAction(
+        const message = await updatePassword(
           resetPasswordToken,
           formData.password
         )
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "You can now sign in with your new password",
-          })
-        } else if (message === "expired") {
-          toast.error(
-            "Reset Password Token is missing or expired. Please try again"
-          )
-        } else {
-          toast.error("Error updating password. Please try again")
+        switch (message) {
+          case "expired":
+            toast({
+              title: "Token is missing or expired",
+              description: "Please try again",
+              variant: "destructive",
+            })
+            router.push("/signin")
+            break
+          case "success":
+            toast({
+              title: "Success!",
+              description: "You can now sign in with new password",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast({
+              title: "Error updating password",
+              description: "Please try again",
+              variant: "destructive",
+            })
         }
-
-        router.push("/signin")
       } catch (error) {
-        toast.error("Something went wrong. Try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -84,7 +99,7 @@ export function PasswordUpdateForm({
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
@@ -98,12 +113,12 @@ export function PasswordUpdateForm({
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

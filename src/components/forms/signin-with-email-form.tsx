@@ -6,9 +6,9 @@ import { signInWithEmailSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,8 +23,9 @@ import { Icons } from "@/components/icons"
 
 type SignInWithEmailFormInputs = z.infer<typeof signInWithEmailSchema>
 
-export function SignInWithEmailForm() {
+export function SignInWithEmailForm(): JSX.Element {
   const searchParams = useSearchParams()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<SignInWithEmailFormInputs>({
@@ -34,7 +35,7 @@ export function SignInWithEmailForm() {
     },
   })
 
-  function onSubmit(formData: SignInWithEmailFormInputs) {
+  function onSubmit(formData: SignInWithEmailFormInputs): void {
     startTransition(async () => {
       try {
         await signIn("email", {
@@ -42,7 +43,11 @@ export function SignInWithEmailForm() {
           callbackUrl: searchParams.get("callbackUrl") || "/",
         })
       } catch (error) {
-        toast.error("Something went wrong. try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -67,12 +72,12 @@ export function SignInWithEmailForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
 
-        <Button className="primary-gradient">
+        <Button>
           {isPending ? (
             <>
               <Icons.spinner

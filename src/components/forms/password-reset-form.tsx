@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { resetPasswordAction } from "@/actions/auth"
+import { resetPassword } from "@/actions/auth"
 import { passwordResetSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,8 +23,9 @@ import { Icons } from "@/components/icons"
 
 type PasswordResetFormInputs = z.infer<typeof passwordResetSchema>
 
-export function PasswordResetForm() {
+export function PasswordResetForm(): JSX.Element {
   const router = useRouter()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<PasswordResetFormInputs>({
@@ -34,25 +35,40 @@ export function PasswordResetForm() {
     },
   })
 
-  function onSubmit(formData: PasswordResetFormInputs) {
+  function onSubmit(formData: PasswordResetFormInputs): void {
     startTransition(async () => {
       try {
-        const message = await resetPasswordAction(formData.email)
+        const message = await resetPassword(formData.email)
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "Check your email for a password reset link",
-          })
-          router.push("/signin")
-        } else if (message === "not-found") {
-          toast.error("User with this email address does not exist")
-          form.reset()
-        } else {
-          toast.error("Error resetting password. Please try again")
-          router.push("/signin")
+        switch (message) {
+          case "not-found":
+            toast({
+              title: "User with this email address does not exist",
+              variant: "destructive",
+            })
+            form.reset()
+            break
+          case "success":
+            toast({
+              title: "Success!",
+              description: "Check your email for a password reset link",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast({
+              title: "Error resetting password",
+              description: "Please try again",
+              variant: "destructive",
+            })
+            router.push("/signin")
         }
       } catch (error) {
-        toast.error("Something went wrong. Try again")
+        toast({
+          title: "Something went wrong",
+          description: "Try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -73,12 +89,12 @@ export function PasswordResetForm() {
               <FormControl>
                 <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

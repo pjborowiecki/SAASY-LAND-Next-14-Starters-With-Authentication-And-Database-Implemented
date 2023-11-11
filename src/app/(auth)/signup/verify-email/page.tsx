@@ -1,11 +1,9 @@
 import { type Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { getUserByEmailVerificationTokenAction } from "@/actions/user"
-import { db } from "@/db"
-import { users } from "@/db/schemas/auth.schema"
+import { markEmailAsVerified } from "@/actions/email"
+import { getUserByEmailVerificationToken } from "@/actions/user"
 import { env } from "@/env.mjs"
-import { eq } from "drizzle-orm"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -24,28 +22,26 @@ export const metadata: Metadata = {
   description: "Verify your email address to continue",
 }
 
-interface VerifyEmailPageProps {
+export interface VerifyEmailPageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export default async function VerifyEmailPage({
   searchParams,
-}: VerifyEmailPageProps) {
+}: VerifyEmailPageProps): Promise<JSX.Element> {
   const emailVerificationToken = searchParams.token as string
 
   if (emailVerificationToken) {
-    const user = await getUserByEmailVerificationTokenAction(
-      emailVerificationToken
-    ).then((res) => res[0])
+    const user = await getUserByEmailVerificationToken(emailVerificationToken)
 
     if (!user) {
       return (
         <div className="flex min-h-screen w-full items-center justify-center">
-          <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+          <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
             <CardHeader>
               <CardTitle>Invalid Email Verification Token</CardTitle>
               <CardDescription>
-                Please return to the Sign Up page and try again
+                Please return to the sign up page and try again
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -67,16 +63,12 @@ export default async function VerifyEmailPage({
       )
     }
 
-    const userUpdatedResponse = await db
-      .update(users)
-      .set({ emailVerified: new Date(), emailVerificationToken: null })
-      .where(eq(users.emailVerificationToken, emailVerificationToken))
-
-    if (!userUpdatedResponse) redirect("/signup")
+    const updatedUser = await markEmailAsVerified(emailVerificationToken)
+    if (!updatedUser) redirect("/signup")
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Email successfully verified</CardTitle>
             <CardDescription>
@@ -87,7 +79,7 @@ export default async function VerifyEmailPage({
             <Link
               aria-label="Go back to sign in page"
               href="/signin"
-              className={cn(buttonVariants(), "primary-gradient w-full")}
+              className={buttonVariants()}
             >
               <span className="sr-only">Go to Sign In page</span>
               Go to Sign In page
@@ -99,7 +91,7 @@ export default async function VerifyEmailPage({
   } else {
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
-        <Card className="bg-customLight-800 dark:bg-customDark-300 max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
+        <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
           <CardHeader>
             <CardTitle>Missing Email Verification Token</CardTitle>
             <CardDescription>

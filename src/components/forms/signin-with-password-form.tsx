@@ -2,15 +2,15 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { checkIfEmailVerifiedAction } from "@/actions/email"
-import { getUserByEmailAction } from "@/actions/user"
+import { checkIfEmailVerified } from "@/actions/email"
+import { getUserByEmail } from "@/actions/user"
 import { signInWithPasswordSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,8 +26,9 @@ import { PasswordInput } from "@/components/password-input"
 
 type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
 
-export function SignInWithPasswordForm() {
+export function SignInWithPasswordForm(): JSX.Element {
   const router = useRouter()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<SignInWithPasswordFormInputs>({
@@ -41,17 +42,21 @@ export function SignInWithPasswordForm() {
   function onSubmit(formData: SignInWithPasswordFormInputs) {
     startTransition(async () => {
       try {
-        const user = await getUserByEmailAction(formData.email).then(
-          (res) => res[0]
-        )
+        const user = await getUserByEmail(formData.email)
         if (!user) {
-          toast.error("Please sign up first")
+          toast({
+            title: "First things first",
+            description: "Please make sure you are signed up before signing in",
+          })
           return
         }
 
-        const emailVerified = await checkIfEmailVerifiedAction(formData.email)
+        const emailVerified = await checkIfEmailVerified(formData.email)
         if (!emailVerified) {
-          toast.error("Please verify your email address before sign in")
+          toast({
+            title: "First things first",
+            description: "Please verify your email address before sign in",
+          })
           return
         }
 
@@ -62,15 +67,22 @@ export function SignInWithPasswordForm() {
         })
 
         if (signInResponse?.ok) {
-          toast.success("Success! You are now signed in")
+          toast({ title: "Success!", description: "You are now signed in" })
           router.push("/")
           router.refresh()
         } else {
-          toast.error("Invalid email or password")
-          return
+          toast({
+            title: "Invalid email or password",
+            description: "Please check your credentials and try again",
+            variant: "destructive",
+          })
         }
       } catch (error) {
-        toast.error("Something went wrong. Try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -95,7 +107,7 @@ export function SignInWithPasswordForm() {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
@@ -109,11 +121,11 @@ export function SignInWithPasswordForm() {
               <FormControl>
                 <PasswordInput placeholder="********" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

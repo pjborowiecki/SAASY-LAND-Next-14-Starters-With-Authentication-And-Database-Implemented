@@ -2,13 +2,13 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { resendEmailVerificationLinkAction } from "@/actions/email"
+import { resendEmailVerificationLink } from "@/actions/email"
 import { emailVerificationSchema } from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { toast } from "sonner"
 import type { z } from "zod"
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -23,8 +23,9 @@ import { Icons } from "@/components/icons"
 
 type EmailVerificationFormInputs = z.infer<typeof emailVerificationSchema>
 
-export function EmailVerificationForm() {
+export function EmailVerificationForm(): JSX.Element {
   const router = useRouter()
+  const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
   const form = useForm<EmailVerificationFormInputs>({
@@ -34,25 +35,40 @@ export function EmailVerificationForm() {
     },
   })
 
-  function onSubmit(formData: EmailVerificationFormInputs) {
+  function onSubmit(formData: EmailVerificationFormInputs): void {
     startTransition(async () => {
       try {
-        const message = await resendEmailVerificationLinkAction(formData.email)
+        const message = await resendEmailVerificationLink(formData.email)
 
-        if (message === "success") {
-          toast.message("Success!", {
-            description: "Check your inbox and verify your email address",
-          })
-          router.push("/signin")
-        } else if (message === "not-found") {
-          toast.error("User with this email address does not exist")
-          form.reset()
-        } else {
-          toast.error("Error sending verification link. Please try again")
-          router.push("/signup")
+        switch (message) {
+          case "not-found":
+            toast({
+              title: "User with this email address does not exist",
+              variant: "destructive",
+            })
+            form.reset()
+            break
+          case "success":
+            toast({
+              title: "Success!",
+              description: "Check your inbox and verify your email address",
+            })
+            router.push("/signin")
+            break
+          default:
+            toast({
+              title: "Error sending verification link",
+              description: "Please try again",
+              variant: "destructive",
+            })
+            router.push("/signup")
         }
       } catch (error) {
-        toast.error("Something went wrong. Please try again")
+        toast({
+          title: "Something went wrong",
+          description: "Please try again",
+          variant: "destructive",
+        })
         console.error(error)
       }
     })
@@ -73,12 +89,12 @@ export function EmailVerificationForm() {
               <FormControl>
                 <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="pt-2 sm:text-sm" />
             </FormItem>
           )}
         />
 
-        <Button className="primary-gradient" disabled={isPending}>
+        <Button disabled={isPending}>
           {isPending ? (
             <>
               <Icons.spinner

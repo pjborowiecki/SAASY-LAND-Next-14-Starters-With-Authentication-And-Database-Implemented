@@ -1,8 +1,8 @@
 {
+  "id": "81d4906a-d036-464f-a9cc-fe471422b5dc",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
-  "id": "b57eac4d-268e-42fe-bbc9-aa1552a147f2",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
       "name": "account",
@@ -101,6 +101,37 @@
         }
       },
       "uniqueConstraints": {}
+    },
+    "newsletterSubscriber": {
+      "name": "newsletterSubscriber",
+      "schema": "",
+      "columns": {
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "newsletterSubscriber_email_unique": {
+          "name": "newsletterSubscriber_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
     },
     "session": {
       "name": "session",
