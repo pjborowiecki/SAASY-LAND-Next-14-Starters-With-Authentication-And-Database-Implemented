@@ -1,14 +1,16 @@
 "use server"
 
+import { unstable_noStore as noStore } from "next/cache"
 import {
   psGetUserByEmail,
   psGetUserByEmailVerificationToken,
   psGetUserByResetPasswordToken,
 } from "@/db/prepared/statements"
-import { type User } from "@/db/schemas/auth.schema"
+import { type User } from "@/db/schema/index"
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   try {
+    noStore()
     const [user] = await psGetUserByEmail.execute({ email })
     return user || null
   } catch (error) {
@@ -21,6 +23,7 @@ export async function getUserByResetPasswordToken(
   resetPasswordToken: string
 ): Promise<User | null> {
   try {
+    noStore()
     const [user] = await psGetUserByResetPasswordToken.execute({
       resetPasswordToken,
     })
@@ -35,6 +38,7 @@ export async function getUserByEmailVerificationToken(
   emailVerificationToken: string
 ): Promise<User | null> {
   try {
+    noStore()
     const [user] = await psGetUserByEmailVerificationToken.execute({
       emailVerificationToken,
     })

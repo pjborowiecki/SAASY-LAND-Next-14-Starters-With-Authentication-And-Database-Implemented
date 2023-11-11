@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs"
 import { Body } from "@react-email/body"
 import { Container } from "@react-email/container"
 import { Head } from "@react-email/head"
@@ -10,13 +11,7 @@ import { Section } from "@react-email/section"
 import { Tailwind } from "@react-email/tailwind"
 import { Text } from "@react-email/text"
 
-interface NewsletterWelcomeEmailProps {
-  emailFrom: string
-}
-
-export function NewsletterWelcomeEmail({
-  emailFrom,
-}: NewsletterWelcomeEmailProps) {
+export function NewsletterWelcomeEmail(): JSX.Element {
   const previewText = "Hello and welcome to SaaSy Land!"
 
   return (
@@ -50,10 +45,10 @@ export function NewsletterWelcomeEmail({
                 {`We're`} looking forward to seeing you around! If you have any
                 questions, please {`don't`} hesitate to reach out to us at{" "}
                 <Link
-                  href={`mailto:${emailFrom}`}
+                  href={`mailto:${env.RESEND_EMAIL_FROM}`}
                   className="text-blue-500 underline"
                 >
-                  {emailFrom}
+                  {env.RESEND_EMAIL_FROM}
                 </Link>
               </Text>
               <Text className="mb-0 mt-4">

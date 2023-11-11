@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "saasy-land-next-13-starters-with-authentication-and-database-implemented",
+  "name": "saasy-land-next-14-starters-with-authentication-and-database-implemented",
   "description": "Starter templates for Next.js 14 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.",
   "version": "0.1.0",
   "license": "MIT",
@@ -33,12 +33,12 @@
     "prettier:format": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "prettier:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "typecheck": "tsc --noEmit",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint": "contentlayer build && next lint",
+    "lint:fix": "contentlayer build && next lint --fix"
   },
   "dependencies": {
-    "@auth/core": "^0.18.0",
-    "@auth/drizzle-adapter": "^0.3.5",
+    "@auth/core": "^0.18.1",
+    "@auth/drizzle-adapter": "^0.3.6",
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -95,7 +95,7 @@
     "locomotive-scroll": "5.0.0-beta.8",
     "mysql2": "^3.6.3",
     "next": "14.0.2",
-    "next-auth": "^4.24.4",
+    "next-auth": "^4.24.5",
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.2.1",
     "nodemailer": "^6.9.7",
@@ -108,7 +108,6 @@
     "sonner": "^1.2.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "undici": "^5.27.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {

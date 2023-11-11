@@ -1,6 +1,5 @@
 import { db } from "@/db"
-import { users } from "@/db/schemas/auth.schema"
-import { newsletterSubscribers } from "@/db/schemas/newsletter.schema"
+import { newsletterSubscribers, users } from "@/db/schema"
 import { eq, sql } from "drizzle-orm"
 
 export const psGetUserByEmail = db

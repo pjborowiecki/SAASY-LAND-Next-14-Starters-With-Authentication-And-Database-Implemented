@@ -1,9 +1,10 @@
 "use server"
 
 import crypto from "crypto"
+import { unstable_noStore as noStore } from "next/cache"
 import { getUserByEmail } from "@/actions/user"
 import { db } from "@/db"
-import { users } from "@/db/schemas/auth.schema"
+import { users } from "@/db/schema"
 import { env } from "@/env.mjs"
 import { eq } from "drizzle-orm"
 import {
@@ -60,6 +61,7 @@ export async function resendEmailVerificationLink(
 
 export async function checkIfEmailVerified(email: string): Promise<boolean> {
   try {
+    noStore()
     const user = await getUserByEmail(email)
     return user?.emailVerified instanceof Date ? true : false
   } catch (error) {

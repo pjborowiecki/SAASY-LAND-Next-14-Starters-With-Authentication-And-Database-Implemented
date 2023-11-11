@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { unstable_noStore as noStore } from "next/cache"
 import { signIn } from "next-auth/react"
 
 import { useToast } from "@/hooks/use-toast"
@@ -12,6 +13,7 @@ export function OAuthButtons(): JSX.Element {
 
   async function handleOAuthSignIn(provider: string): Promise<void> {
     try {
+      noStore()
       const signInResponse = await signIn(provider, {
         callbackUrl: `${window.location.origin}/`,
       })

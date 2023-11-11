@@ -10,8 +10,6 @@ Starter templates for [Next.js 14](https://nextjs.org/) full-stack projects. Bui
 
 This branch contains a Next.js 14 starter with Next-Auth authentication using JSON Web Tokens (JWT), and a MySQL database set up at [PlanetScale](https://planetscale.com). The database is connected with [Drizzle ORM](https://orm.drizzle.team/), which is serverless-compatible. OAuth authentication is also set up for GitHub and Google providers. The set up contains email verification and password reset functionality, both set up with [Resend](https://resend.com) and [React Email](https://react.email/).
 
-**This branch is being updated as you read this. It has not been thoroughly tested yet. Please check back soon**
-
 <br />
 
 > **Warning**

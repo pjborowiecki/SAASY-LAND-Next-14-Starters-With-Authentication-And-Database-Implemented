@@ -94,6 +94,11 @@ export const verificationTokens = mysqlTable(
   })
 )
 
+export const newsletterSubscribers = mysqlTable("newsletterSubscriber", {
+  email: varchar("email", { length: 255 }).unique().notNull().primaryKey(),
+  createdAt: timestamp("createdAt", { mode: "date", fsp: 3 }).defaultNow(),
+})
+
 export type User = typeof users.$inferSelect
 export type NewUser = typeof users.$inferInsert
 
@@ -105,3 +110,6 @@ export type NewSession = typeof sessions.$inferInsert
 
 export type VerificationToken = typeof verificationTokens.$inferSelect
 export type NewVerificationToken = typeof verificationTokens.$inferInsert
+
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect
+export type NewNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert
