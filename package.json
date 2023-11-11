@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "saasy-land-next-13-starters-with-authentication-and-database-implemented",
+  "name": "saasy-land-next-14-starters-with-authentication-and-database-implemented",
   "description": "Starter templates for Next.js 14 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.",
   "version": "0.1.0",
   "license": "MIT",

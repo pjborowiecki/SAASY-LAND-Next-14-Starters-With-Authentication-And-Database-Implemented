@@ -12,8 +12,9 @@ export function OAuthButtons(): JSX.Element {
   const { toast } = useToast()
 
   async function handleOAuthSignIn(provider: string): Promise<void> {
-    noStore()
     try {
+      noStore()
+
       const signInResponse = await signIn(provider, {
         callbackUrl: `${window.location.origin}/`,
       })
