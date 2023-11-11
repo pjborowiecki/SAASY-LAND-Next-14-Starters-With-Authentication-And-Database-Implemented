@@ -101,6 +101,10 @@ Under construction
 
 Under construction
 
+- ### [mern-vite-plain-react-redux](https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented/tree/mern-vite-plain-react-redux)
+
+Under construction
+
 - ### [next-auth-supabase-postgres](https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented/tree/next-auth-supabase-postgres)
 
 Under construction
