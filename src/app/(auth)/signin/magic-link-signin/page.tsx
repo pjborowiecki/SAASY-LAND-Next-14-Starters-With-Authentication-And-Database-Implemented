@@ -22,7 +22,7 @@ export default function MagicLinkSignInPage(): JSX.Element {
     <div className="flex min-h-screen w-full items-center justify-center">
       <Card className="max-sm:flex max-sm:h-screen max-sm:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:rounded-none max-sm:border-none sm:min-w-[370px] sm:max-w-[368px]">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Magic Link Sign In</CardTitle>
+          <CardTitle className="text-2xl">Success!</CardTitle>
           <CardDescription>
             Check your email for the magic link to sign in
           </CardDescription>
