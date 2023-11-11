@@ -37,7 +37,7 @@ export async function subscribeToNewsletter(
       from: env.RESEND_EMAIL_FROM,
       to: email,
       subject: "Welcome to our newsletter!",
-      react: NewsletterWelcomeEmail({ emailFrom: email }),
+      react: NewsletterWelcomeEmail(),
     })
 
     return newSubscriber && emailSent ? "success" : null

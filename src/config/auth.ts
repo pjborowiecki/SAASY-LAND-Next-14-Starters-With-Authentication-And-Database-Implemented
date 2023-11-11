@@ -58,7 +58,7 @@ export const authOptions: AuthOptions = {
           })
           return void { success: true, data: emailSent }
         } catch (error) {
-          throw new Error("Failed to send the verification Email.")
+          throw new Error("Failed to send verification email")
         }
       },
     }),
