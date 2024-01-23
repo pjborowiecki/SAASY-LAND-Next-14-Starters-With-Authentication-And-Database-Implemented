@@ -36,7 +36,10 @@ export const signInWithEmailSchema = z.object({
 
 export const signInWithPasswordSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
+  password: z.string({
+    required_error: "Password is required",
+    invalid_type_error: "Password must be a string",
+  }),
 })
 
 export const passwordResetSchema = z.object({
@@ -59,6 +62,49 @@ export const passwordUpdateSchema = z
     path: ["confirmPassword"],
   })
 
+export const passwordUpdateSchemaExtended = z
+  .object({
+    password: passwordSchema.regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
+      {
+        message:
+          "Password must contain at least 8 characters, including one uppercase, one lowercase, one number and one special character",
+      }
+    ),
+    confirmPassword: z.string(),
+    resetPasswordToken: z
+      .string({
+        required_error: "Reset password token is required",
+        invalid_type_error: "Reset password token must be a string",
+      })
+      .min(16)
+      .max(256),
+  })
+  .refine((schema) => schema.password === schema.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  })
+
 export const emailVerificationSchema = z.object({
   email: emailSchema,
 })
+
+export type SignUpWithPasswordFormInput = z.infer<
+  typeof signUpWithPasswordSchema
+>
+
+export type SignInWithPasswordFormInput = z.infer<
+  typeof signInWithPasswordSchema
+>
+
+export type SignInWithEmailFormInput = z.infer<typeof signInWithEmailSchema>
+
+export type PasswordResetFormInput = z.infer<typeof passwordResetSchema>
+
+export type PasswordUpdateFormInput = z.infer<typeof passwordUpdateSchema>
+
+export type PasswordUpdateFormInputExtended = z.infer<
+  typeof passwordUpdateSchemaExtended
+>
+
+export type EmailVerificationFormInput = z.infer<typeof emailVerificationSchema>

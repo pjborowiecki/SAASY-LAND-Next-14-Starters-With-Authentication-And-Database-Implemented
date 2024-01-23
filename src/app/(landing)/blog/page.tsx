@@ -39,10 +39,10 @@ export default function BlogPage(): JSX.Element {
                   aria-label="Placeholder"
                   role="img"
                   aria-roledescription="placeholder"
-                  className="flex h-full w-full items-center justify-center rounded-lg bg-secondary"
+                  className="flex size-full items-center justify-center rounded-lg bg-secondary"
                 >
                   <Icons.placeholder
-                    className="h-9 w-9 text-muted-foreground"
+                    className="size-9 text-muted-foreground"
                     aria-hidden="true"
                   />
                 </div>

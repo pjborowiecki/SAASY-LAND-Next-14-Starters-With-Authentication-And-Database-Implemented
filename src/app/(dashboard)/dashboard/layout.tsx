@@ -1,7 +1,8 @@
 import * as React from "react"
 import { redirect } from "next/navigation"
+import { auth } from "@/auth"
 
-import { getCurrentUser } from "@/lib/auth"
+import { DEFAULT_UNAUTHENTICATED_REDIRECT } from "@/config/defaults"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -10,8 +11,8 @@ interface DashboardLayoutProps {
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps): Promise<JSX.Element> {
-  const user = await getCurrentUser()
-  if (!user) redirect("/signin")
+  const session = await auth()
+  if (!session) redirect(DEFAULT_UNAUTHENTICATED_REDIRECT)
 
   return <div>{children}</div>
 }

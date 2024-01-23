@@ -1,13 +1,6 @@
-import { type NextApiRequest, type NextApiResponse } from "next"
-import { type AuthOptions } from "next-auth"
-import NextAuth from "next-auth/next"
+// import { siteConfig } from "@/config/site"
 
-import { authOptions } from "@/config/auth"
+export { GET, POST } from "@/auth"
 
-const handler = NextAuth(authOptions) as (
-  req: NextApiRequest,
-  res: NextApiResponse,
-  authOptions: AuthOptions
-) => Promise<void> | undefined
-
-export { handler as GET, handler as POST }
+// export const runtime = "edge"
+// export const preferredRegion = siteConfig.hostingRegion

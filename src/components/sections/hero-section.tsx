@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import Balancer from "react-wrap-balancer"
 
@@ -17,13 +16,6 @@ export async function HeroSection() {
       aria-label="hero section"
       className="mt-16 w-full md:mt-48"
     >
-      <Image
-        fill
-        src="/images/radial_1.svg"
-        alt="Hero top right corenr radial light effect"
-        className="absolute right-0 top-0 opacity-5 lg:opacity-10"
-      />
-
       <div className="container flex flex-col items-center gap-6 text-center">
         {gitHubStars ? (
           <Link
@@ -37,7 +29,7 @@ export async function HeroSection() {
               aria-hidden="true"
               className="rounded-md px-3.5 py-1.5 text-sm transition-all duration-1000 ease-out hover:opacity-80 md:text-base md:hover:-translate-y-2"
             >
-              <Icons.gitHub className="mr-2 h-3.5 w-3.5" aria-hidden="true" />
+              <Icons.gitHub className="mr-2 size-3.5" aria-hidden="true" />
               {gitHubStars} Stars on GitHub
             </Badge>
             <span className="sr-only">GitHub</span>

@@ -1,7 +1,21 @@
 "use server"
 
-import { prisma } from "@/db"
 import { type User } from "@prisma/client"
+
+import { prisma } from "@/config/db"
+
+export async function getUserById(id: string): Promise<User | null> {
+  try {
+    return await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    throw new Error("Error getting user by Id")
+  }
+}
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   try {

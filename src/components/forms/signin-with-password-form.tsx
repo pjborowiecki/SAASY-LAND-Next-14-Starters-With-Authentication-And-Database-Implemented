@@ -2,14 +2,15 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { checkIfEmailVerified } from "@/actions/email"
-import { getUserByEmail } from "@/actions/user"
-import { signInWithPasswordSchema } from "@/validations/auth"
+import { signInWithPassword } from "@/actions/auth"
+import {
+  signInWithPasswordSchema,
+  type SignInWithPasswordFormInput,
+} from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
+import { DEFAULT_SIGNIN_REDIRECT } from "@/config/defaults"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,14 +25,12 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignInWithPasswordFormInputs = z.infer<typeof signInWithPasswordSchema>
-
 export function SignInWithPasswordForm(): JSX.Element {
   const router = useRouter()
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInWithPasswordFormInputs>({
+  const form = useForm<SignInWithPasswordFormInput>({
     resolver: zodResolver(signInWithPasswordSchema),
     defaultValues: {
       email: "",
@@ -39,51 +38,62 @@ export function SignInWithPasswordForm(): JSX.Element {
     },
   })
 
-  function onSubmit(formData: SignInWithPasswordFormInputs) {
+  function onSubmit(formData: SignInWithPasswordFormInput) {
     startTransition(async () => {
       try {
-        const user = await getUserByEmail(formData.email)
-        if (!user) {
-          toast({
-            title: "First things first",
-            description: "Please make sure you are signed up before signing in",
-          })
-          return
-        }
-
-        const emailVerified = await checkIfEmailVerified(formData.email)
-        if (!emailVerified) {
-          toast({
-            title: "First things first",
-            description: "Please verify your email address before sign in",
-          })
-          return
-        }
-
-        const signInResponse = await signIn("credentials", {
+        const message = await signInWithPassword({
           email: formData.email,
           password: formData.password,
-          redirect: false,
         })
 
-        if (signInResponse?.ok) {
-          toast({ title: "Success!", description: "You are now signed in" })
-          router.push("/")
-          router.refresh()
-        } else {
-          toast({
-            title: "Invalid email or password",
-            description: "Please check your credentials and try again",
-            variant: "destructive",
-          })
+        switch (message) {
+          case "not-registered":
+            toast({
+              title: "First things first",
+              description:
+                "Please make sure you are signed up before signing in",
+            })
+            break
+          case "incorrect-provider":
+            toast({
+              title: "Email already in use with another provider",
+              description: "Perhaps you signed up with a different method?",
+            })
+            break
+          case "unverified-email":
+            toast({
+              title: "First things first",
+              description: "Please verify your email address before signing in",
+            })
+            break
+          case "invalid-credentials":
+            toast({
+              title: "Invalid email or Password",
+              description: "Double-check your credentials and try again",
+              variant: "destructive",
+            })
+            break
+          case "success":
+            toast({
+              title: "Success!",
+              description: "You are now signed in",
+            })
+            router.push(DEFAULT_SIGNIN_REDIRECT)
+            break
+          default:
+            toast({
+              title: "Error signing in with password",
+              description: "Please try again",
+              variant: "destructive",
+            })
         }
       } catch (error) {
+        console.error(error)
         toast({
           title: "Something went wrong",
           description: "Please try again",
           variant: "destructive",
         })
-        console.error(error)
       }
     })
   }
@@ -129,7 +139,7 @@ export function SignInWithPasswordForm(): JSX.Element {
           {isPending ? (
             <>
               <Icons.spinner
-                className="mr-2 h-4 w-4 animate-spin"
+                className="mr-2 size-4 animate-spin"
                 aria-hidden="true"
               />
               <span>Signing in...</span>

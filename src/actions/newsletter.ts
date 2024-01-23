@@ -1,9 +1,9 @@
 "use server"
 
-import { sendEmail } from "@/actions/email"
-import { prisma } from "@/db"
 import { env } from "@/env.mjs"
 
+import { prisma } from "@/config/db"
+import { resend } from "@/config/email"
 import { NewsletterWelcomeEmail } from "@/components/emails/newsletter-welcome-email"
 
 export async function checkIfSubscribedToNewsletter(
@@ -33,7 +33,7 @@ export async function subscribeToNewsletter(
       data: { email },
     })
 
-    const emailSent = await sendEmail({
+    const emailSent = await resend.emails.send({
       from: env.RESEND_EMAIL_FROM,
       to: email,
       subject: "Welcome to our newsletter!",
