@@ -9,7 +9,7 @@ Starter templates for [Next.js 14](https://nextjs.org/) full-stack projects. Bui
 <br />
 
 > **Warning**
-> This project is still in active development.
+> This project is still in active development. See a feature list below to get a better understanding of what has been implemented to date and what is yet to come.
 
 <br />
 
