@@ -114,7 +114,7 @@ export function PricingSection(): JSX.Element {
                   <ul className="flex flex-col gap-3">
                     {plan.features.map((item) => (
                       <li className="flex items-center gap-2" key={item}>
-                        <Icons.check className="h-4 w-4" />
+                        <Icons.check className="size-4" />
                         <Balancer>{item}</Balancer>
                       </li>
                     ))}
@@ -126,7 +126,7 @@ export function PricingSection(): JSX.Element {
                         key={item}
                         className="flex items-center gap-3 text-muted-foreground"
                       >
-                        <Icons.close className="h-4 w-4" />
+                        <Icons.close className="size-4" />
                         <Balancer>{item}</Balancer>
                       </li>
                     ))}

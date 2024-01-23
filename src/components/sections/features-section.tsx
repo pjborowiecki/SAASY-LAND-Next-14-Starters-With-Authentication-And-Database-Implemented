@@ -68,7 +68,7 @@ export function FeaturesSection() {
                 src={activeFeature ? activeFeature.image : ""}
                 fill
                 alt={activeFeature ? activeFeature.title : ""}
-                className="h-full w-full object-cover object-center"
+                className="size-full object-cover object-center"
               />
             </div>
           </div>

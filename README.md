@@ -14,15 +14,12 @@ This branch contains a Next.js 14 starter with Next-Auth authentication using JS
 
 > **Warning**
 > This project is still in active development.
->
-> It uses new technologies (server actions, serverless database connection, etc. ), which are subject to change and may break your application.
-> It is not recommended to use this project in production yet.
 
 <br />
 
 ## Features:
 
-- [x] Authentication with NextAuth
+- [x] Authentication with NextAuth v.5
 - [x] Database and ORM set up
 - [x] Magic link authentication
 - [x] OAuth authentication

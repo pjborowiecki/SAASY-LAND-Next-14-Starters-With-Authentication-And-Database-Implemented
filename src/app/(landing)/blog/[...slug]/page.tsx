@@ -32,7 +32,7 @@ export default function BlogPostPage({
           "absolute left-[-200px] top-14 hidden xl:inline-flex"
         )}
       >
-        <ChevronLeftIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+        <ChevronLeftIcon className="mr-2 size-4" aria-hidden="true" />
         See all posts
       </Link>
       <div className="space-y-2">
@@ -96,7 +96,7 @@ export default function BlogPostPage({
           buttonVariants({ variant: "ghost", className: "mx-auto mt-4 w-fit" })
         )}
       >
-        <ChevronLeftIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+        <ChevronLeftIcon className="mr-2 size-4" aria-hidden="true" />
         See all posts
         <span className="sr-only">See all posts</span>
       </Link>

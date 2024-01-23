@@ -83,7 +83,7 @@ export function Footer(): JSX.Element {
               "rounded-full"
             )}
           >
-            <Icons.gitHub className="h-[18px] w-[18px]" />
+            <Icons.gitHub className="size-[18px]" />
           </Link>
           <ThemeToggle />
         </div>

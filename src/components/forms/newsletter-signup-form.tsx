@@ -96,16 +96,13 @@ export function NewsletterSignUpForm(): JSX.Element {
         />
 
         <Button
-          className="h-10 w-10 rounded-l-none md:h-12 md:w-12"
+          className="size-10 rounded-l-none md:size-12"
           disabled={isPending}
         >
           {isPending ? (
-            <Icons.spinner
-              className="h-4 w-4 animate-spin"
-              aria-hidden="true"
-            />
+            <Icons.spinner className="size-4 animate-spin" aria-hidden="true" />
           ) : (
-            <Icons.paperPlane className="h-4 w-4" aria-hidden="true" />
+            <Icons.paperPlane className="size-4" aria-hidden="true" />
           )}
           <span className="sr-only">Join newsletter</span>
         </Button>

@@ -2,11 +2,13 @@
 
 import * as React from "react"
 import { useSearchParams } from "next/navigation"
-import { signInWithEmailSchema } from "@/validations/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
+import {
+  signInWithEmailSchema,
+  type SignInWithEmailFormInput,
+} from "@/validations/auth"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -21,34 +23,36 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
-type SignInWithEmailFormInputs = z.infer<typeof signInWithEmailSchema>
-
 export function SignInWithEmailForm(): JSX.Element {
   const searchParams = useSearchParams()
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignInWithEmailFormInputs>({
+  const form = useForm<SignInWithEmailFormInput>({
     resolver: zodResolver(signInWithEmailSchema),
     defaultValues: {
       email: "",
     },
   })
 
-  function onSubmit(formData: SignInWithEmailFormInputs): void {
+  function onSubmit(formData: SignInWithEmailFormInput): void {
     startTransition(async () => {
       try {
-        await signIn("email", {
-          email: formData.email,
-          callbackUrl: searchParams.get("callbackUrl") || "/",
-        })
+        await signIn("email", { email: formData.email })
       } catch (error) {
-        toast({
-          title: "Something went wrong",
-          description: "Please try again",
-          variant: "destructive",
-        })
         console.error(error)
+
+        searchParams.get("error") === "OAuthAccountNotLinked"
+          ? toast({
+              title: "Email already in use with another provider",
+              description: "Perhaps you signed up with another method?",
+              variant: "destructive",
+            })
+          : toast({
+              title: "Something went wrong",
+              description: "Please try again",
+              variant: "destructive",
+            })
       }
     })
   }
@@ -81,7 +85,7 @@ export function SignInWithEmailForm(): JSX.Element {
           {isPending ? (
             <>
               <Icons.spinner
-                className="mr-2 h-4 w-4 animate-spin"
+                className="mr-2 size-4 animate-spin"
                 aria-hidden="true"
               />
               <span>Pending...</span>

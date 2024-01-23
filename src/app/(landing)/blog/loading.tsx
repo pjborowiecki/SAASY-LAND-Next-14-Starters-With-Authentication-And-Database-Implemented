@@ -7,7 +7,7 @@ export default function BlogLoadingPage(): JSX.Element {
       {Array.from({ length: 6 }).map((_, index) => (
         <article key={index} className="flex flex-col space-y-2.5">
           <AspectRatio ratio={16 / 9}>
-            <Skeleton className="h-full w-full" />
+            <Skeleton className="size-full" />
           </AspectRatio>
           <Skeleton className="h-6 w-40" />
           <Skeleton className="h-6 w-28" />

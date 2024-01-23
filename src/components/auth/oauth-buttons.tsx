@@ -3,6 +3,7 @@
 import * as React from "react"
 import { signIn } from "next-auth/react"
 
+import { DEFAULT_SIGNIN_REDIRECT } from "@/config/defaults"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
@@ -10,28 +11,27 @@ import { Icons } from "@/components/icons"
 export function OAuthButtons(): JSX.Element {
   const { toast } = useToast()
 
-  async function handleOAuthSignIn(provider: string): Promise<void> {
+  async function handleOAuthSignIn(
+    provider: "google" | "github"
+  ): Promise<void> {
     try {
-      const signInResponse = await signIn(provider, {
-        callbackUrl: `${window.location.origin}/`,
+      await signIn(provider, {
+        callbackUrl: DEFAULT_SIGNIN_REDIRECT,
       })
 
-      if (signInResponse?.ok) {
-        toast({ title: "Success!", description: "You are now signed in" })
-      } else {
-        toast({
-          title: "Something went wrong",
-          description: "Please try again",
-          variant: "destructive",
-        })
-      }
+      toast({
+        title: "Success!",
+        description: "You are now signed in",
+      })
     } catch (error) {
       toast({
         title: "Something went wrong",
         description: "Please try again",
         variant: "destructive",
       })
+
       console.error(error)
+      throw new Error(`Error signing in with ${provider}`)
     }
   }
 
@@ -43,7 +43,7 @@ export function OAuthButtons(): JSX.Element {
         onClick={() => void handleOAuthSignIn("google")}
         className="w-full sm:w-auto"
       >
-        <Icons.google className="mr-2 h-4 w-4" />
+        <Icons.google className="mr-2 size-4" />
         Google
       </Button>
 
@@ -53,7 +53,7 @@ export function OAuthButtons(): JSX.Element {
         onClick={() => void handleOAuthSignIn("github")}
         className="w-full sm:w-auto"
       >
-        <Icons.gitHub className="mr-2 h-4 w-4" />
+        <Icons.gitHub className="mr-2 size-4" />
         GitHub
       </Button>
     </div>

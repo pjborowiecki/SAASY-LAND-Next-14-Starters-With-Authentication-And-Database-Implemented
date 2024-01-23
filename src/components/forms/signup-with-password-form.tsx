@@ -3,10 +3,12 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { signUpWithPassword } from "@/actions/auth"
-import { signUpWithPasswordSchema } from "@/validations/auth"
+import {
+  signUpWithPasswordSchema,
+  type SignUpWithPasswordFormInput,
+} from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -22,14 +24,12 @@ import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 import { PasswordInput } from "@/components/password-input"
 
-type SignUpWithPasswordFormInputs = z.infer<typeof signUpWithPasswordSchema>
-
 export function SignUpWithPasswordForm(): JSX.Element {
   const router = useRouter()
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<SignUpWithPasswordFormInputs>({
+  const form = useForm<SignUpWithPasswordFormInput>({
     resolver: zodResolver(signUpWithPasswordSchema),
     defaultValues: {
       email: "",
@@ -38,13 +38,14 @@ export function SignUpWithPasswordForm(): JSX.Element {
     },
   })
 
-  function onSubmit(formData: SignUpWithPasswordFormInputs): void {
+  function onSubmit(formData: SignUpWithPasswordFormInput): void {
     startTransition(async () => {
       try {
-        const message = await signUpWithPassword(
-          formData.email,
-          formData.password
-        )
+        const message = await signUpWithPassword({
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+        })
 
         switch (message) {
           case "exists":
@@ -71,12 +72,12 @@ export function SignUpWithPasswordForm(): JSX.Element {
             console.error(message)
         }
       } catch (error) {
+        console.error(error)
         toast({
           title: "Something went wrong",
           description: "Please try again",
           variant: "destructive",
         })
-        console.error(error)
       }
     })
   }
@@ -133,7 +134,7 @@ export function SignUpWithPasswordForm(): JSX.Element {
           {isPending ? (
             <>
               <Icons.spinner
-                className="mr-2 h-4 w-4 animate-spin"
+                className="mr-2 size-4 animate-spin"
                 aria-hidden="true"
               />
               <span>Signing up...</span>
