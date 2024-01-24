@@ -110,7 +110,7 @@ export async function signInWithPassword(
           throw error
       }
     } else {
-      throw error
+      throw new Error("Error signin in with password")
     }
   }
 }

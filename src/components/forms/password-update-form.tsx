@@ -47,7 +47,7 @@ export function PasswordUpdateForm({
       try {
         const message = await updatePassword({
           password: formData.password,
-          confirmPassword: formData.password,
+          confirmPassword: formData.confirmPassword,
           resetPasswordToken,
         })
 
