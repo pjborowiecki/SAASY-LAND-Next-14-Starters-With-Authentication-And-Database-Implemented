@@ -1,15 +1,13 @@
 import { env } from "@/env.mjs"
-import { neonConfig, Pool } from "@neondatabase/serverless"
-import { PrismaNeon } from "@prisma/adapter-neon"
+import { Client } from "@planetscale/database"
+import { PrismaPlanetScale } from "@prisma/adapter-planetscale"
 import { PrismaClient } from "@prisma/client"
-import ws from "ws"
-
-neonConfig.webSocketConstructor = ws as unknown as typeof WebSocket
+import { fetch as undiciFetch } from "undici"
 
 const connectionString = env.DATABASE_URL
 
-const pool = new Pool({ connectionString })
-const adapter = new PrismaNeon(pool)
+const client = new Client({ url: connectionString, fetch: undiciFetch })
+const adapter = new PrismaPlanetScale(client)
 
 const prismaClientSingleton = () => {
   return new PrismaClient({ adapter })

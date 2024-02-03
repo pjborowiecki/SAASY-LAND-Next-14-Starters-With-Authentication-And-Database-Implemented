@@ -87,12 +87,10 @@ export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
           enableSystem
           disableTransitionOnChange
         >
-          <SmoothScrollProvider>
-            {children}
-            <Toaster />
-            <Analytics />
-            <TailwindIndicator />
-          </SmoothScrollProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
+          <Toaster />
+          <Analytics />
+          <TailwindIndicator />
         </ThemeProvider>
       </body>
     </html>

@@ -1,13 +1,15 @@
-import { Body } from "@react-email/body"
-import { Container } from "@react-email/container"
-import { Head } from "@react-email/head"
-import { Heading } from "@react-email/heading"
-import { Hr } from "@react-email/hr"
-import { Html } from "@react-email/html"
-import { Preview } from "@react-email/preview"
-import { Section } from "@react-email/section"
-import { Tailwind } from "@react-email/tailwind"
-import { Text } from "@react-email/text"
+import {
+  Body,
+  Container,
+  Head,
+  Heading,
+  Hr,
+  Html,
+  Preview,
+  Section,
+  Tailwind,
+  Text,
+} from "@react-email/components"
 
 interface NewEnquiryEmailProps {
   name: string
