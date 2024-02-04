@@ -48,11 +48,12 @@ export async function Header(): Promise<JSX.Element> {
                     "transition-all duration-300 ease-in-out hover:opacity-70"
                   )}
                 >
-                  <Avatar className="size-full">
+                  <Avatar className="size-9 p-1.5">
                     {session?.user.image ? (
                       <AvatarImage
                         src={session?.user.image}
                         alt={session?.user.name ?? "user's profile picture"}
+                        className="size-5"
                       />
                     ) : (
                       <AvatarFallback className="size-9 cursor-pointer p-1.5 text-xs capitalize">
