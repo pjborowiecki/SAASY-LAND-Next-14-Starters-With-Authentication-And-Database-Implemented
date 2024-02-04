@@ -53,7 +53,7 @@ export async function Header(): Promise<JSX.Element> {
                       <AvatarImage
                         src={session?.user.image}
                         alt={session?.user.name ?? "user's profile picture"}
-                        className="size-5 rounded-full"
+                        className="size-7 rounded-full"
                       />
                     ) : (
                       <AvatarFallback className="size-9 cursor-pointer p-1.5 text-xs capitalize">
