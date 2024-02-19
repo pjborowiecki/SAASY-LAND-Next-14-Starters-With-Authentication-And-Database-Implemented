@@ -2,10 +2,12 @@
 
 import * as React from "react"
 import { subscribeToNewsletter } from "@/actions/newsletter"
-import { newsletterSignUpSchema } from "@/validations/email"
+import {
+  newsletterSignUpSchema,
+  type NewsletterSignUpFormInput,
+} from "@/validations/newsletter"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -20,23 +22,21 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
-type NewsletterSignUpFormInputs = z.infer<typeof newsletterSignUpSchema>
-
 export function NewsletterSignUpForm(): JSX.Element {
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<NewsletterSignUpFormInputs>({
+  const form = useForm<NewsletterSignUpFormInput>({
     resolver: zodResolver(newsletterSignUpSchema),
     defaultValues: {
       email: "",
     },
   })
 
-  function onSubmit(formData: NewsletterSignUpFormInputs): void {
+  function onSubmit(formData: NewsletterSignUpFormInput): void {
     startTransition(async () => {
       try {
-        const message = await subscribeToNewsletter(formData.email)
+        const message = await subscribeToNewsletter({ email: formData.email })
 
         switch (message) {
           case "exists":

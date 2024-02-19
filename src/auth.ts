@@ -18,7 +18,6 @@ export const {
     signIn: "/signin",
     signOut: "/signout",
     verifyRequest: "/signin/magic-link-signin",
-    error: "/error",
   },
   secret: env.AUTH_SECRET,
   session: {
@@ -28,7 +27,7 @@ export const {
   },
   events: {
     async linkAccount({ user }) {
-      if (user.id) await linkOAuthAccount(user.id)
+      if (user.id) await linkOAuthAccount({ userId: user.id })
     },
   },
   callbacks: {
@@ -36,7 +35,7 @@ export const {
       if (!user.id) return false
       if (account?.provider !== "credentials") return true
 
-      const existingUser = await getUserById(user.id)
+      const existingUser = await getUserById({ id: user.id })
       return !existingUser?.emailVerified ? false : true
     },
   },

@@ -1,14 +1,29 @@
 "use server"
 
+import {
+  getUserByEmailSchema,
+  getUserByEmailVerificationTokenSchema,
+  getUserByIdSchema,
+  getUserByResetPasswordTokenSchema,
+  type GetUserByEmailInput,
+  type GetUserByEmailVerificationTokenInput,
+  type GetUserByIdInput,
+  type GetUserByResetPasswordTokenInput,
+} from "@/validations/user"
 import { type User } from "@prisma/client"
 
 import { prisma } from "@/config/db"
 
-export async function getUserById(id: string): Promise<User | null> {
+export async function getUserById(
+  rawInput: GetUserByIdInput
+): Promise<User | null> {
   try {
+    const validatedInput = getUserByIdSchema.safeParse(rawInput)
+    if (!validatedInput.success) return null
+
     return await prisma.user.findUnique({
       where: {
-        id,
+        id: validatedInput.data.id,
       },
     })
   } catch (error) {
@@ -17,11 +32,16 @@ export async function getUserById(id: string): Promise<User | null> {
   }
 }
 
-export async function getUserByEmail(email: string): Promise<User | null> {
+export async function getUserByEmail(
+  rawInput: GetUserByEmailInput
+): Promise<User | null> {
   try {
+    const validatedInput = getUserByEmailSchema.safeParse(rawInput)
+    if (!validatedInput.success) return null
+
     return await prisma.user.findUnique({
       where: {
-        email,
+        email: validatedInput.data.email,
       },
     })
   } catch (error) {
@@ -31,12 +51,15 @@ export async function getUserByEmail(email: string): Promise<User | null> {
 }
 
 export async function getUserByResetPasswordToken(
-  resetPasswordToken: string
+  rawInput: GetUserByResetPasswordTokenInput
 ): Promise<User | null> {
   try {
+    const validatedInput = getUserByResetPasswordTokenSchema.safeParse(rawInput)
+    if (!validatedInput.success) return null
+
     return await prisma.user.findUnique({
       where: {
-        resetPasswordToken,
+        resetPasswordToken: validatedInput.data.token,
       },
     })
   } catch (error) {
@@ -46,12 +69,16 @@ export async function getUserByResetPasswordToken(
 }
 
 export async function getUserByEmailVerificationToken(
-  emailVerificationToken: string
+  rawInput: GetUserByEmailVerificationTokenInput
 ): Promise<User | null> {
   try {
+    const validatedInput =
+      getUserByEmailVerificationTokenSchema.safeParse(rawInput)
+    if (!validatedInput.success) return null
+
     return await prisma.user.findUnique({
       where: {
-        emailVerificationToken,
+        emailVerificationToken: validatedInput.data.token,
       },
     })
   } catch (error) {

@@ -30,7 +30,9 @@ export default {
           signInWithPasswordSchema.safeParse(rawCredentials)
 
         if (validatedCredentials.success) {
-          const user = await getUserByEmail(validatedCredentials.data.email)
+          const user = await getUserByEmail({
+            email: validatedCredentials.data.email,
+          })
           if (!user || !user.passwordHash) return null
 
           const passwordIsValid = await bcryptjs.compare(
@@ -44,7 +46,6 @@ export default {
       },
     }),
     EmailProvider({
-      type: "email",
       server: {
         host: env.RESEND_HOST,
         port: Number(env.RESEND_PORT),

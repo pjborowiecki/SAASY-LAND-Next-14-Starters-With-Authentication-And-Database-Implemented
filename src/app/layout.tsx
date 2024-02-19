@@ -72,26 +72,28 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden overflow-y-scroll">
       <body
         className={cn(
-          "w-full !overflow-scroll overflow-x-hidden bg-background bg-gradient-to-r from-background to-pink-400/10 font-sans antialiased",
+          "w-full bg-background bg-gradient-to-r from-background to-pink-400/10 font-sans antialiased",
           fontInter.variable,
           fontUrbanist.variable,
           fontHeading.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SmoothScrollProvider>{children}</SmoothScrollProvider>
-          <Toaster />
-          <Analytics />
-          <TailwindIndicator />
-        </ThemeProvider>
+        <SmoothScrollProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster />
+            <Analytics />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

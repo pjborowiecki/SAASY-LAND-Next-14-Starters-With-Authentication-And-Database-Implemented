@@ -15,10 +15,6 @@ export const emailSchema = z
     message: "Please enter a valid email address",
   })
 
-export const newsletterSignUpSchema = z.object({
-  email: emailSchema,
-})
-
 export const contactFormSchema = z.object({
   email: emailSchema,
   name: z
@@ -38,3 +34,25 @@ export const contactFormSchema = z.object({
       message: "Message must be made of at most 10240 characters",
     }),
 })
+
+export const emailVerificationSchema = z.object({
+  email: emailSchema,
+})
+
+export const markEmailAsVerifiedSchema = z.object({
+  token: z.string(),
+})
+
+export const checkIfEmailVerifiedSchema = z.object({
+  email: emailSchema,
+})
+
+export type EmailVerificationFormInput = z.infer<typeof emailVerificationSchema>
+
+export type MarkEmailAsVerifiedInput = z.infer<typeof markEmailAsVerifiedSchema>
+
+export type CheckIfEmailVerifiedInput = z.infer<
+  typeof checkIfEmailVerifiedSchema
+>
+
+export type ContactFormInput = z.infer<typeof contactFormSchema>
