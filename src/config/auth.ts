@@ -1,8 +1,8 @@
 import type { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import EmailProvider from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import EmailProvider from "next-auth/providers/nodemailer"
 import { getUserByEmail } from "@/actions/user"
 import { env } from "@/env.mjs"
 import { signInWithPasswordSchema } from "@/validations/auth"
@@ -30,7 +30,9 @@ export default {
           signInWithPasswordSchema.safeParse(rawCredentials)
 
         if (validatedCredentials.success) {
-          const user = await getUserByEmail(validatedCredentials.data.email)
+          const user = await getUserByEmail({
+            email: validatedCredentials.data.email,
+          })
           if (!user || !user.passwordHash) return null
 
           const passwordIsValid = await bcryptjs.compare(
@@ -44,7 +46,6 @@ export default {
       },
     }),
     EmailProvider({
-      type: "email",
       server: {
         host: env.RESEND_HOST,
         port: Number(env.RESEND_PORT),

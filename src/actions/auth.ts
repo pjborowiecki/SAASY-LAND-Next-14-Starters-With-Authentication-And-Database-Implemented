@@ -7,10 +7,12 @@ import { getUserByEmail, getUserByResetPasswordToken } from "@/actions/user"
 import { signIn } from "@/auth"
 import { env } from "@/env.mjs"
 import {
+  linkOAuthAccountSchema,
   passwordResetSchema,
   passwordUpdateSchemaExtended,
   signInWithPasswordSchema,
   signUpWithPasswordSchema,
+  type LinkOAuthAccountInput,
   type PasswordResetFormInput,
   type PasswordUpdateFormInputExtended,
   type SignInWithPasswordFormInput,
@@ -25,31 +27,21 @@ import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
 
 export async function signUpWithPassword(
   rawInput: SignUpWithPasswordFormInput
-): Promise<"invalid-input" | "exists" | "success" | "error"> {
+): Promise<"invalid-input" | "exists" | "error" | "success"> {
   const validatedInput = signUpWithPasswordSchema.safeParse(rawInput)
   if (!validatedInput.success) return "invalid-input"
 
   try {
-    const user = await getUserByEmail(validatedInput.data.email)
+    const user = await getUserByEmail({ email: validatedInput.data.email })
     if (user) return "exists"
 
     const passwordHash = await bcryptjs.hash(validatedInput.data.password, 10)
+    const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
 
     const newUser = await prisma.user.create({
       data: {
         email: validatedInput.data.email,
         passwordHash,
-      },
-    })
-    if (!newUser) return "error"
-
-    const emailVerificationToken = crypto.randomBytes(32).toString("base64url")
-
-    const userUpdated = await prisma.user.update({
-      where: {
-        id: newUser.id,
-      },
-      data: {
         emailVerificationToken,
       },
     })
@@ -64,7 +56,7 @@ export async function signUpWithPassword(
       }),
     })
 
-    return userUpdated && emailSent ? "success" : "error"
+    return newUser && emailSent ? "success" : "error"
   } catch (error) {
     console.error(error)
     throw new Error("Error signing up with password")
@@ -81,18 +73,20 @@ export async function signInWithPassword(
   | "incorrect-provider"
   | "success"
 > {
-  const validatedInput = signInWithPasswordSchema.safeParse(rawInput)
-  if (!validatedInput.success) return "invalid-input"
-
-  const existingUser = await getUserByEmail(validatedInput.data.email)
-  if (!existingUser) return "not-registered"
-
-  if (!existingUser.email || !existingUser.passwordHash)
-    return "incorrect-provider"
-
-  if (!existingUser.emailVerified) return "unverified-email"
-
   try {
+    const validatedInput = signInWithPasswordSchema.safeParse(rawInput)
+    if (!validatedInput.success) return "invalid-input"
+
+    const existingUser = await getUserByEmail({
+      email: validatedInput.data.email,
+    })
+    if (!existingUser) return "not-registered"
+
+    if (!existingUser.email || !existingUser.passwordHash)
+      return "incorrect-provider"
+
+    if (!existingUser.emailVerified) return "unverified-email"
+
     await signIn("credentials", {
       email: validatedInput.data.email,
       password: validatedInput.data.password,
@@ -117,18 +111,20 @@ export async function signInWithPassword(
 
 export async function resetPassword(
   rawInput: PasswordResetFormInput
-): Promise<"invalid-input" | "not-found" | "success" | "error"> {
-  const validatedInput = passwordResetSchema.safeParse(rawInput)
-  if (!validatedInput.success) return "invalid-input"
-
-  const user = await getUserByEmail(validatedInput.data.email)
-  if (!user) return "not-found"
-
-  const today = new Date()
-  const resetPasswordToken = crypto.randomBytes(32).toString("base64url")
-  const resetPasswordTokenExpiry = new Date(today.setDate(today.getDate() + 1)) // 24 hours from now
-
+): Promise<"invalid-input" | "not-found" | "error" | "success"> {
   try {
+    const validatedInput = passwordResetSchema.safeParse(rawInput)
+    if (!validatedInput.success) return "invalid-input"
+
+    const user = await getUserByEmail({ email: validatedInput.data.email })
+    if (!user) return "not-found"
+
+    const today = new Date()
+    const resetPasswordToken = crypto.randomBytes(32).toString("base64url")
+    const resetPasswordTokenExpiry = new Date(
+      today.setDate(today.getDate() + 1)
+    ) // 24 hours from now
+
     const userUpdated = await prisma.user.update({
       where: {
         id: user.id,
@@ -158,18 +154,18 @@ export async function resetPassword(
 
 export async function updatePassword(
   rawInput: PasswordUpdateFormInputExtended
-): Promise<"invalid-input" | "not-found" | "expired" | "success" | "error"> {
-  const validatedInput = passwordUpdateSchemaExtended.safeParse(rawInput)
-  if (
-    !validatedInput.success ||
-    validatedInput.data.password !== validatedInput.data.confirmPassword
-  )
-    return "invalid-input"
-
+): Promise<"invalid-input" | "not-found" | "expired" | "error" | "success"> {
   try {
-    const user = await getUserByResetPasswordToken(
-      validatedInput.data.resetPasswordToken
+    const validatedInput = passwordUpdateSchemaExtended.safeParse(rawInput)
+    if (
+      !validatedInput.success ||
+      validatedInput.data.password !== validatedInput.data.confirmPassword
     )
+      return "invalid-input"
+
+    const user = await getUserByResetPasswordToken({
+      token: validatedInput.data.resetPasswordToken,
+    })
     if (!user) return "not-found"
 
     const resetPasswordExpiry = user.resetPasswordTokenExpiry
@@ -196,13 +192,16 @@ export async function updatePassword(
   }
 }
 
-export async function linkOAuthAccount(userId: string): Promise<void> {
-  if (!userId) throw new Error("User ID is required")
-
+export async function linkOAuthAccount(
+  rawInput: LinkOAuthAccountInput
+): Promise<void> {
   try {
+    const validatedInput = linkOAuthAccountSchema.safeParse(rawInput)
+    if (!validatedInput.success) return
+
     await prisma.user.update({
       where: {
-        id: userId,
+        id: validatedInput.data.userId,
       },
       data: {
         emailVerified: new Date(),

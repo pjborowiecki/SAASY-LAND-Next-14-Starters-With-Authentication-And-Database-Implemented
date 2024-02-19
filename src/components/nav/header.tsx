@@ -34,11 +34,11 @@ export async function Header(): Promise<JSX.Element> {
           <span className="hidden md:flex">{siteConfig.name}</span>
         </Link>
         <Navigation navItems={siteConfig.navItems} />
-        <div className="flex items-center justify-center md:gap-1">
+        <div className="flex items-center justify-center">
           <ThemeToggle />
           <NavigationMobile navItems={siteConfig.navItems} />
 
-          <nav className="ml-2">
+          <nav className="space-x-1">
             {session?.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
@@ -104,7 +104,7 @@ export async function Header(): Promise<JSX.Element> {
               <Link
                 aria-label="Get started"
                 href="/signup"
-                className={buttonVariants({ size: "sm" })}
+                className={cn(buttonVariants({ size: "sm" }), "ml-2")}
               >
                 Get Started
                 <span className="sr-only">Get Started</span>
