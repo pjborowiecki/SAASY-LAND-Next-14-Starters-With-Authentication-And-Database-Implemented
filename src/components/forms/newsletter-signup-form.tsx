@@ -5,7 +5,7 @@ import { subscribeToNewsletter } from "@/actions/newsletter"
 import {
   newsletterSignUpSchema,
   type NewsletterSignUpFormInput,
-} from "@/validations/email"
+} from "@/validations/newsletter"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 

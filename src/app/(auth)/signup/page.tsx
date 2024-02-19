@@ -26,7 +26,6 @@ export const metadata: Metadata = {
 
 export default async function SignUpPage(): Promise<JSX.Element> {
   const session = await auth()
-  console.log("SESSION", session)
   if (session) redirect(DEFAULT_SIGNIN_REDIRECT)
 
   return (
