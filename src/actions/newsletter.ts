@@ -6,7 +6,7 @@ import {
   newsletterSignUpSchema,
   type CheckIfSubscribedToNewsletterInput,
   type NewsletterSignUpFormInput,
-} from "@/validations/email"
+} from "@/validations/newsletter"
 
 import { prisma } from "@/config/db"
 import { resend } from "@/config/email"

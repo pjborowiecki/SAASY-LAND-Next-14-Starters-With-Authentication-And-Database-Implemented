@@ -22,7 +22,7 @@ import { NewEnquiryEmail } from "@/components/emails/new-enquiry-email"
 
 export async function resendEmailVerificationLink(
   rawInput: EmailVerificationFormInput
-): Promise<"invalid-input" | "not-found" | "success" | "error"> {
+): Promise<"invalid-input" | "not-found" | "error" | "success"> {
   try {
     const validatedInput = emailVerificationSchema.safeParse(rawInput)
     if (!validatedInput.success) return "invalid-input"
@@ -99,7 +99,7 @@ export async function markEmailAsVerified(
 
 export async function submitContactForm(
   rawInput: ContactFormInput
-): Promise<"success" | "error"> {
+): Promise<"error" | "success"> {
   try {
     const validatedInput = contactFormSchema.safeParse(rawInput)
     if (!validatedInput.success) return "error"
@@ -114,8 +114,6 @@ export async function submitContactForm(
         message: validatedInput.data.message,
       }),
     })
-
-    console.log("Passed this part, about to return")
 
     return emailSent ? "success" : "error"
   } catch (error) {

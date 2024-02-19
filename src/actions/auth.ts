@@ -28,10 +28,10 @@ import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
 export async function signUpWithPassword(
   rawInput: SignUpWithPasswordFormInput
 ): Promise<"invalid-input" | "exists" | "error" | "success"> {
-  const validatedInput = signUpWithPasswordSchema.safeParse(rawInput)
-  if (!validatedInput.success) return "invalid-input"
-
   try {
+    const validatedInput = signUpWithPasswordSchema.safeParse(rawInput)
+    if (!validatedInput.success) return "invalid-input"
+
     const user = await getUserByEmail({ email: validatedInput.data.email })
     if (user) return "exists"
 

@@ -36,8 +36,6 @@ export function ContactForm(): JSX.Element {
   function onSubmit(formData: ContactFormInput): void {
     startTransition(async () => {
       try {
-        console.log("FORM DATA:", formData)
-
         const message = await submitContactForm(formData)
 
         switch (message) {
