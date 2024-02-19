@@ -38,3 +38,35 @@ export const contactFormSchema = z.object({
       message: "Message must be made of at most 10240 characters",
     }),
 })
+
+export const emailVerificationSchema = z.object({
+  email: emailSchema,
+})
+
+export const markEmailAsVerifiedSchema = z.object({
+  token: z.string(),
+})
+
+export const checkIfEmailVerifiedSchema = z.object({
+  email: emailSchema,
+})
+
+export const checkIfSubscribedToNewsletterSchema = z.object({
+  email: emailSchema,
+})
+
+export type EmailVerificationFormInput = z.infer<typeof emailVerificationSchema>
+
+export type MarkEmailAsVerifiedInput = z.infer<typeof markEmailAsVerifiedSchema>
+
+export type CheckIfEmailVerifiedInput = z.infer<
+  typeof checkIfEmailVerifiedSchema
+>
+
+export type CheckIfSubscribedToNewsletterInput = z.infer<
+  typeof checkIfEmailVerifiedSchema
+>
+
+export type NewsletterSignUpFormInput = z.infer<typeof newsletterSignUpSchema>
+
+export type ContactFormInput = z.infer<typeof contactFormSchema>

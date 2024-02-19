@@ -85,8 +85,8 @@ export const passwordUpdateSchemaExtended = z
     path: ["confirmPassword"],
   })
 
-export const emailVerificationSchema = z.object({
-  email: emailSchema,
+export const linkOAuthAccountSchema = z.object({
+  userId: z.string(),
 })
 
 export type SignUpWithPasswordFormInput = z.infer<
@@ -107,4 +107,4 @@ export type PasswordUpdateFormInputExtended = z.infer<
   typeof passwordUpdateSchemaExtended
 >
 
-export type EmailVerificationFormInput = z.infer<typeof emailVerificationSchema>
+export type LinkOAuthAccountInput = z.infer<typeof linkOAuthAccountSchema>
