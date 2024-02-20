@@ -32,7 +32,9 @@ export default async function VerifyEmailPage({
   const emailVerificationToken = searchParams.token as string
 
   if (emailVerificationToken) {
-    const user = await getUserByEmailVerificationToken(emailVerificationToken)
+    const user = await getUserByEmailVerificationToken({
+      token: emailVerificationToken,
+    })
 
     if (!user) {
       return (
@@ -53,7 +55,7 @@ export default async function VerifyEmailPage({
                   "w-full"
                 )}
               >
-                <Icons.arrowLeft className="mr-2 h-4 w-4" />
+                <Icons.arrowLeft className="mr-2 size-4" />
                 <span className="sr-only">Try again</span>
                 Try again
               </Link>
@@ -63,8 +65,8 @@ export default async function VerifyEmailPage({
       )
     }
 
-    const updatedUser = await markEmailAsVerified(emailVerificationToken)
-    if (!updatedUser) redirect("/signup")
+    const message = await markEmailAsVerified({ token: emailVerificationToken })
+    if (message !== "success") redirect("/signup")
 
     return (
       <div className="flex min-h-screen w-full items-center justify-center">
@@ -104,7 +106,7 @@ export default async function VerifyEmailPage({
               href="/signup"
               className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
             >
-              <Icons.arrowLeft className="mr-2 h-4 w-4" />
+              <Icons.arrowLeft className="mr-2 size-4" />
               <span className="sr-only">Try again</span>
               Try again
             </Link>

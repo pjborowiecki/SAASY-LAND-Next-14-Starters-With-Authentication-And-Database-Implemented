@@ -8,7 +8,6 @@ import { Analytics } from "@vercel/analytics/react"
 
 import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
-import { AuthProvider } from "@/providers/auth-provider"
 import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
@@ -73,7 +72,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden overflow-y-scroll">
       <body
         className={cn(
           "w-full bg-background bg-gradient-to-r from-background to-pink-400/10 font-sans antialiased",
@@ -82,19 +81,19 @@ export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
           fontHeading.variable
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SmoothScrollProvider>
-            <AuthProvider>{children}</AuthProvider>
+        <SmoothScrollProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
             <Toaster />
             <Analytics />
             <TailwindIndicator />
-          </SmoothScrollProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

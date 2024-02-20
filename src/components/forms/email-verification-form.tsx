@@ -3,10 +3,12 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { resendEmailVerificationLink } from "@/actions/email"
-import { emailVerificationSchema } from "@/validations/auth"
+import {
+  emailVerificationSchema,
+  type EmailVerificationFormInput,
+} from "@/validations/email"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -21,24 +23,24 @@ import {
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
 
-type EmailVerificationFormInputs = z.infer<typeof emailVerificationSchema>
-
 export function EmailVerificationForm(): JSX.Element {
   const router = useRouter()
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<EmailVerificationFormInputs>({
+  const form = useForm<EmailVerificationFormInput>({
     resolver: zodResolver(emailVerificationSchema),
     defaultValues: {
       email: "",
     },
   })
 
-  function onSubmit(formData: EmailVerificationFormInputs): void {
+  function onSubmit(formData: EmailVerificationFormInput): void {
     startTransition(async () => {
       try {
-        const message = await resendEmailVerificationLink(formData.email)
+        const message = await resendEmailVerificationLink({
+          email: formData.email,
+        })
 
         switch (message) {
           case "not-found":
@@ -98,7 +100,7 @@ export function EmailVerificationForm(): JSX.Element {
           {isPending ? (
             <>
               <Icons.spinner
-                className="mr-2 h-4 w-4 animate-spin"
+                className="mr-2 size-4 animate-spin"
                 aria-hidden="true"
               />
               <span>Pending...</span>

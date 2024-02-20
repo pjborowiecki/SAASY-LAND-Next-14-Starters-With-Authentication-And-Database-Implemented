@@ -2,10 +2,9 @@
 
 import * as React from "react"
 import { submitContactForm } from "@/actions/email"
-import { contactFormSchema } from "@/validations/email"
+import { contactFormSchema, type ContactFormInput } from "@/validations/email"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import type { z } from "zod"
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -21,13 +20,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Icons } from "@/components/icons"
 
-type ContactFormInputs = z.infer<typeof contactFormSchema>
-
 export function ContactForm(): JSX.Element {
   const { toast } = useToast()
   const [isPending, startTransition] = React.useTransition()
 
-  const form = useForm<ContactFormInputs>({
+  const form = useForm<ContactFormInput>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
@@ -36,7 +33,7 @@ export function ContactForm(): JSX.Element {
     },
   })
 
-  function onSubmit(formData: ContactFormInputs): void {
+  function onSubmit(formData: ContactFormInput): void {
     startTransition(async () => {
       try {
         const message = await submitContactForm(formData)
@@ -126,7 +123,7 @@ export function ContactForm(): JSX.Element {
         >
           {isPending && (
             <Icons.spinner
-              className="mr-2 h-4 w-4 animate-spin"
+              className="mr-2 size-4 animate-spin"
               aria-hidden="true"
             />
           )}

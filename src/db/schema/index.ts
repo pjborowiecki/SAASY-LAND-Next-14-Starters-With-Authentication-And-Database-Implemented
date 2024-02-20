@@ -92,7 +92,7 @@ export const verificationTokens = pgTable(
 )
 
 export const newsletterSubscribers = pgTable("newsletterSubscriber", {
-  email: text("email").unique().notNull().primaryKey(),
+  email: text("email").notNull().primaryKey(),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
 })
 

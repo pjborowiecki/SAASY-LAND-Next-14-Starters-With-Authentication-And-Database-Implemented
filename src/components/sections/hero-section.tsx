@@ -37,7 +37,7 @@ export async function HeroSection() {
               aria-hidden="true"
               className="rounded-md px-3.5 py-1.5 text-sm transition-all duration-1000 ease-out hover:opacity-80 md:text-base md:hover:-translate-y-2"
             >
-              <Icons.gitHub className="mr-2 h-3.5 w-3.5" aria-hidden="true" />
+              <Icons.gitHub className="mr-2 size-3.5" aria-hidden="true" />
               {gitHubStars} Stars on GitHub
             </Badge>
             <span className="sr-only">GitHub</span>

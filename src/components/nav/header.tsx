@@ -1,9 +1,10 @@
 import Link from "next/link"
+import { auth } from "@/auth"
 
 import { siteConfig } from "@/config/site"
-import { getCurrentUser } from "@/lib/auth"
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +21,7 @@ import { NavigationMobile } from "@/components/nav/navigation-mobile"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export async function Header(): Promise<JSX.Element> {
-  const user = await getCurrentUser()
+  const session = await auth()
 
   return (
     <header className="sticky top-0 z-40 flex h-20 w-full bg-transparent">
@@ -29,43 +30,46 @@ export async function Header(): Promise<JSX.Element> {
           href="/"
           className="flex items-center justify-center gap-2 text-lg font-bold tracking-wide transition-all duration-300 ease-in-out"
         >
-          <Icons.rocket className="h-6 w-6 md:hidden lg:flex" />
+          <Icons.rocket className="size-6 md:hidden lg:flex" />
           <span className="hidden md:flex">{siteConfig.name}</span>
         </Link>
         <Navigation navItems={siteConfig.navItems} />
-        <div className="flex items-center justify-center md:gap-1">
+        <div className="flex items-center justify-center">
           <ThemeToggle />
           <NavigationMobile navItems={siteConfig.navItems} />
 
-          <nav className="ml-2">
-            {user ? (
+          <nav className="space-x-1">
+            {session?.user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   asChild
-                  className="transition-all duration-300 ease-in-out hover:opacity-70"
+                  className={cn(
+                    buttonVariants({ variant: "user", size: "icon" }),
+                    "transition-all duration-300 ease-in-out hover:opacity-70"
+                  )}
                 >
-                  <Button variant="user" size="icon">
-                    <Avatar className="h-full w-full">
-                      {user.image && (
-                        <AvatarImage
-                          src={user.image}
-                          alt={user.name ?? "user's profile picture"}
-                        />
-                      )}
-                      <AvatarFallback className="text-xs capitalize">
-                        {user.email && user.email.charAt(0)}
+                  <Avatar className="size-9">
+                    {session?.user.image ? (
+                      <AvatarImage
+                        src={session?.user.image}
+                        alt={session?.user.name ?? "user's profile picture"}
+                        className="size-7 rounded-full"
+                      />
+                    ) : (
+                      <AvatarFallback className="size-9 cursor-pointer p-1.5 text-xs capitalize">
+                        <Icons.user className="size-5 rounded-full" />
                       </AvatarFallback>
-                    </Avatar>
-                  </Button>
+                    )}
+                  </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
                       <p className="text-sm font-medium leading-none">
-                        {user.name}
+                        {session?.user.name}
                       </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        {user.email}
+                        {session.user.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>
@@ -74,7 +78,7 @@ export async function Header(): Promise<JSX.Element> {
                     <DropdownMenuItem asChild disabled>
                       <Link href="/dashboard/account">
                         <Icons.avatar
-                          className="mr-2 h-4 w-4"
+                          className="mr-2 size-4"
                           aria-hidden="true"
                         />
                         Account
@@ -83,7 +87,7 @@ export async function Header(): Promise<JSX.Element> {
                     <DropdownMenuItem asChild disabled>
                       <Link href="/dashboard/settings">
                         <Icons.settings
-                          className="mr-2 h-4 w-4"
+                          className="mr-2 size-4"
                           aria-hidden="true"
                         />
                         Settings
@@ -100,7 +104,7 @@ export async function Header(): Promise<JSX.Element> {
               <Link
                 aria-label="Get started"
                 href="/signup"
-                className={buttonVariants({ size: "sm" })}
+                className={cn(buttonVariants({ size: "sm" }), "ml-2")}
               >
                 Get Started
                 <span className="sr-only">Get Started</span>

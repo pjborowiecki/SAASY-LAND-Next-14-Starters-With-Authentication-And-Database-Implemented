@@ -16,7 +16,7 @@ export function GET(req: Request) {
     return new ImageResponse(
       (
         <div
-          tw="flex h-full w-full flex-col items-center justify-center"
+          tw="flex size-full flex-col items-center justify-center"
           style={{
             color: paint,
             background:
