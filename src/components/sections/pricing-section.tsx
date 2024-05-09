@@ -5,7 +5,9 @@ import Balancer from "react-wrap-balancer"
 
 import { siteConfig } from "@/config/site"
 import { pricingPlans } from "@/data/pricing-plans"
+
 import { cn } from "@/lib/utils"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -35,7 +37,7 @@ export function PricingSection(): JSX.Element {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               {siteConfig.name} is completely free and open source. The pricing
               section is there to serve as an example of how you could set it up

@@ -2,10 +2,14 @@
 
 import crypto from "crypto"
 
-import { AuthError } from "next-auth"
 import { getUserByEmail, getUserByResetPasswordToken } from "@/actions/user"
 import { signIn } from "@/auth"
+import bcryptjs from "bcryptjs"
+import { AuthError } from "next-auth"
+
 import { env } from "@/env.mjs"
+import { prisma } from "@/config/db"
+import { resend } from "@/config/email"
 import {
   linkOAuthAccountSchema,
   passwordResetSchema,
@@ -18,10 +22,7 @@ import {
   type SignInWithPasswordFormInput,
   type SignUpWithPasswordFormInput,
 } from "@/validations/auth"
-import bcryptjs from "bcryptjs"
 
-import { prisma } from "@/config/db"
-import { resend } from "@/config/email"
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
 import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
 

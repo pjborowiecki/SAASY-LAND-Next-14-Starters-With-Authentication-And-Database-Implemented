@@ -1,4 +1,3 @@
-import { env } from "@/env.mjs"
 import {
   Body,
   Button,
@@ -11,6 +10,7 @@ import {
   Text,
 } from "@react-email/components"
 
+import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 
 interface EmailVerificationEmailProps {

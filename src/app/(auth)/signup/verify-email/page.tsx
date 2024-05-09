@@ -3,9 +3,11 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { markEmailAsVerified } from "@/actions/email"
 import { getUserByEmailVerificationToken } from "@/actions/user"
+
 import { env } from "@/env.mjs"
 
 import { cn } from "@/lib/utils"
+
 import { buttonVariants } from "@/components/ui/button"
 import {
   Card,

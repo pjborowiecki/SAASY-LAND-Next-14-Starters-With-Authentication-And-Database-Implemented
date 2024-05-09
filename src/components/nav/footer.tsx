@@ -2,7 +2,9 @@ import Link from "next/link"
 import Balancer from "react-wrap-balancer"
 
 import { siteConfig } from "@/config/site"
+
 import { cn } from "@/lib/utils"
+
 import { buttonVariants } from "@/components/ui/button"
 import { NewsletterSignUpForm } from "@/components/forms/newsletter-signup-form"
 import { Icons } from "@/components/icons"

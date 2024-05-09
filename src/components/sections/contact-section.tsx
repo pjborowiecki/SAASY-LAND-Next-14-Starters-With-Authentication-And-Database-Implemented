@@ -19,7 +19,7 @@ export function ContactSection(): JSX.Element {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               Feel free to email us with any questions you might have. While we
               are always happy to help, please keep in mind that this is a free

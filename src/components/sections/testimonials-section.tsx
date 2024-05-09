@@ -1,6 +1,7 @@
 import Balancer from "react-wrap-balancer"
 
 import { testimonials } from "@/data/testimonials"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Card,
@@ -27,7 +28,7 @@ export function TestimonialsSection(): JSX.Element {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>See what our customers are saying about us.</Balancer>
           </h3>
         </div>

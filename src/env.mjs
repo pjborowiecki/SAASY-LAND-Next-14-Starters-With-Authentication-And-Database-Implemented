@@ -51,9 +51,4 @@ export const env = createEnv({
     RESEND_USERNAME: process.env.RESEND_USERNAME,
     RESEND_PORT: process.env.RESEND_PORT,
   },
-  /**
-   * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
-   * This is especially useful for Docker builds.
-   */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 })

@@ -1,4 +1,3 @@
-import { env } from "@/env.mjs"
 import {
   Body,
   Container,
@@ -12,6 +11,8 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components"
+
+import { env } from "@/env.mjs"
 
 export function NewsletterWelcomeEmail(): JSX.Element {
   const previewText = "Hello and welcome to SaaSy Land!"

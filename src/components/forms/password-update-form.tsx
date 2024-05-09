@@ -3,14 +3,16 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { updatePassword } from "@/actions/auth"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
 import {
   passwordUpdateSchema,
   type PasswordUpdateFormInput,
 } from "@/validations/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 
 import { useToast } from "@/hooks/use-toast"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,

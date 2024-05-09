@@ -2,6 +2,7 @@ import Image from "next/image"
 import Balancer from "react-wrap-balancer"
 
 import { siteConfig } from "@/config/site"
+
 import {
   Card,
   CardContent,
@@ -23,7 +24,7 @@ export function BenefitsSection(): JSX.Element {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               Your competitors are already using{" "}
               <span className="font-semibold text-foreground">

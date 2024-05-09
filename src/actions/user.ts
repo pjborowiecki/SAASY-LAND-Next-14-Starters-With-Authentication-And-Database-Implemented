@@ -1,5 +1,8 @@
 "use server"
 
+import { type User } from "@prisma/client"
+
+import { prisma } from "@/config/db"
 import {
   getUserByEmailSchema,
   getUserByEmailVerificationTokenSchema,
@@ -10,9 +13,6 @@ import {
   type GetUserByIdInput,
   type GetUserByResetPasswordTokenInput,
 } from "@/validations/user"
-import { type User } from "@prisma/client"
-
-import { prisma } from "@/config/db"
 
 export async function getUserById(
   rawInput: GetUserByIdInput

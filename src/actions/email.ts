@@ -3,7 +3,10 @@
 import crypto from "crypto"
 
 import { getUserByEmail } from "@/actions/user"
+
 import { env } from "@/env.mjs"
+import { prisma } from "@/config/db"
+import { resend } from "@/config/email"
 import {
   checkIfEmailVerifiedSchema,
   contactFormSchema,
@@ -15,8 +18,6 @@ import {
   type MarkEmailAsVerifiedInput,
 } from "@/validations/email"
 
-import { prisma } from "@/config/db"
-import { resend } from "@/config/email"
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
 import { NewEnquiryEmail } from "@/components/emails/new-enquiry-email"
 

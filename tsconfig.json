@@ -18,23 +18,21 @@
     "baseUrl": ".",
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"],
-    },
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.cjs",
     "**/*.mjs",
+    "next-env.d.ts",
     ".next/types/**/*.ts",
-    ".contentlayer/generated",
-    "next.config.cjs",
+    ".contentlayer/generated"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }
