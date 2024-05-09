@@ -4,16 +4,9 @@
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1708390546534,
-      "tag": "0000_rapid_dreadnoughts",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1708391219006,
-      "tag": "0001_fair_nextwave",
+      "version": "6",
+      "when": 1715269491904,
+      "tag": "0000_wonderful_jackpot",
       "breakpoints": true
     }
   ]

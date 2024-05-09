@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es2022",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,15 +26,6 @@
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    ".next/types/**/*.ts",
-    ".contentlayer/generated",
-    "next.config.cjs"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.mjs", "next-env.d.ts", ".next/types/**/*.ts", ".contentlayer/generated"],
   "exclude": ["node_modules"]
 }

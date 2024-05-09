@@ -1,12 +1,19 @@
 "use server"
 
 import crypto from "crypto"
+
 import { unstable_noStore as noStore } from "next/cache"
 import { getUserByEmail, getUserByResetPasswordToken } from "@/actions/user"
 import { signIn } from "@/auth"
+import bcryptjs from "bcryptjs"
+import { eq } from "drizzle-orm"
+import { AuthError } from "next-auth"
+
+import { env } from "@/env.mjs"
+import { db } from "@/config/db"
+import { resend } from "@/config/email"
 import { psLinkOAuthAccount } from "@/db/prepared/statements"
 import { users } from "@/db/schema"
-import { env } from "@/env.mjs"
 import {
   linkOAuthAccountSchema,
   passwordResetSchema,
@@ -19,12 +26,7 @@ import {
   type SignInWithPasswordFormInput,
   type SignUpWithPasswordFormInput,
 } from "@/validations/auth"
-import bcryptjs from "bcryptjs"
-import { eq } from "drizzle-orm"
-import { AuthError } from "next-auth"
 
-import { db } from "@/config/db"
-import { resend } from "@/config/email"
 import { EmailVerificationEmail } from "@/components/emails/email-verification-email"
 import { ResetPasswordEmail } from "@/components/emails/reset-password-email"
 

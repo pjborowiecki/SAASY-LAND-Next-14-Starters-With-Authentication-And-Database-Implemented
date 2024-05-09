@@ -1,9 +1,9 @@
 import { linkOAuthAccount } from "@/actions/auth"
 import { getUserById } from "@/actions/user"
-import { env } from "@/env.mjs"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import NextAuth from "next-auth"
 
+import { env } from "@/env.mjs"
 import authConfig from "@/config/auth"
 import { db } from "@/config/db"
 

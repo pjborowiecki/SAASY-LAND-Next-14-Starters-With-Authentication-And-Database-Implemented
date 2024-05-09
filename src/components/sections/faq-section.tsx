@@ -2,6 +2,7 @@ import Link from "next/link"
 import Balancer from "react-wrap-balancer"
 
 import { frequentlyAskedQuestions } from "@/data/frequently-asked-questions"
+
 import {
   Accordion,
   AccordionContent,
@@ -22,7 +23,7 @@ export function FAQSection() {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               Find the answers to the most common questions about our product.
               Feel free to{" "}

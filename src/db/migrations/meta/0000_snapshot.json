@@ -1,10 +1,10 @@
 {
-  "id": "3ca13723-2eb6-4080-95e7-cd9fc192bf4a",
+  "id": "dccd28fc-693b-4375-a31b-fd9b9088ae85",
   "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "account": {
+    "public.account": {
       "name": "account",
       "schema": "",
       "columns": {
@@ -102,7 +102,7 @@
       },
       "uniqueConstraints": {}
     },
-    "newsletterSubscriber": {
+    "public.newsletterSubscriber": {
       "name": "newsletterSubscriber",
       "schema": "",
       "columns": {
@@ -123,17 +123,9 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "newsletterSubscriber_email_unique": {
-          "name": "newsletterSubscriber_email_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     },
-    "session": {
+    "public.session": {
       "name": "session",
       "schema": "",
       "columns": {
@@ -175,7 +167,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user": {
+    "public.user": {
       "name": "user",
       "schema": "",
       "columns": {
@@ -287,7 +279,7 @@
         }
       }
     },
-    "verificationToken": {
+    "public.verificationToken": {
       "name": "verificationToken",
       "schema": "",
       "columns": {

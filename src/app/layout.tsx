@@ -3,14 +3,16 @@ import "@/styles/mdx.css"
 
 import * as React from "react"
 import type { Metadata, Viewport } from "next"
-import { env } from "@/env.mjs"
 import { Analytics } from "@vercel/analytics/react"
 
+import { env } from "@/env.mjs"
 import { fontHeading, fontInter, fontUrbanist } from "@/config/fonts"
 import { siteConfig } from "@/config/site"
+
 import { SmoothScrollProvider } from "@/providers/smooth-scroll-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import { cn } from "@/lib/utils"
+
 import { Toaster } from "@/components/ui/toaster"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 

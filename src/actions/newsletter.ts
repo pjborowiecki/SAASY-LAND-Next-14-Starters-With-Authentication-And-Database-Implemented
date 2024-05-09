@@ -1,9 +1,12 @@
 "use server"
 
 import { unstable_noStore as noStore } from "next/cache"
+
+import { env } from "@/env.mjs"
+import { db } from "@/config/db"
+import { resend } from "@/config/email"
 import { psGetNewsletterSubscriberByEmail } from "@/db/prepared/statements"
 import { newsletterSubscribers } from "@/db/schema"
-import { env } from "@/env.mjs"
 import {
   checkIfSubscribedToNewsletterSchema,
   newsletterSignUpSchema,
@@ -11,8 +14,6 @@ import {
   type NewsletterSignUpFormInput,
 } from "@/validations/newsletter"
 
-import { db } from "@/config/db"
-import { resend } from "@/config/email"
 import { NewsletterWelcomeEmail } from "@/components/emails/newsletter-welcome-email"
 
 export async function checkIfSubscribedToNewsletter(

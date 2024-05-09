@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og"
+
 import { ogImageSchema } from "@/validations/og"
 
 export const runtime = "edge"

@@ -1,6 +1,4 @@
 import { getUserByEmail } from "@/actions/user"
-import { env } from "@/env.mjs"
-import { signInWithPasswordSchema } from "@/validations/auth"
 import bcryptjs from "bcryptjs"
 import type { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -8,8 +6,11 @@ import EmailProvider from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
+import { env } from "@/env.mjs"
 import { resend } from "@/config/email"
 import { siteConfig } from "@/config/site"
+import { signInWithPasswordSchema } from "@/validations/auth"
+
 import { MagicLinkEmail } from "@/components/emails/magic-link-email"
 
 export default {

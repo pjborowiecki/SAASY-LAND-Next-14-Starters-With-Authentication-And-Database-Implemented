@@ -2,15 +2,17 @@
 
 import * as React from "react"
 import { useSearchParams } from "next/navigation"
-import {
-  signInWithEmailSchema,
-  type SignInWithEmailFormInput,
-} from "@/validations/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
 
+import {
+  signInWithEmailSchema,
+  type SignInWithEmailFormInput,
+} from "@/validations/auth"
+
 import { useToast } from "@/hooks/use-toast"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,

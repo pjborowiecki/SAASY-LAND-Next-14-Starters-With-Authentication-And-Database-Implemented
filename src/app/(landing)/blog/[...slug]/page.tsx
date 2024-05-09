@@ -7,6 +7,7 @@ import { allAuthors, allPosts } from "contentlayer/generated"
 
 import { getPostFromParams } from "@/lib/mdx"
 import { cn, formatDate } from "@/lib/utils"
+
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
