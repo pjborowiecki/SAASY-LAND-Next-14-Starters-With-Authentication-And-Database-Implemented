@@ -31,6 +31,14 @@ export const {
     },
   },
   callbacks: {
+    jwt({ token, user }) {
+      if (user) token.role = user.role
+      return token
+    },
+    session({ session, token }) {
+      session.user.role = token.role
+      return session
+    },
     async signIn({ user, account }) {
       if (!user.id) return false
       if (account?.provider !== "credentials") return true
