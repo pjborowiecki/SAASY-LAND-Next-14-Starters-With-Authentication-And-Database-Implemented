@@ -1,8 +1,9 @@
 import * as React from "react"
 import { redirect } from "next/navigation"
-import { auth } from "@/auth"
 
 import { DEFAULT_UNAUTHENTICATED_REDIRECT } from "@/config/defaults"
+
+import auth from "@/lib/auth"
 
 interface DashboardLayoutProps {
   children: React.ReactNode

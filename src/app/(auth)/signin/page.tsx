@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { auth } from "@/auth"
+import  auth  from "@/lib/auth"
 
 import { env } from "@/env.mjs"
 import { DEFAULT_SIGNIN_REDIRECT } from "@/config/defaults"
