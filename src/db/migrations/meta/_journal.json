@@ -8,6 +8,13 @@
       "when": 1715269491904,
       "tag": "0000_wonderful_jackpot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1715282629065,
+      "tag": "0001_slow_hellion",
+      "breakpoints": true
     }
   ]
 }

@@ -2,11 +2,14 @@ import type { AdapterAccount } from "@auth/core/adapters"
 import { relations } from "drizzle-orm"
 import {
   integer,
+  pgEnum,
   pgTable,
   primaryKey,
   text,
   timestamp,
 } from "drizzle-orm/pg-core"
+
+export const userRoleEnum = pgEnum("user_role", ["USER", "ADMIN"])
 
 export const accounts = pgTable(
   "account",
@@ -56,6 +59,7 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
+  role: userRoleEnum("role").notNull().default("USER"),
   name: text("name"),
   surname: text("surname"),
   username: text("username").unique(),

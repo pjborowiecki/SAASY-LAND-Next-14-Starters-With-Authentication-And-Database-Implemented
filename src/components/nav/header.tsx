@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { auth } from "@/auth"
 
 import { siteConfig } from "@/config/site"
 
+import auth from "@/lib/auth"
 import { cn } from "@/lib/utils"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

@@ -2,9 +2,9 @@ import { getUserByEmail } from "@/actions/user"
 import bcryptjs from "bcryptjs"
 import type { NextAuthConfig } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import EmailProvider from "next-auth/providers/email"
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import ResendProvider from "next-auth/providers/resend"
 
 import { env } from "@/env.mjs"
 import { resend } from "@/config/email"
@@ -46,7 +46,7 @@ export default {
         return null
       },
     }),
-    EmailProvider({
+    ResendProvider({
       server: {
         host: env.RESEND_HOST,
         port: Number(env.RESEND_PORT),

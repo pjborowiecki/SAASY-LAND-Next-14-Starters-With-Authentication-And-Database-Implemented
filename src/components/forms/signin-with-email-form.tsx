@@ -40,7 +40,7 @@ export function SignInWithEmailForm(): JSX.Element {
   function onSubmit(formData: SignInWithEmailFormInput): void {
     startTransition(async () => {
       try {
-        await signIn("email", { email: formData.email })
+        await signIn("resend", { email: formData.email })
       } catch (error) {
         console.error(error)
 
