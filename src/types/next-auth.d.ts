@@ -1,6 +1,6 @@
 import type { DefaultSession } from "next-auth"
 
-export type Role = "user" | "admin"
+export type Role = "USER" | "ADMIN"
 
 declare module "next-auth" {
   interface User {
@@ -8,16 +8,12 @@ declare module "next-auth" {
   }
 
   interface Session {
-    user: DefaultSession["user"] & {
-      id: string
-      role: UserRole
-    }
+    user: User & DefaultSession["user"]
   }
 }
 
 declare module "@auth/core/adapters" {
   interface AdapterUser {
-    id: string
     role: Role
   }
 }

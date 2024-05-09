@@ -11,9 +11,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  user
-  admin
+enum Role {
+  USER
+  ADMIN
 }
 
 model Account {
@@ -58,7 +58,7 @@ model User {
   resetPasswordTokenExpiry      DateTime?   @map("reset_password_token_expiery")
   image                         String?
   createdAt                     DateTime    @default(now()) @map("created_at")
-  role                          UserRole[]  @default([user])
+  role                          Role        @default(USER)
   accounts                      Account[]
   sessions                      Session[]
 
