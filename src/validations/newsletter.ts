@@ -1,5 +1,6 @@
-import { emailSchema } from "@/validations/email"
 import * as z from "zod"
+
+import { emailSchema } from "@/validations/email"
 
 export const newsletterSignUpSchema = z.object({
   email: emailSchema,

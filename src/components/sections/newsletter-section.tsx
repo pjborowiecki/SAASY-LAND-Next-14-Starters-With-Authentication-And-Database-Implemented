@@ -19,7 +19,7 @@ export function NewsletterSection(): JSX.Element {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               Never miss a thing with our newsletter. We will send you updates
               on major released or changes to the product. We will never spam

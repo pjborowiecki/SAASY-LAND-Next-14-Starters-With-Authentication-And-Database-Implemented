@@ -1,7 +1,8 @@
 import { type Metadata } from "next"
-import { env } from "@/env.mjs"
 import { type BlogPostParamsProps } from "@/types"
 import { allPosts } from "contentlayer/generated"
+
+import { env } from "@/env.mjs"
 
 import { absoluteUrl } from "@/lib/utils"
 

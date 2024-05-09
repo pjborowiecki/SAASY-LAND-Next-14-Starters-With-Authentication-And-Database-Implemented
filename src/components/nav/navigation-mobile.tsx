@@ -6,7 +6,9 @@ import { useSelectedLayoutSegment } from "next/navigation"
 import type { NavItem } from "@/types"
 
 import { siteConfig } from "@/config/site"
+
 import { cn } from "@/lib/utils"
+
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Icons } from "@/components/icons"

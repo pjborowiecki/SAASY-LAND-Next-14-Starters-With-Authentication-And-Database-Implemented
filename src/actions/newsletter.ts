@@ -1,6 +1,8 @@
 "use server"
 
 import { env } from "@/env.mjs"
+import { prisma } from "@/config/db"
+import { resend } from "@/config/email"
 import {
   checkIfSubscribedToNewsletterSchema,
   newsletterSignUpSchema,
@@ -8,8 +10,6 @@ import {
   type NewsletterSignUpFormInput,
 } from "@/validations/newsletter"
 
-import { prisma } from "@/config/db"
-import { resend } from "@/config/email"
 import { NewsletterWelcomeEmail } from "@/components/emails/newsletter-welcome-email"
 
 export async function checkIfSubscribedToNewsletter(

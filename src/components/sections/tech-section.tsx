@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { techStack } from "@/data/tech-stack"
+
 import { Icons } from "@/components/icons"
 
 export function TechSection(): JSX.Element {
@@ -11,7 +12,7 @@ export function TechSection(): JSX.Element {
       className="hidden w-full bg-background py-8 sm:grid"
     >
       <div
-        className="container flex w-full max-w-[56rem] animate-fade-up flex-wrap place-items-center items-center justify-center gap-6 opacity-0 sm:gap-[38px] md:gap-[36px] lg:gap-x-12"
+        className="container flex w-full max-w-4xl animate-fade-up flex-wrap place-items-center items-center justify-center gap-6 opacity-0 sm:gap-[38px] md:gap-[36px] lg:gap-x-12"
         style={{ animationDelay: "0.55s", animationFillMode: "forwards" }}
       >
         {techStack.map((tech) => {

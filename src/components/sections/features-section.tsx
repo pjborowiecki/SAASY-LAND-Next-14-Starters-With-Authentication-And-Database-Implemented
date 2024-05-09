@@ -6,6 +6,7 @@ import { type Feature } from "@/types"
 import Balancer from "react-wrap-balancer"
 
 import { features } from "@/data/features"
+
 import { cn } from "@/lib/utils"
 
 export function FeaturesSection() {
@@ -29,7 +30,7 @@ export function FeaturesSection() {
               </span>
             </Balancer>
           </h2>
-          <h3 className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+          <h3 className="max-w-2xl leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             <Balancer>
               Take advantage of a fully authentication, data storage, payments,
               emails, and more available to you instantly.

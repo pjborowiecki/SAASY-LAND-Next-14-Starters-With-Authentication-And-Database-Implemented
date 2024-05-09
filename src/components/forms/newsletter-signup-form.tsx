@@ -2,14 +2,16 @@
 
 import * as React from "react"
 import { subscribeToNewsletter } from "@/actions/newsletter"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
 import {
   newsletterSignUpSchema,
   type NewsletterSignUpFormInput,
 } from "@/validations/newsletter"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 
 import { useToast } from "@/hooks/use-toast"
+
 import { Button } from "@/components/ui/button"
 import {
   Form,
