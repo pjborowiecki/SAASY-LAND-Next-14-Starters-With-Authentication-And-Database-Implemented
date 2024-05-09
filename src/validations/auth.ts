@@ -2,16 +2,28 @@ import * as z from "zod"
 
 import { emailSchema } from "@/validations/email"
 
-const passwordSchema = z
+export const userIdSchema = z
+  .string({
+    required_error: "User Id is required",
+    invalid_type_error: "User Id must be a string",
+  })
+  .min(1, {
+    message: "User Id must be at least 1 character long",
+  })
+  .max(512, {
+    message: "User Id must be at most 512 characters long",
+  })
+
+export const passwordSchema = z
   .string({
     required_error: "Password is required",
     invalid_type_error: "Password must be a string",
   })
   .min(8, {
-    message: "Password must be made of at least 8 characters",
+    message: "Password must at least 8 characters long",
   })
   .max(256, {
-    message: "Password must be made of at most 256 characters",
+    message: "Password must be at most 256 characters long",
   })
 
 export const signUpWithPasswordSchema = z
@@ -87,7 +99,7 @@ export const passwordUpdateSchemaExtended = z
   })
 
 export const linkOAuthAccountSchema = z.object({
-  userId: z.string(),
+  userId: userIdSchema,
 })
 
 export type SignUpWithPasswordFormInput = z.infer<
