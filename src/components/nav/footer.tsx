@@ -68,7 +68,7 @@ export function Footer(): JSX.Element {
               rel="noreferrer"
               className="font-semibold underline-offset-8 transition-all hover:underline hover:opacity-70"
             >
-              Piotr Borowiecki.
+              ak01redwan.
             </Link>{" "}
             <span className="hidden md:inline-flex">
               Freely available under the MIT license. Enjoy :)

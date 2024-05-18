@@ -2,12 +2,12 @@ import { type NavItem, type NavItemFooter } from "@/types"
 
 const links = {
   github:
-    "https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented",
-  twitter: "https://twitter.com/pjborowiecki",
-  linkedin: "https://www.linkedin.com/in/pjborowiecki",
+    "https://github.com/srmed/srmed",
+  twitter: "https://twitter.com/srmed",
+  linkedin: "https://www.linkedin.com/in/srmed",
   discord: "",
-  authorsWebsite: "https://pjborowiecki.com",
-  authorsGitHub: "https://github.com/pjborowiecki",
+  authorsWebsite: "https://srmed.com",
+  authorsGitHub: "https://github.com/srmed",
   openGraphImage: "https://saasyland.com/images/opengraph-image.png",
 }
 
@@ -18,7 +18,7 @@ export const siteConfig = {
   links,
   url: "https://saasyland.com",
   ogImage: links.openGraphImage,
-  author: "pjborowiecki",
+  author: "srmed",
   hostingRegion: "fra1",
   keywords: ["SaaS", "Next.js", "Template"],
   navItems: [

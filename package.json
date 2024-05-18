@@ -1,19 +1,19 @@
 {
   "private": true,
-  "name": "saasy-land-next-14-starters-with-authentication-and-database-implemented",
+  "name": "srmed",
   "description": "Starter templates for Next.js 14 full-stack projects. Built with Tailwind CSS, ShadCn, authentication, and database. Several branches contain several different configurations, including serverless databases like PostgreSQL with Neon, or MySQL with PlanetScale, Drizzle ORM, Prisma ORM v.5 (serverless-compatible), but also MongoDB and Supabase.",
   "version": "0.2.0",
   "license": "MIT",
   "author": {
-    "name": "Piotr Borowiecki",
-    "url": "https://pjborowiecki.com"
+    "name": "ak01redwan",
+    "url": "https://srmed.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented"
+    "url": "https://github.com/srmed/srmed"
   },
   "bugs": {
-    "url": "https://github.com/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented/issues"
+    "url": "https://github.com/srmed/srmed/issues"
   },
   "type": "module",
   "scripts": {
@@ -88,13 +88,15 @@
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.13",
+    "or": "^0.2.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
-    "react-email": "^2.1.2",
+    "react-email": "^1.10.1",
     "react-hook-form": "^7.51.4",
     "react-wrap-balancer": "^1.1.0",
     "resend": "^3.2.0",
+    "shiki": "^1.5.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "ws": "^8.17.0",
@@ -107,7 +109,7 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/eslint": "^8.56.10",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.12",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
     "@types/ws": "^8.5.10",
@@ -121,7 +123,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "prisma": "^5.13.0",
+    "prisma": "^5.14.0",
     "rehype": "^13.0.1",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-pretty-code": "^0.13.1",
@@ -129,6 +131,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "engine": {
