@@ -6,14 +6,14 @@
   "license": "MIT",
   "author": {
     "name": "ak01redwan",
-    "url": "https://srmed.com"
+    "url": "https://ak-chat-server.web.app"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/srmed/srmed"
+    "url": "https://github.com/ak01redwan/ak-saas"
   },
   "bugs": {
-    "url": "https://github.com/srmed/srmed/issues"
+    "url": "https://github.com/ak01redwan/ak-saas_issues"
   },
   "type": "module",
   "scripts": {

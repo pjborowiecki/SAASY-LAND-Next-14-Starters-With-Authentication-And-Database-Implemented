@@ -71,7 +71,7 @@ export function Footer(): JSX.Element {
               ak01redwan.
             </Link>{" "}
             <span className="hidden md:inline-flex">
-              Freely available under the MIT license. Enjoy :)
+              Freely to use by SRMED.
             </span>
           </Balancer>
         </p>
