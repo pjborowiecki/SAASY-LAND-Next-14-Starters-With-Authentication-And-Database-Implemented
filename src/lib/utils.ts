@@ -26,7 +26,7 @@ export function truncate(str: string, length: number) {
 export async function getGitHubStars(): Promise<number | null> {
   try {
     const response = await fetch(
-      "https://api.github.com/repos/pjborowiecki/SAASY-LAND-Next-14-Starters-With-Authentication-And-Database-Implemented",
+      "https://api.github.com/repos/srmed/srmed",
       {
         headers: {
           Accept: "application/vnd.github+json",
