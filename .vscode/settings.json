@@ -1,0 +1,11 @@
+{
+    "WillLuke.nextjs.addTypesOnSave": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.quickSuggestions": {
+        "other": "inline",
+        "comments": true,
+        "strings": true
+    },
+    "editor.quickSuggestionsDelay": 100,
+    "WillLuke.nextjs.hasPrompted": true
+}
